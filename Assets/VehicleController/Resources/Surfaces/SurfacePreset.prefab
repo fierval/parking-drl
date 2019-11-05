@@ -1,0 +1,301 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1113448967392562}
+  m_IsPrefabAsset: 1
+--- !u!1 &1113448967392562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4068269319268710}
+  - component: {fileID: 114500453911298720}
+  m_Layer: 0
+  m_Name: SurfacePreset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4068269319268710
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1113448967392562}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 92.29654, y: -6.099698, z: 41.10479}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114500453911298720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1113448967392562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed19042e02f88e498f98988596547ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  surfaceindex: 8
+  addsurface:
+  - SurfaceName: TestArena(frontwheelpreset)
+    usewheelfrictincurve: 1
+    ActiveTerrain: {fileID: 0}
+    TerrainName: 
+    IsTerrain: 0
+    ParticlePrefab: {fileID: 0}
+    Particles: {fileID: 0}
+    EmitParticle: 0
+    TerrainTextureIndex: 0
+    TagName: TestArena
+    clip: {fileID: 0}
+    forwardslip:
+      asymptoteslip: 0.37
+      asymptotevalue: 0.5
+      extremumslip: 0.4
+      extremumvalue: 1
+      Stiffness: 1
+      wheelcollider:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelObject:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelColliderTagName: frontwheel
+    sideslip:
+      asymptoteslip: 0.5
+      asymptotevalue: 0.75
+      extremumslip: 0.2
+      extremumvalue: 1
+      Stiffness: 1
+  - SurfaceName: TestArena(RearWheelPreset)
+    usewheelfrictincurve: 1
+    ActiveTerrain: {fileID: 0}
+    TerrainName: 
+    IsTerrain: 0
+    ParticlePrefab: {fileID: 0}
+    Particles: {fileID: 0}
+    EmitParticle: 0
+    TerrainTextureIndex: 0
+    TagName: TestArena
+    clip: {fileID: 0}
+    forwardslip:
+      asymptoteslip: 0.5
+      asymptotevalue: 1
+      extremumslip: 0.4
+      extremumvalue: 1
+      Stiffness: 1
+      wheelcollider:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelObject:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelColliderTagName: rearwheel
+    sideslip:
+      asymptoteslip: 2.95
+      asymptotevalue: 1.75
+      extremumslip: 0.2
+      extremumvalue: 1.75
+      Stiffness: 1
+  - SurfaceName: HardSurface(front)
+    usewheelfrictincurve: 1
+    ActiveTerrain: {fileID: 0}
+    TerrainName: 
+    IsTerrain: 0
+    ParticlePrefab: {fileID: 0}
+    Particles: {fileID: 0}
+    EmitParticle: 0
+    TerrainTextureIndex: 0
+    TagName: HardSurface
+    clip: {fileID: 0}
+    forwardslip:
+      asymptoteslip: 0.37
+      asymptotevalue: 0.5
+      extremumslip: 0.4
+      extremumvalue: 1
+      Stiffness: 1
+      wheelcollider:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelObject:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelColliderTagName: frontwheel
+    sideslip:
+      asymptoteslip: 0.5
+      asymptotevalue: 0.75
+      extremumslip: 0.2
+      extremumvalue: 1
+      Stiffness: 1
+  - SurfaceName: HardSurface(Rear)
+    usewheelfrictincurve: 1
+    ActiveTerrain: {fileID: 0}
+    TerrainName: 
+    IsTerrain: 0
+    ParticlePrefab: {fileID: 0}
+    Particles: {fileID: 0}
+    EmitParticle: 0
+    TerrainTextureIndex: 0
+    TagName: HardSurface
+    clip: {fileID: 0}
+    forwardslip:
+      asymptoteslip: 0.5
+      asymptotevalue: 1
+      extremumslip: 0.4
+      extremumvalue: 1
+      Stiffness: 1
+      wheelcollider:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelObject:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelColliderTagName: rearwheel
+    sideslip:
+      asymptoteslip: 2.95
+      asymptotevalue: 1.75
+      extremumslip: 0.2
+      extremumvalue: 1.75
+      Stiffness: 1
+  - SurfaceName: SoftSandSurface(front)_Terrain
+    usewheelfrictincurve: 1
+    ActiveTerrain: {fileID: 0}
+    TerrainName: Terrain
+    IsTerrain: 1
+    ParticlePrefab: {fileID: 198292948156601464, guid: a50034ab7e2b7ca4a9f6d61855638917,
+      type: 2}
+    Particles: {fileID: 0}
+    EmitParticle: 1
+    TerrainTextureIndex: 1
+    TagName: 
+    clip: {fileID: 8300000, guid: ed8a7dafa5ea4224c943796d34c5da81, type: 3}
+    forwardslip:
+      asymptoteslip: 1
+      asymptotevalue: 1
+      extremumslip: 1
+      extremumvalue: 1
+      Stiffness: 0.5
+      wheelcollider:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelObject:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelColliderTagName: frontwheel
+    sideslip:
+      asymptoteslip: 1
+      asymptotevalue: 1
+      extremumslip: 1
+      extremumvalue: 1
+      Stiffness: 0.5
+  - SurfaceName: SoftSandSurface(rear)_Terrain
+    usewheelfrictincurve: 1
+    ActiveTerrain: {fileID: 0}
+    TerrainName: Terrain
+    IsTerrain: 1
+    ParticlePrefab: {fileID: 198292948156601464, guid: a50034ab7e2b7ca4a9f6d61855638917,
+      type: 2}
+    Particles: {fileID: 0}
+    EmitParticle: 1
+    TerrainTextureIndex: 1
+    TagName: 
+    clip: {fileID: 8300000, guid: ed8a7dafa5ea4224c943796d34c5da81, type: 3}
+    forwardslip:
+      asymptoteslip: 1
+      asymptotevalue: 1
+      extremumslip: 1
+      extremumvalue: 1
+      Stiffness: 0.5
+      wheelcollider:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelObject:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelColliderTagName: rearwheel
+    sideslip:
+      asymptoteslip: 1
+      asymptotevalue: 1
+      extremumslip: 1
+      extremumvalue: 1
+      Stiffness: 0.5
+  - SurfaceName: SoftGrassSurface(front)_Terrain
+    usewheelfrictincurve: 1
+    ActiveTerrain: {fileID: 0}
+    TerrainName: Terrain
+    IsTerrain: 1
+    ParticlePrefab: {fileID: 198252618335248924, guid: b07567d33f38a2a43b888568d8ef12f3,
+      type: 2}
+    Particles: {fileID: 0}
+    EmitParticle: 1
+    TerrainTextureIndex: 0
+    TagName: 
+    clip: {fileID: 8300000, guid: ed8a7dafa5ea4224c943796d34c5da81, type: 3}
+    forwardslip:
+      asymptoteslip: 1
+      asymptotevalue: 1
+      extremumslip: 1
+      extremumvalue: 1
+      Stiffness: 0.5
+      wheelcollider:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelObject:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelColliderTagName: frontwheel
+    sideslip:
+      asymptoteslip: 1
+      asymptotevalue: 1
+      extremumslip: 1
+      extremumvalue: 1
+      Stiffness: 0.5
+  - SurfaceName: SoftGrassSurface(rear)_Terrain
+    usewheelfrictincurve: 1
+    ActiveTerrain: {fileID: 0}
+    TerrainName: Terrain
+    IsTerrain: 1
+    ParticlePrefab: {fileID: 198252618335248924, guid: b07567d33f38a2a43b888568d8ef12f3,
+      type: 2}
+    Particles: {fileID: 0}
+    EmitParticle: 1
+    TerrainTextureIndex: 0
+    TagName: 
+    clip: {fileID: 8300000, guid: ed8a7dafa5ea4224c943796d34c5da81, type: 3}
+    forwardslip:
+      asymptoteslip: 1
+      asymptotevalue: 1
+      extremumslip: 1
+      extremumvalue: 1
+      Stiffness: 0.5
+      wheelcollider:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelObject:
+      - {fileID: 0}
+      - {fileID: 0}
+      WheelColliderTagName: rearwheel
+    sideslip:
+      asymptoteslip: 1
+      asymptotevalue: 1
+      extremumslip: 1
+      extremumvalue: 1
+      Stiffness: 0.5
+  m_surafaceFoldout: 0000000000000000
+  wheelcolliderpreset: 0101010101010101
