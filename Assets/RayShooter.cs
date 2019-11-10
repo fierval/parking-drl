@@ -17,7 +17,7 @@ public class RayShooter : MonoBehaviour
         Debug.DrawLine(transform.position, plane.transform.position, Color.blue);
         RaycastHit hit;
         var pos = transform.position;
-        var to = Quaternion.AngleAxis(-45, transform.TransformDirection(Vector3.right)) * transform.TransformDirection(Vector3.forward);
+        var to = Quaternion.AngleAxis(-10, transform.right) * transform.forward;
         //var to = transform.TransformDirection(Vector3.forward);
         Ray ray = new Ray(pos, to);
         Debug.DrawRay(pos, to, Color.red);
