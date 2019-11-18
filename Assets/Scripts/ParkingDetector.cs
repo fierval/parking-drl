@@ -26,9 +26,8 @@ public class ParkingDetector : MonoBehaviour
         parkingBoundingBox = parkRender.bounds;
     }
 
-    // parking barriers are the only one tri
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        Debug.Log("Collision!");
     }
 }
