@@ -25,4 +25,10 @@ public class ParkingDetector : MonoBehaviour
     {
         parkingBoundingBox = parkRender.bounds;
     }
+
+    // parking barriers are the only one tri
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
 }
