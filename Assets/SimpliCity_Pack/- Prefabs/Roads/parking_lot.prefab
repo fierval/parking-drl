@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 6400000}
   m_Layer: 0
-  m_Name: scp_road_part_07
+  m_Name: parking_lot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,6 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1390457124293082135}
+  - {fileID: 8223630560844790439}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -144,7 +145,7 @@ GameObject:
   - component: {fileID: 4664644609237879740}
   - component: {fileID: 8333967677146753425}
   - component: {fileID: 1624523965311550491}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +237,7 @@ GameObject:
   - component: {fileID: 1256747502134496779}
   - component: {fileID: 2518124369694939525}
   - component: {fileID: 1730560281763674482}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +471,7 @@ GameObject:
   - component: {fileID: 2559494040999439492}
   - component: {fileID: 1430792467102274967}
   - component: {fileID: 2281132495575562729}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -736,7 +737,7 @@ GameObject:
   - component: {fileID: 6194339642393293257}
   - component: {fileID: 5774503316871981598}
   - component: {fileID: 8134491954238524677}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,7 +1049,7 @@ GameObject:
   - component: {fileID: 7289890985536075958}
   - component: {fileID: 2209030144909510737}
   - component: {fileID: 8056657708265723383}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1160,6 +1161,99 @@ Transform:
   m_Father: {fileID: 1390457124293082135}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7242550989678938121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3223369558992229982}
+  - component: {fileID: 6257623977649469129}
+  - component: {fileID: 298805504546331705}
+  - component: {fileID: 1804132372238751747}
+  m_Layer: 0
+  m_Name: Quad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3223369558992229982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7242550989678938121}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.44, y: 1.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8223630560844790439}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6257623977649469129
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7242550989678938121}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &298805504546331705
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7242550989678938121}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!64 &1804132372238751747
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7242550989678938121}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &7362768587935550138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,7 +1266,7 @@ GameObject:
   - component: {fileID: 4593040022238565511}
   - component: {fileID: 2334660552185261296}
   - component: {fileID: 6126717598706609418}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1264,7 +1358,7 @@ GameObject:
   - component: {fileID: 3947605352209382553}
   - component: {fileID: 738998877165627171}
   - component: {fileID: 2614783889134089406}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1479,7 +1573,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
+  - {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1656,6 +1750,37 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &8429667934223964360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8223630560844790439}
+  m_Layer: 0
+  m_Name: Sidewalks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8223630560844790439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8429667934223964360}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3223369558992229982}
+  m_Father: {fileID: 400000}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9170609422186521345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1668,7 +1793,7 @@ GameObject:
   - component: {fileID: 2010320920349474671}
   - component: {fileID: 8813293923253283212}
   - component: {fileID: 1025664518413583712}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
