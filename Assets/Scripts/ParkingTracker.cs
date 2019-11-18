@@ -3,14 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Flags]
-public enum ParkingState : int
-{
-    Available = 0,
-    InProgress = 1,
-    Incomplete = 2,
-    Complete = 4
-}
 
 public class ParkingTracker : MonoBehaviour
 {
@@ -68,18 +60,11 @@ public class ParkingTracker : MonoBehaviour
         SetState(ParkingState.Available);
         placeMatRenderer = GetComponent<Renderer>();
 
-        placeMatBounds = CreateRectFromTransformAndLocalBounds(transform, GetComponent<MeshFilter>().mesh.bounds);
+        placeMatBounds = ParkingUtils.CreateRectFromTransformAndLocalBounds(transform);
 
         parkingProfile = null;
     }
 
-    static Rect CreateRectFromTransformAndLocalBounds(Transform transform, Bounds localBounds)
-    {
-        var min = transform.TransformVector(localBounds.min);
-        var max = transform.TransformVector(localBounds.max);
-        
-        return Rect.MinMaxRect(min.x, min.y, max.x, max.y);
-    }
 
     // Parking detector should instantiate proper entry
     // Any entrance by any carBounds means is considered "collision"
@@ -111,21 +96,14 @@ public class ParkingTracker : MonoBehaviour
             parkingProfile = car.Find("ParkingBounds").gameObject;
         }
 
-        var carBounds = CreateRectFromTransformAndLocalBounds(parkingProfile.transform, parkingProfile.GetComponent<MeshFilter>().mesh.bounds);
+        var carBounds = ParkingUtils.CreateRectFromTransformAndLocalBounds(parkingProfile.transform);
 
-        if(IsCarInside(placeMatBounds, carBounds))
+        if(placeMatBounds.Contains(carBounds))
         {
             SetState(ParkingState.Complete);
         }
     }
 
-    public static bool IsCarInside(Rect parkingBounds, Rect carBounds)
-    {
-        return parkingBounds.min.x <= carBounds.min.x
-            && parkingBounds.min.y <= carBounds.min.y
-            && parkingBounds.max.x >= carBounds.max.y
-            && parkingBounds.max.y >= carBounds.max.y;
-    }
 
     private void OnCollisionExit(Collision collision)
     {
