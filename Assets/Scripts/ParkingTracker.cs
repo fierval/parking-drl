@@ -57,8 +57,8 @@ public class ParkingTracker : MonoBehaviour
 
     private void Awake()
     {
-        SetState(ParkingState.Available);
         placeMatRenderer = GetComponent<Renderer>();
+        SetState(ParkingState.Available);
 
         placeMatBounds = ParkingUtils.CreateRectFromTransformAndLocalBounds(transform);
 
@@ -68,24 +68,24 @@ public class ParkingTracker : MonoBehaviour
 
     // Parking detector should instantiate proper entry
     // Any entrance by any carBounds means is considered "collision"
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (parkingState == ParkingState.Available)
-        {
-            SetState(ParkingState.Incomplete);
-        }
-        numCars++;
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (parkingState == ParkingState.Available)
+    //    {
+    //        SetState(ParkingState.Incomplete);
+    //    }
+    //    numCars++;
+    //}
 
-    private void OnCollisionStay(Collision collision)
-    {
-        // we use a different entry mechanism
-        Debug.Assert(parkingState != ParkingState.Available);
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    // we use a different entry mechanism
+    //    Debug.Assert(parkingState != ParkingState.Available);
 
-        if (parkingState == ParkingState.Incomplete) { return; }
+    //    if (parkingState == ParkingState.Incomplete) { return; }
 
-        CheckAndSetIsDone(collision.gameObject);
-    }
+    //    CheckAndSetIsDone(collision.gameObject);
+    //}
 
     private void CheckAndSetIsDone(GameObject gameObject)
     {
