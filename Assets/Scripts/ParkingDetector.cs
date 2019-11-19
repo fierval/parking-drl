@@ -13,46 +13,75 @@ public enum WheelColliderPos : int
 
 public class ParkingDetector : MonoBehaviour
 {
-    GameObject parkingBounds;
+    // fires when a vehicle is parked
+    // to notify a placemat
+    public delegate void parked(string name);
+    public event parked Parked;
+
     Renderer parkRender;
     Bounds parkingBoundingBox;
     ESVehicleController vehicleController;
 
     WheelCollider[] wheelColliders;
+    HashSet<(int, string)> parkingState;
+
+    bool isParked = false;
 
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
-        
+
         // get front and rear wheel colliders
         wheelColliders =
             vehicleController.m_wheelsettings.frontwheels.frontwheelcols.Concat(
                 vehicleController.m_wheelsettings.rearwheels.rearwheelcols
                 ).ToArray();
 
-        parkingBounds = transform.Find("ParkingBounds").gameObject;
-        parkRender = parkingBounds.GetComponent<Renderer>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        parkingBoundingBox = parkRender.bounds;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        HashSet<GameObject> placeMats = new HashSet<GameObject>();
+        parkingState.Clear();
+
         for (int i = 0; i < wheelColliders.Length; i++)
         {
-            WheelCollider wheel = (WheelCollider)wheelColliders[i];
+            WheelCollider wheel = wheelColliders[i];
             WheelHit hit;
             wheel.GetGroundHit(out hit);
-            if (hit.collider != null)
+            if (hit.collider != null && hit.collider.gameObject.name == Consts.PlaceMat)
             {
-                Debug.Log($"Wheel {((WheelColliderPos)i)} hit {hit.collider.gameObject.name}");
+                parkingState.Add((i, hit.collider.gameObject.transform.parent.name));
+
             }
+        }
+
+        if (IsParked)
+        {
+            Parked?.Invoke(parkingState.AsEnumerable().First().Item2);
         }
     }
 
+    // We only have as many points as we have colliders and they
+    // are all within one placemat
+    bool IsParked 
+    {
+        get
+        {
+            return parkingState.Count == wheelColliders.Length
+               && parkingState.Select((i, name) => name).Distinct().Count() == 1;
+        }
+    }
+
+    // We have a wheel on the mat or a few wheels
+    // on a couple of mats
+    bool IsParking
+    {
+        get 
+        {
+            return parkingState.Count > 0
+                && (parkingState.Count != wheelColliders.Length || parkingState.Select((i, name) => name).Distinct().Count() != 1);
+        }
+    }
 }
