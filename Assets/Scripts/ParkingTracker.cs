@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -8,10 +9,7 @@ public class ParkingTracker : MonoBehaviour
 {
     bool hasVehicle = false;
     Renderer placeMatRenderer;
-    Rect placeMatBounds;
-    
-    // car ParkingBounds object
-    GameObject parkingProfile;
+    string spotName;
 
     ParkingState parkingState;
     // number of cars currently inside the spot
@@ -37,7 +35,6 @@ public class ParkingTracker : MonoBehaviour
         {
             case ParkingState.Available:
                 CurMaterial = emptyMaterial;
-                parkingProfile = null;
                 break;
             case ParkingState.InProgress:
                 CurMaterial = inProgressMaterial;
@@ -59,57 +56,33 @@ public class ParkingTracker : MonoBehaviour
     {
         placeMatRenderer = GetComponent<Renderer>();
         SetState(ParkingState.Available);
+        spotName = transform.parent.name;
 
-        placeMatBounds = ParkingUtils.CreateRectFromTransformAndLocalBounds(transform);
-
-        parkingProfile = null;
+        ParkingDetector.Parked += OnParked;
+        ParkingDetector.Parking += OnParking;
+        ParkingDetector.ExitedParking += OnParkingExit;
     }
 
-
-    // Parking detector should instantiate proper entry
-    // Any entrance by any carBounds means is considered "collision"
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (parkingState == ParkingState.Available)
-    //    {
-    //        SetState(ParkingState.Incomplete);
-    //    }
-    //    numCars++;
-    //}
-
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    // we use a different entry mechanism
-    //    Debug.Assert(parkingState != ParkingState.Available);
-
-    //    if (parkingState == ParkingState.Incomplete) { return; }
-
-    //    CheckAndSetIsDone(collision.gameObject);
-    //}
-
-    private void CheckAndSetIsDone(GameObject gameObject)
+    void OnParked(string [] spots)
     {
-        if (parkingProfile is null)
-        {
-            // car -> Wheels -> collider
-            var car = gameObject.transform.parent.parent;
-            parkingProfile = car.Find("ParkingBounds").gameObject;
-        }
+        if(spots.First() != spotName || ParkingState.Complete == parkingState) { return; }
 
-        var carBounds = ParkingUtils.CreateRectFromTransformAndLocalBounds(parkingProfile.transform);
-
-        if(placeMatBounds.Contains(carBounds))
-        {
-            SetState(ParkingState.Complete);
-        }
+        SetState(ParkingState.Complete);
     }
 
-
-    private void OnCollisionExit(Collision collision)
+    void OnParking(string [] spots)
     {
-        numCars--;
-        if (numCars > 0) { return; }
+        if(!spots.Contains(spotName) || ParkingState.InProgress == parkingState) { return; }
+
+        SetState(ParkingState.InProgress);
+    }
+
+    void OnParkingExit(string [] spots)
+    {
+        if (!spots.Contains(spotName) || ParkingState.Available == parkingState) { return; }
 
         SetState(ParkingState.Available);
+
     }
 }
+
