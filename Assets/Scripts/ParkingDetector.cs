@@ -47,9 +47,7 @@ public class ParkingDetector : MonoBehaviour
     {
         HashSet<GameObject> placeMats = new HashSet<GameObject>();
 
-        //TODO: Save current parking state so we can check if it's time to reset
-        // parking spaces
-        Dictionary<string, int> curParkingState = new System.Collections.Generic.Dictionary<string, int>();
+        Dictionary<string, int> curParkingState = new Dictionary<string, int>();
 
         for (int i = 0; i < wheelColliders.Length; i++)
         {
@@ -59,7 +57,9 @@ public class ParkingDetector : MonoBehaviour
             if(hit.collider == null || hit.collider.gameObject == null) { continue; }
 
             string hitName = hit.collider.gameObject.name;
-            if (hit.collider != null && hitName == Consts.PlaceMat)
+
+            // we are in a parking spot
+            if (hitName == Consts.PlaceMat)
             {
                 if (!parkingState.ContainsKey(hitName))
                 {
