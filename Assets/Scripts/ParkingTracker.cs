@@ -62,30 +62,14 @@ public class ParkingTracker : MonoBehaviour
         ParkingDetector.ParkingFailed += OnParkingFailed;
     }
 
-    void SetMyState(GameObject [] spots, ParkingState state)
+    public ParkingState ParkingState
     {
-        if (!spots.Contains(spot) || state == parkingState) { return; }
-        SetState(state);
-    }
+        set
+        {
+            if (value == parkingState) { return; }
+            SetState(value);
 
-    void OnParked(GameObject [] spots)
-    {
-        SetMyState(spots, ParkingState.Complete);
-    }
-
-    void OnParking(GameObject [] spots)
-    {
-        SetMyState(spots, ParkingState.InProgress);
-    }
-
-    void OnParkingExit(GameObject [] spots)
-    {
-        SetMyState(spots, ParkingState.Available);
-
-    }
-    void OnParkingFailed(GameObject [] spots)
-    {
-        SetMyState(spots, ParkingState.Failed);
+        }
     }
 }
 

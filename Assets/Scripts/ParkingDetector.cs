@@ -53,8 +53,8 @@ public class ParkingDetector : MonoBehaviour
             wheel.GetGroundHit(out hit);
             if(hit.collider == null || hit.collider.gameObject == null) { continue; }
 
-            string hitName = hit.collider.gameObject.name;
-            GameObject spotGameObj = hit.collider.gameObject.transform.parent.gameObject;
+            GameObject spotGameObj = hit.collider.gameObject;
+            string hitName = spotGameObj.name;
 
             // we are in a parking spot
             if (hitName == Consts.PlaceMat)
