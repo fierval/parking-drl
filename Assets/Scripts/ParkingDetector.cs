@@ -15,20 +15,19 @@ public class ParkingDetector : MonoBehaviour
 {
     // fires when a vehicle is parked
     // to notify a placemat
-    public delegate void ParkingAction(string [] name);
+    public delegate void ParkingAction(GameObject [] spot);
     
     public static event ParkingAction Parked;
     public static event ParkingAction Parking;
     public static event ParkingAction ExitedParking;
+    public static event ParkingAction ParkingFailed;
     
     Renderer parkRender;
     Bounds parkingBoundingBox;
     ESVehicleController vehicleController;
 
     WheelCollider[] wheelColliders;
-    Dictionary<string, int> parkingState = new Dictionary<string, int>();
-
-    bool isParked = false;
+    Dictionary<GameObject, int> parkingState = new Dictionary<GameObject, int>();
 
     private void Awake()
     {
@@ -45,9 +44,7 @@ public class ParkingDetector : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        HashSet<GameObject> placeMats = new HashSet<GameObject>();
-
-        Dictionary<string, int> curParkingState = new Dictionary<string, int>();
+        Dictionary<GameObject, int> curParkingState = new Dictionary<GameObject, int>();
 
         for (int i = 0; i < wheelColliders.Length; i++)
         {
@@ -57,49 +54,61 @@ public class ParkingDetector : MonoBehaviour
             if(hit.collider == null || hit.collider.gameObject == null) { continue; }
 
             string hitName = hit.collider.gameObject.name;
+            GameObject spotGameObj = hit.collider.gameObject.transform.parent.gameObject;
 
             // we are in a parking spot
             if (hitName == Consts.PlaceMat)
             {
-                if (!parkingState.ContainsKey(hitName))
+                if (!curParkingState.ContainsKey(spotGameObj))
                 {
-                    parkingState.Add(hitName, 0);
+                    curParkingState.Add(spotGameObj, 0);
                 }
-                parkingState[hitName]++;
+
+                curParkingState[spotGameObj]++;
             }
 
         }
 
-        if (IsParked(curParkingState))
-        {
-            Parked?.Invoke(parkingState.Keys.ToArray());
-            return;
-        }
-
-        if(IsParking(curParkingState))
-        {
-            Parking?.Invoke(parkingState.Keys.ToArray());
-            return;
-        }
-
+        // first we figure out the exited spots & save state
         var exitedParkingSpaces = NoLongerParking(curParkingState.Keys, parkingState.Keys);
-        if(exitedParkingSpaces.Length > 0)
+
+        if (exitedParkingSpaces.Length > 0)
         {
             ExitedParking?.Invoke(exitedParkingSpaces);
         }
 
         parkingState = curParkingState.Select(kvp => kvp).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+        // Check if we are parked
+        if (IsParked(curParkingState))
+        {
+            Parked?.Invoke(curParkingState.Keys.ToArray());
+        }
+        else if (IsDoubleParked(curParkingState))
+        {
+            Debug.Log("Double Parked!");
+            ParkingFailed?.Invoke(curParkingState.Keys.ToArray());
+        }
+        // trying to park
+        else if (IsParking(curParkingState))
+        {
+            Parking?.Invoke(curParkingState.Keys.ToArray());
+            return;
+        }
+
     }
 
     // We only have as many points as we have colliders and they
     // are all within one placemat
-    bool IsParked(Dictionary<string, int> parkingState) => parkingState.Count == 1 && parkingState.First().Value == wheelColliders.Length;
+    bool IsParked(Dictionary<GameObject, int> parkingState) => parkingState.Count == 1 && parkingState.First().Value == wheelColliders.Length;
 
     // We have a wheel on the mat or a few wheels
     // on a couple of mats
-    bool IsParking(Dictionary<string, int> parkingState) => parkingState.FirstOrDefault().Value > 0;
+    bool IsParking(Dictionary<GameObject, int> parkingState) => parkingState.FirstOrDefault().Value > 0;
 
-    string [] NoLongerParking(IEnumerable<string> curParking, IEnumerable<string> prevParking)
+    bool IsDoubleParked(Dictionary<GameObject, int> parkingState) => parkingState.Count > 1;
+
+    GameObject [] NoLongerParking(IEnumerable<GameObject> curParking, IEnumerable<GameObject> prevParking)
     {
         return prevParking.Except(curParking).ToArray();
     }

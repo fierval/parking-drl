@@ -258,7 +258,7 @@ MonoBehaviour:
   emptyMaterial: {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
   inProgressMaterial: {fileID: 2100000, guid: f16da02d25256f542864655e6a5d4f2c, type: 2}
   completeMaterial: {fileID: 2100000, guid: fbc6f672077904a4485f1d507a05e905, type: 2}
-  incompleteMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
+  failedMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
 --- !u!65 &7722753137754350863
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -398,7 +398,7 @@ MonoBehaviour:
   emptyMaterial: {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
   inProgressMaterial: {fileID: 2100000, guid: f16da02d25256f542864655e6a5d4f2c, type: 2}
   completeMaterial: {fileID: 2100000, guid: fbc6f672077904a4485f1d507a05e905, type: 2}
-  incompleteMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
+  failedMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
 --- !u!65 &4158941703480198102
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
   emptyMaterial: {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
   inProgressMaterial: {fileID: 2100000, guid: f16da02d25256f542864655e6a5d4f2c, type: 2}
   completeMaterial: {fileID: 2100000, guid: fbc6f672077904a4485f1d507a05e905, type: 2}
-  incompleteMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
+  failedMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
 --- !u!65 &98993194175384462
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -709,7 +709,7 @@ MonoBehaviour:
   emptyMaterial: {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
   inProgressMaterial: {fileID: 2100000, guid: f16da02d25256f542864655e6a5d4f2c, type: 2}
   completeMaterial: {fileID: 2100000, guid: fbc6f672077904a4485f1d507a05e905, type: 2}
-  incompleteMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
+  failedMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
 --- !u!65 &3042339887827777183
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -924,7 +924,7 @@ MonoBehaviour:
   emptyMaterial: {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
   inProgressMaterial: {fileID: 2100000, guid: f16da02d25256f542864655e6a5d4f2c, type: 2}
   completeMaterial: {fileID: 2100000, guid: fbc6f672077904a4485f1d507a05e905, type: 2}
-  incompleteMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
+  failedMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
 --- !u!1 &7527101869404064666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +1020,7 @@ MonoBehaviour:
   emptyMaterial: {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
   inProgressMaterial: {fileID: 2100000, guid: f16da02d25256f542864655e6a5d4f2c, type: 2}
   completeMaterial: {fileID: 2100000, guid: fbc6f672077904a4485f1d507a05e905, type: 2}
-  incompleteMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
+  failedMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
 --- !u!65 &3690743211085625292
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1129,7 +1129,7 @@ MonoBehaviour:
   emptyMaterial: {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
   inProgressMaterial: {fileID: 2100000, guid: f16da02d25256f542864655e6a5d4f2c, type: 2}
   completeMaterial: {fileID: 2100000, guid: fbc6f672077904a4485f1d507a05e905, type: 2}
-  incompleteMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
+  failedMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
 --- !u!65 &7790786842688057725
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1238,7 +1238,7 @@ MonoBehaviour:
   emptyMaterial: {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
   inProgressMaterial: {fileID: 2100000, guid: f16da02d25256f542864655e6a5d4f2c, type: 2}
   completeMaterial: {fileID: 2100000, guid: fbc6f672077904a4485f1d507a05e905, type: 2}
-  incompleteMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
+  failedMaterial: {fileID: 2100000, guid: 6d571c8d1d9194844b7d90972e08588d, type: 2}
 --- !u!65 &3676313566280413447
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -7,18 +7,15 @@ using UnityEngine;
 
 public class ParkingTracker : MonoBehaviour
 {
-    bool hasVehicle = false;
     Renderer placeMatRenderer;
-    string spotName;
+    GameObject spot;
 
     ParkingState parkingState;
-    // number of cars currently inside the spot
-    int numCars = 0;
 
     public Material emptyMaterial;
     public Material inProgressMaterial;
     public Material completeMaterial;
-    public Material incompleteMaterial;
+    public Material failedMaterial;
 
     Material CurMaterial
     {
@@ -39,8 +36,8 @@ public class ParkingTracker : MonoBehaviour
             case ParkingState.InProgress:
                 CurMaterial = inProgressMaterial;
                 break;
-            case ParkingState.Incomplete:
-                CurMaterial = incompleteMaterial;
+            case ParkingState.Failed:
+                CurMaterial = failedMaterial;
                 break;
             case ParkingState.Complete:
                 CurMaterial = completeMaterial;
@@ -56,33 +53,39 @@ public class ParkingTracker : MonoBehaviour
     {
         placeMatRenderer = GetComponent<Renderer>();
         SetState(ParkingState.Available);
-        spotName = transform.parent.name;
+
+        spot = transform.parent.gameObject;
 
         ParkingDetector.Parked += OnParked;
         ParkingDetector.Parking += OnParking;
         ParkingDetector.ExitedParking += OnParkingExit;
+        ParkingDetector.ParkingFailed += OnParkingFailed;
     }
 
-    void OnParked(string [] spots)
+    void SetMyState(GameObject [] spots, ParkingState state)
     {
-        if(spots.First() != spotName || ParkingState.Complete == parkingState) { return; }
-
-        SetState(ParkingState.Complete);
+        if (!spots.Contains(spot) || state == parkingState) { return; }
+        SetState(state);
     }
 
-    void OnParking(string [] spots)
+    void OnParked(GameObject [] spots)
     {
-        if(!spots.Contains(spotName) || ParkingState.InProgress == parkingState) { return; }
-
-        SetState(ParkingState.InProgress);
+        SetMyState(spots, ParkingState.Complete);
     }
 
-    void OnParkingExit(string [] spots)
+    void OnParking(GameObject [] spots)
     {
-        if (!spots.Contains(spotName) || ParkingState.Available == parkingState) { return; }
+        SetMyState(spots, ParkingState.InProgress);
+    }
 
-        SetState(ParkingState.Available);
+    void OnParkingExit(GameObject [] spots)
+    {
+        SetMyState(spots, ParkingState.Available);
 
+    }
+    void OnParkingFailed(GameObject [] spots)
+    {
+        SetMyState(spots, ParkingState.Failed);
     }
 }
 

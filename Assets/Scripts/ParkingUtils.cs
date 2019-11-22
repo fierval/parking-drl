@@ -10,7 +10,7 @@ public enum ParkingState : int
 {
     Available = 0,
     InProgress = 1,
-    Incomplete = 2,
+    Failed = 2,
     Complete = 4
 }
 

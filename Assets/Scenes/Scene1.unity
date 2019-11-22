@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: 0.16357777, y: -0.008660692, z: 0.0014361657, w: 0.9864914}
+  m_LocalRotation: {x: 0.16352582, y: -0.02632032, z: 0.004364442, w: 0.9861783}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1467,7 +1467,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: 0.032842875, y: -0.0019792672, z: 0.000065508546, w: 0.9994586}
+  m_LocalRotation: {x: 0.03284088, y: -0.011232952, z: 0.00036959106, w: 0.99939746}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3671,17 +3671,17 @@ PrefabInstance:
     - target: {fileID: 3718455252951896382, guid: 2f4e41595a9d4aa46b93a317dffde7d9,
         type: 3}
       propertyPath: VolumeMultiplier
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3718455252951896382, guid: 2f4e41595a9d4aa46b93a317dffde7d9,
         type: 3}
       propertyPath: PitchMultiplier
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3718455252951896377, guid: 2f4e41595a9d4aa46b93a317dffde7d9,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f4e41595a9d4aa46b93a317dffde7d9, type: 3}
@@ -4947,7 +4947,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: 0.16069251, y: -0.019700835, z: 0.003208063, w: 0.9868027}
+  m_LocalRotation: {x: 0.16051766, y: -0.050061665, z: 0.008152071, w: 0.9857289}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5669,7 +5669,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.03284286, y: -0.0019792516, z: 0.00006503955, w: 0.99945855}
+  m_LocalRotation: {x: 0.03284086, y: -0.011232937, z: 0.0003691218, w: 0.9993974}
   m_LocalPosition: {x: -1.4630327, y: 5, z: 2.290679}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
