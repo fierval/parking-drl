@@ -13,15 +13,6 @@ public enum WheelColliderPos : int
 
 public class ParkingDetector : MonoBehaviour
 {
-    // fires when a vehicle is parked
-    // to notify a placemat
-    public delegate void ParkingAction(GameObject [] spot);
-    
-    public static event ParkingAction Parked;
-    public static event ParkingAction Parking;
-    public static event ParkingAction ExitedParking;
-    public static event ParkingAction ParkingFailed;
-    
     Renderer parkRender;
     Bounds parkingBoundingBox;
     ESVehicleController vehicleController;
@@ -74,28 +65,32 @@ public class ParkingDetector : MonoBehaviour
 
         if (exitedParkingSpaces.Length > 0)
         {
-            ExitedParking?.Invoke(exitedParkingSpaces);
+            SetParkingState(exitedParkingSpaces, ParkingState.Available);
         }
 
         parkingState = curParkingState.Select(kvp => kvp).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        var parkingObjects = curParkingState.Keys.ToArray();
 
         // Check if we are parked
         if (IsParked(curParkingState))
         {
-            Parked?.Invoke(curParkingState.Keys.ToArray());
+            SetParkingState(parkingObjects, ParkingState.Complete);
         }
         else if (IsDoubleParked(curParkingState))
         {
-            Debug.Log("Double Parked!");
-            ParkingFailed?.Invoke(curParkingState.Keys.ToArray());
+            SetParkingState(parkingObjects, ParkingState.Failed);
         }
         // trying to park
         else if (IsParking(curParkingState))
         {
-            Parking?.Invoke(curParkingState.Keys.ToArray());
-            return;
+            SetParkingState(parkingObjects, ParkingState.InProgress);
         }
 
+    }
+
+    void SetParkingState(GameObject [] spots, ParkingState state)
+    {
+        spots.ToList().ForEach(g => g.GetComponent<ParkingTracker>().ParkingState = state);
     }
 
     // We only have as many points as we have colliders and they

@@ -20,10 +20,7 @@ public class ParkingTracker : MonoBehaviour
     Material CurMaterial
     {
         get => placeMatRenderer.material;
-        set
-        {
-            placeMatRenderer.material = value;
-        }
+        set => placeMatRenderer.material = value;
     }
 
     void SetState(ParkingState state)
@@ -63,7 +60,6 @@ public class ParkingTracker : MonoBehaviour
         {
             if (value == parkingState) { return; }
             SetState(value);
-
         }
     }
 }
