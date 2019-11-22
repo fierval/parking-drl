@@ -55,11 +55,6 @@ public class ParkingTracker : MonoBehaviour
         SetState(ParkingState.Available);
 
         spot = transform.parent.gameObject;
-
-        ParkingDetector.Parked += OnParked;
-        ParkingDetector.Parking += OnParking;
-        ParkingDetector.ExitedParking += OnParkingExit;
-        ParkingDetector.ParkingFailed += OnParkingFailed;
     }
 
     public ParkingState ParkingState
