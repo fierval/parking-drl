@@ -5,6 +5,30 @@ TagManager:
   serializedVersion: 2
   tags:
   - SkidTrashHolder
+  - target
+  - ground
+  - goal
+  - agent
+  - block
+  - wall
+  - switchOff
+  - badFood
+  - stone
+  - pyramid
+  - walkableSurface
+  - purpleAgent
+  - purpleGoal
+  - blueAgent
+  - blueGoal
+  - ball
+  - symbol_X
+  - iWall
+  - symbol_O
+  - food
+  - pit
+  - symbol_O_Goal
+  - symbol_X_Goal
+  - Academy
   layers:
   - Default
   - TransparentFX

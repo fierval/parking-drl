@@ -118,11 +118,18 @@ public class ESVehicleController : MonoBehaviour
     private float m_startangdrag;
     private float mytime;
 
+    // For machine learning
+    [HideInInspector]
+    public bool isML = false;
+
     // Use this for initialization
     void Awake()
     {
         if(m_enginesettings.UseMaxBrakeForce)
         m_enginesettings.MaxBrakeForce = float.MaxValue;
+
+        // academy exists and active
+        isML = FindObjectOfType<CarAcademy>() != null;
     }
 
     void Start()
@@ -163,7 +170,13 @@ public class ESVehicleController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Engine();
+        if(isML) { return; }
+
+        float accel = Input.GetAxis("Vertical");
+        float brake = Input.GetAxis("Jump");
+        float steer = Input.GetAxis("Horizontal");
+
+        Engine(accel, brake, steer);
     }
 
     void Update()
@@ -250,7 +263,7 @@ public class ESVehicleController : MonoBehaviour
 
     }
     //Engine
-    public void Engine()
+    public void Engine(float accel, float brake, float steer)
     {
         // check for fuel consumption
         if (fuelmanager != null)
@@ -269,8 +282,8 @@ public class ESVehicleController : MonoBehaviour
         {
             if (usefuel || ignition.On)
             {
-                Accel = Mathf.Clamp(Input.GetAxis("Vertical") * mul , 0, 1);
-                Shoebrake = -1f * Mathf.Clamp(Input.GetAxis("Vertical") * mul, -1, 0);
+                Accel = Mathf.Clamp(accel * mul , 0, 1);
+                Shoebrake = -1f * Mathf.Clamp(accel * mul, -1, 0);
             }
             if (!usefuel || !ignition.On)
             {
@@ -284,8 +297,8 @@ public class ESVehicleController : MonoBehaviour
             {
                 if (usefuel)
                 {
-                    Accel = Mathf.Clamp(Input.GetAxis("Vertical") * mul, 0, 1);
-                    Shoebrake = -1f * Mathf.Clamp(Input.GetAxis("Vertical") * mul, -1, 0);
+                    Accel = Mathf.Clamp(accel * mul, 0, 1);
+                    Shoebrake = -1f * Mathf.Clamp(accel * mul, -1, 0);
                 }
                 if (!usefuel)
                 {
@@ -295,13 +308,13 @@ public class ESVehicleController : MonoBehaviour
             }
             else
             {
-                Accel = Mathf.Clamp(Input.GetAxis("Vertical") * mul, 0, 1);
-                Shoebrake = -1f * Mathf.Clamp(Input.GetAxis("Vertical")* mul, -1, 0);
+                Accel = Mathf.Clamp(accel * mul, 0, 1);
+                Shoebrake = -1f * Mathf.Clamp(accel* mul, -1, 0);
             }
         }
         TopSpeed = m_gearshift.TopSpeed;
-        Steer = Input.GetAxis("Horizontal");
-        Handbrake = Input.GetAxis("Jump");
+        Steer = steer;
+        Handbrake = brake;
         AddTorqueToEngine(Accel, Shoebrake);
         BrakeSystem(Handbrake);
         if (Handbrake == 0 && m_enginesettings.PlayAirSound)
