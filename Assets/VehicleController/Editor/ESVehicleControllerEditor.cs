@@ -161,9 +161,11 @@ public class ESVehicleControllerEditor : Editor
         float CurrentSpeed = new float();
         float ForceAppliedToWheels = new float();
         EditorGUI.BeginChangeCheck();
+        bool MachineLearningOverride = false;
 
         GUILayout.Space(5);
         ShowReadOnly = EditorGUILayout.Toggle("ShowReadOnlyValues", myscript.ShowReadOnly);
+        MachineLearningOverride = EditorGUILayout.Toggle("MachineLearningOverride", myscript.MLOverride);
 
         if (ShowReadOnly)
         {
@@ -185,6 +187,7 @@ public class ESVehicleControllerEditor : Editor
             myscript.TopSpeed = TopSpeed;
             myscript.Neutral = Neutral;
             myscript.CurrentSpeed = CurrentSpeed;
+            myscript.MLOverride = MachineLearningOverride;
         }
     }
 
@@ -200,5 +203,5 @@ public class ESVehicleControllerEditor : Editor
         }
         serializedObject.ApplyModifiedProperties();
     }	
-	
+    
 }

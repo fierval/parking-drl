@@ -73,6 +73,7 @@ public class ESVehicleController : MonoBehaviour
     public float Drag;
     public float KillDriftSpeed;
     public float mul = 1;
+    public bool MLOverride = false;
 
     public float Shoebrake, Rpm;
     [HideInInspector]
@@ -129,7 +130,7 @@ public class ESVehicleController : MonoBehaviour
         m_enginesettings.MaxBrakeForce = float.MaxValue;
 
         // academy exists and active
-        isML = FindObjectOfType<CarAcademy>() != null;
+        isML = !MLOverride && FindObjectOfType<CarAcademy>() != null;
     }
 
     void Start()
