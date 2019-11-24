@@ -28,7 +28,18 @@ TagManager:
   - pit
   - symbol_O_Goal
   - symbol_X_Goal
-  - Academy
+  - Nodes
+  - DeathImmidiate
+  - Obstacles
+  - Terrain
+  - DeathZone
+  - GrassSurface
+  - TestArena
+  - LapTrigger
+  - rearwheel
+  - frontwheel
+  - Dodge(RearWheel)
+  - Particles
   layers:
   - Default
   - TransparentFX
@@ -38,7 +49,7 @@ TagManager:
   - UI
   - 
   - 
-  - Parking Barrier
+  - 
   - 
   - 
   - 

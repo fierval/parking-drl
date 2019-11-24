@@ -52,6 +52,7 @@ public class ESGearShiftEditor : Editor
         //bool IsReverse = new bool();
         bool auto = new bool();
         bool NeutralOnAwake = new bool();
+        bool MachineLearningOverride = new bool();
         //int curgear = new int();
 
         AudioSource PickupSource = new AudioSource();
@@ -120,7 +121,8 @@ public class ESGearShiftEditor : Editor
         auto = EditorGUILayout.Toggle("AutoReverse", myscript.AutoReverse);
         //curgear = EditorGUILayout.IntField("CurGear", myscript.CurrentGear);
         NeutralOnAwake = EditorGUILayout.Toggle("NeutralOnAwake", myscript.NeutralOnAwake);
-
+        MachineLearningOverride = EditorGUILayout.Toggle("MachineLearningOverride", myscript.MachineLearningOverride);
+        
         if (_enginemode == ESGearShift.EngineMode.Nitro)
         {
             GUILayout.Space(15);
@@ -188,6 +190,7 @@ public class ESGearShiftEditor : Editor
             //myscript.CurrentGear = curgear;
             myscript.NeutralOnAwake = NeutralOnAwake;
             myscript.TransmissionSoundPrefab = GearShiftSound;
+            myscript.MachineLearningOverride = MachineLearningOverride;
           
         }
     }
@@ -204,5 +207,5 @@ public class ESGearShiftEditor : Editor
         }
         serializedObject.ApplyModifiedProperties();
     }	
-	
+    
 }

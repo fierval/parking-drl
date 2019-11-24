@@ -160,7 +160,7 @@ public class ESGearShift : MonoBehaviour
     {
         float accel = 0f;
 
-        if (isML)
+        if (!isML)
         {
             accel = Input.GetAxis("Vertical");
         }
@@ -176,7 +176,7 @@ public class ESGearShift : MonoBehaviour
         Gear();
 
 
-        if (isML)
+        if (!isML)
         {
             accel = Input.GetAxis("Vertical");
         }
