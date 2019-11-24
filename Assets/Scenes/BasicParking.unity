@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.022621099, y: -0.97705156, z: 0.16201241, w: -0.13642061}
+  m_LocalRotation: {x: -0.01777803, y: -0.9806863, z: 0.16261514, w: -0.107213445}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1727,7 +1727,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.0038409648, y: -0.99260354, z: 0.032617535, w: -0.11687434}
+  m_LocalRotation: {x: -0.003337747, y: -0.99428713, z: 0.032672856, w: -0.10156065}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4331,7 +4331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1203670576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5632,7 +5632,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.027228797, y: -0.9727323, z: 0.15840128, w: -0.16721104}
+  m_LocalRotation: {x: -0.019329729, y: -0.9798353, z: 0.15955794, w: -0.11870331}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6433,7 +6433,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.0038405666, y: 0.99260354, z: -0.03261761, w: 0.11687431}
+  m_LocalRotation: {x: 0.0033373453, y: 0.9942871, z: -0.032672912, w: 0.101560615}
   m_LocalPosition: {x: -2.3066623, y: 4.8, z: -21.852186}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -7178,13 +7178,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1548861548646659401, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
-      propertyPath: m_ridigbodycenterofmass.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1548861548646659401, guid: 340d5d4e655434a4594b5c86635591ce,
-        type: 3}
       propertyPath: ShowReadOnly
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 340d5d4e655434a4594b5c86635591ce, type: 3}

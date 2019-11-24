@@ -174,10 +174,11 @@ public class ESVehicleController : MonoBehaviour
         if(isML) { return; }
 
         float accel = Input.GetAxis("Vertical");
+        float decel = Input.GetAxis("Vertical");
         float brake = Input.GetAxis("Jump");
         float steer = Input.GetAxis("Horizontal");
 
-        Engine(accel, brake, steer);
+        Engine(accel, decel, brake, steer);
     }
 
     void Update()
@@ -264,7 +265,7 @@ public class ESVehicleController : MonoBehaviour
 
     }
     //Engine
-    public void Engine(float accel, float brake, float steer)
+    public void Engine(float accel, float decel, float brake, float steer)
     {
         // check for fuel consumption
         if (fuelmanager != null)
@@ -284,7 +285,7 @@ public class ESVehicleController : MonoBehaviour
             if (usefuel || ignition.On)
             {
                 Accel = Mathf.Clamp(accel * mul , 0, 1);
-                Shoebrake = -1f * Mathf.Clamp(accel * mul, -1, 0);
+                Shoebrake = -1f * Mathf.Clamp(decel * mul, -1, 0);
             }
             if (!usefuel || !ignition.On)
             {
@@ -299,7 +300,7 @@ public class ESVehicleController : MonoBehaviour
                 if (usefuel)
                 {
                     Accel = Mathf.Clamp(accel * mul, 0, 1);
-                    Shoebrake = -1f * Mathf.Clamp(accel * mul, -1, 0);
+                    Shoebrake = -1f * Mathf.Clamp(decel * mul, -1, 0);
                 }
                 if (!usefuel)
                 {
@@ -310,7 +311,7 @@ public class ESVehicleController : MonoBehaviour
             else
             {
                 Accel = Mathf.Clamp(accel * mul, 0, 1);
-                Shoebrake = -1f * Mathf.Clamp(accel* mul, -1, 0);
+                Shoebrake = -1f * Mathf.Clamp(decel * mul, -1, 0);
             }
         }
         TopSpeed = m_gearshift.TopSpeed;

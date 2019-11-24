@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [AddComponentMenu("EasyVehicleSystem/ESGearshit")]
 public class ESGearShift : MonoBehaviour
 {
     // public
-    #region public
     public enum ShiftTpye
     {
         Automatic,
@@ -41,6 +41,7 @@ public class ESGearShift : MonoBehaviour
     public GameObject[] HeavyEngineSmoke;
     public AudioSource TransmissionSoundPrefab;
     public AudioSource TransmissionSoud;
+    public bool MachineLearningOverride = false;
 
     public float EffectTime = 2f;
     public int MaxGear = 7;
@@ -89,9 +90,7 @@ public class ESGearShift : MonoBehaviour
     [HideInInspector]
     public bool isreverse;
     
-    #endregion
     //private
-    #region private
     private float ReturnTorque;
     private int Inversecurrentgear;
     private float ParkingBrakeTorque;
@@ -106,7 +105,13 @@ public class ESGearShift : MonoBehaviour
     private bool CallGearEffect;
     [SerializeField]private float BacOldTopSeed;
     [SerializeField] private bool has_return_oldtopspeed;
-    #endregion
+
+    bool isML = false;
+
+    private void Awake()
+    {
+        isML = !MachineLearningOverride && FindObjectOfType<CarAcademy>() != null;
+    }
 
     private void Start()
     {
@@ -153,13 +158,30 @@ public class ESGearShift : MonoBehaviour
 
     private void Update()
     {
+        float accel = 0f;
+
+        if (isML)
+        {
+            accel = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            accel = GetAccelFromAgent();
+        }
         GoNeutral_Parking();
         ApplyClutch();
         Clutching();
         TorqueControl();
-        Reverse();
+        Reverse(accel);
         Gear();
-        EmitHeavyEngineSmoke();
+
+
+        if (isML)
+        {
+            accel = Input.GetAxis("Vertical");
+        }
+
+        EmitHeavyEngineSmoke(accel);
         NitroEngine();
         if (CallGearEffect)
         {
@@ -172,6 +194,13 @@ public class ESGearShift : MonoBehaviour
         }
 
     }
+
+    // TODO: retrieve acceleration from the CarAgent if present
+    private float GetAccelFromAgent()
+    {
+        throw new NotImplementedException();
+    }
+
     #region CalculateEngineRpm
     private void CalcEngineRpm()
     {
@@ -295,11 +324,11 @@ public class ESGearShift : MonoBehaviour
     }
     #endregion
     #region Reverse
-    private void Reverse()
+    private void Reverse(float accel)
     {
         if (AutoReverse)
         {
-            if (Input.GetAxis("Vertical") < 0)
+            if (accel < 0)
             {
                 if (!isreverse)
                 {
@@ -975,13 +1004,13 @@ public class ESGearShift : MonoBehaviour
 
         }
     }
-    private void EmitHeavyEngineSmoke()
+    private void EmitHeavyEngineSmoke(float accel)
     {
         if (HeavyEngineSmoke.Length > 0)
         {
             for (int i = 0; i < HeavyEngineSmoke.Length; i++)
             {
-                if (CurrentGear == 1 && Input.GetAxis("Vertical") > 0)
+                if (CurrentGear == 1 && accel > 0)
                     HeavyEngineSmoke[i].GetComponent<ParticleSystem>().Emit(1);
             }
         }
