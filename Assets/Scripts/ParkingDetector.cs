@@ -13,6 +13,10 @@ public enum WheelColliderPos : int
 
 public class ParkingDetector : MonoBehaviour
 {
+    // angles where parking is not failed
+    const int MinAngle = 10;
+    const int MaxAngle = 170;
+
     Renderer parkRender;
     Bounds parkingBoundingBox;
     ESVehicleController vehicleController;
@@ -36,6 +40,7 @@ public class ParkingDetector : MonoBehaviour
     void FixedUpdate()
     {
         Dictionary<GameObject, int> curParkingState = new Dictionary<GameObject, int>();
+        bool isFailedParking = false;
 
         for (int i = 0; i < wheelColliders.Length; i++)
         {
@@ -56,6 +61,9 @@ public class ParkingDetector : MonoBehaviour
                 }
 
                 curParkingState[spotGameObj]++;
+
+                // once we fail parking = it's always failed
+                isFailedParking = isFailedParking || IsFailedParking(wheel, spotGameObj);
             }
 
         }
@@ -63,13 +71,13 @@ public class ParkingDetector : MonoBehaviour
         // first we figure out the exited spots & save state
         var exitedParkingSpaces = NoLongerParking(curParkingState.Keys, parkingState.Keys);
 
-        if (exitedParkingSpaces.Length > 0)
+        if (exitedParkingSpaces.Count > 0)
         {
             SetParkingState(exitedParkingSpaces, ParkingState.Available);
         }
 
         parkingState = curParkingState.Select(kvp => kvp).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        var parkingObjects = curParkingState.Keys.ToArray();
+        var parkingObjects = curParkingState.Keys.ToList();
 
         // Check if we are parked
         if (IsParked(curParkingState))
@@ -88,9 +96,9 @@ public class ParkingDetector : MonoBehaviour
 
     }
 
-    void SetParkingState(GameObject [] spots, ParkingState state)
+    void SetParkingState(List<GameObject> spots, ParkingState state)
     {
-        spots.ToList().ForEach(g => g.GetComponent<ParkingTracker>().ParkingState = state);
+        spots.ForEach(g => g.GetComponent<ParkingTracker>().ParkingState = state);
     }
 
     // We only have as many points as we have colliders and they
@@ -103,8 +111,18 @@ public class ParkingDetector : MonoBehaviour
 
     bool IsDoubleParked(Dictionary<GameObject, int> parkingState) => parkingState.Count > 1;
 
-    GameObject [] NoLongerParking(IEnumerable<GameObject> curParking, IEnumerable<GameObject> prevParking)
+    List<GameObject> NoLongerParking(IEnumerable<GameObject> curParking, IEnumerable<GameObject> prevParking)
     {
-        return prevParking.Except(curParking).ToArray();
+        return prevParking.Except(curParking).ToList();
+    }
+
+    // Angle between x axis of place mat and z axis of collider should not be large
+    bool IsFailedParking(WheelCollider wheel, GameObject spot)
+    {
+        var wheelPos = wheel.transform.forward.normalized;
+        var spotPos = spot.transform.right.normalized;
+        var angle = Vector3.Angle(spotPos, wheelPos);
+
+        return angle > MinAngle && angle < MaxAngle;
     }
 }
