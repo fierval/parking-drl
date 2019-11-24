@@ -79,14 +79,13 @@ public class ParkingDetector : MonoBehaviour
         parkingState = curParkingState.Select(kvp => kvp).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         var parkingObjects = curParkingState.Keys.ToList();
 
-        // Check if we are parked
-        if (IsParked(curParkingState))
-        {
-            SetParkingState(parkingObjects, ParkingState.Complete);
-        }
-        else if (IsDoubleParked(curParkingState))
+        if (isFailedParking || IsDoubleParked(curParkingState))
         {
             SetParkingState(parkingObjects, ParkingState.Failed);
+        }
+        else if (IsParked(curParkingState))
+        {
+            SetParkingState(parkingObjects, ParkingState.Complete);
         }
         // trying to park
         else if (IsParking(curParkingState))
