@@ -130,7 +130,7 @@ public class ESVehicleController : MonoBehaviour
         m_enginesettings.MaxBrakeForce = float.MaxValue;
 
         // academy exists and active
-        isML = !MLOverride && FindObjectOfType<CarAcademy>() != null;
+        isML = !MLOverride && ParkingUtils.IsAcademyActive();
     }
 
     void Start()

@@ -110,7 +110,7 @@ public class ESGearShift : MonoBehaviour
 
     private void Awake()
     {
-        isML = !MachineLearningOverride && FindObjectOfType<CarAcademy>() != null;
+        isML = !MachineLearningOverride && ParkingUtils.IsAcademyActive();
     }
 
     private void Start()

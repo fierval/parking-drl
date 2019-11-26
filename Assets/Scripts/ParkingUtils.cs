@@ -16,6 +16,10 @@ public enum ParkingState : int
 
 public static class ParkingUtils
 {
+    static CarAcademy academy = GameObject.FindObjectOfType<CarAcademy>();
+
+    public static bool IsAcademyActive() => academy != null && academy.enabled;
+    
     /// <summary>
     /// Create rectangle from local bounds
     /// </summary>
