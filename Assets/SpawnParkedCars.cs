@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+using Random = UnityEngine.Random;
+
 public class SpawnParkedCars : MonoBehaviour
 {
     Dictionary<GameObject, List<Vector3>> parkingSpots;
@@ -18,7 +20,14 @@ public class SpawnParkedCars : MonoBehaviour
 
     private void OccupyParkingSpots()
     {
-        throw new NotImplementedException();
+        foreach (var lot in parkingLots)
+        {
+            var prefabs = Enumerable.Range(0, carPrefabs.Length)
+                .Select(_ => parkingSpots[lot][Random.Range(0, carPrefabs.Length)])
+                .ToList();
+        }
+
+
     }
 
     private void PopulateFreeSpots()
