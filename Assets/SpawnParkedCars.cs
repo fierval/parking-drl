@@ -24,8 +24,15 @@ public class SpawnParkedCars : MonoBehaviour
     {
         foreach (var lot in parkingLots)
         {
-            var prefabs = Enumerable.Range(0, maxOccupiedSpaces)
-                .Select(_ => parkingSpots[lot][Random.Range(0, carPrefabs.Length)])
+            // get cars
+            var prefabs = Enumerable.Range(0, carPrefabs.Length)
+                .Select(_ => carPrefabs[Random.Range(0, carPrefabs.Length)])
+                .Take(maxOccupiedSpaces)
+                .ToList();
+
+            var spots = Enumerable.Range(0, parkingSpots[lot].Count)
+                .Select(_ => parkingSpots[lot][Random.Range(0, parkingSpots[lot].Count)])
+                .Take(maxOccupiedSpaces)
                 .ToList();
         }
 
