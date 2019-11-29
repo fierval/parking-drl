@@ -11,6 +11,7 @@ public class SpawnParkedCars : MonoBehaviour
     Dictionary<GameObject, List<Vector3>> parkingSpots;
     [SerializeField] GameObject[] carPrefabs;
     [SerializeField] GameObject[] parkingLots;
+
     [SerializeField] int maxOccupiedSpaces; 
 
     private void Awake()
