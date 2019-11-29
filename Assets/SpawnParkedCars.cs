@@ -11,6 +11,7 @@ public class SpawnParkedCars : MonoBehaviour
     Dictionary<GameObject, List<Vector3>> parkingSpots;
     [SerializeField] GameObject[] carPrefabs;
     [SerializeField] GameObject[] parkingLots;
+    [SerializeField] int maxOccupiedSpaces; 
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class SpawnParkedCars : MonoBehaviour
     {
         foreach (var lot in parkingLots)
         {
-            var prefabs = Enumerable.Range(0, carPrefabs.Length)
+            var prefabs = Enumerable.Range(0, maxOccupiedSpaces)
                 .Select(_ => parkingSpots[lot][Random.Range(0, carPrefabs.Length)])
                 .ToList();
         }
