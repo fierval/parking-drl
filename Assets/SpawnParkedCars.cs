@@ -26,14 +26,24 @@ public class SpawnParkedCars : MonoBehaviour
         {
             // get cars
             var prefabs = Enumerable.Range(0, carPrefabs.Length)
-                .Select(_ => carPrefabs[Random.Range(0, carPrefabs.Length)])
+                .Select(_ => carPrefabs[Random.Range(0, carPrefabs.Length - 1)])
                 .Take(maxOccupiedSpaces)
                 .ToList();
 
             var spots = Enumerable.Range(0, parkingSpots[lot].Count)
-                .Select(_ => parkingSpots[lot][Random.Range(0, parkingSpots[lot].Count)])
+                .Select(_ => parkingSpots[lot][Random.Range(0, parkingSpots[lot].Count - 1)])
                 .Take(maxOccupiedSpaces)
                 .ToList();
+
+            // rotation angles for y axis: 90 or -90
+            var angles = Enumerable.Range(0, maxOccupiedSpaces)
+                .Select(_ => 90 * (Random.Range(0, 1) * 2 - 1))
+                .ToList();
+
+           for(int i = 0; i < maxOccupiedSpaces; i++)
+           {
+                Instantiate(prefabs[i], spots[i], Quaternion.AngleAxis(angles[i], transform.up));
+           }
         }
 
 
