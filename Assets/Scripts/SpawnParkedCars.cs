@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class SpawnParkedCars : MonoBehaviour
 {
-    Dictionary<GameObject, List<Vector3>> parkingSpots = new Dictionary<GameObject, List<Vector3>>();
+    Dictionary<GameObject, List<GameObject>> parkingSpots = new Dictionary<GameObject, List<GameObject>>();
     List<GameObject> instantiatedCars = new List<GameObject>();
 
     [SerializeField] GameObject[] carPrefabs;
@@ -17,6 +17,16 @@ public class SpawnParkedCars : MonoBehaviour
     [SerializeField] int maxOccupiedSpaces;
     
     [SerializeField, Tooltip("Should we populate parking spots on activation")] bool spawnOnAwake;
+    readonly HashSet<GameObject> allSpots = new HashSet<GameObject>();
+
+    public IEnumerable<GameObject> FreeSpots
+    {
+        get
+        {
+            var occupied = parkingSpots.SelectMany(d => d.Value);
+            return allSpots.Except(occupied);
+        }
+    }
 
     private void Awake()
     {
@@ -54,7 +64,9 @@ public class SpawnParkedCars : MonoBehaviour
 
            for(int i = 0; i < maxOccupiedSpaces; i++)
            {
-               instantiatedCars.Add(Instantiate(prefabs[i], spots[i], Quaternion.AngleAxis(angles[i], transform.up)));
+               instantiatedCars.Add(Instantiate(prefabs[i], 
+                   spots[i].transform.position, 
+                   Quaternion.AngleAxis(angles[i], transform.up)));
            }
         }
 
@@ -66,10 +78,11 @@ public class SpawnParkedCars : MonoBehaviour
         // Populate the list of parking spots
         foreach (var pl in parkingLots)
         {
-            parkingSpots.Add(pl, new List<Vector3>());
+            parkingSpots.Add(pl, new List<GameObject>());
             foreach (Transform spot in pl.transform.GetChild(0) as Transform)
             {
-                parkingSpots[pl].Add(spot.position);
+                parkingSpots[pl].Add(spot.gameObject);
+                allSpots.Add(spot.gameObject);
             }
         }
     }
