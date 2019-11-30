@@ -8,7 +8,9 @@ using Random = UnityEngine.Random;
 
 public class SpawnParkedCars : MonoBehaviour
 {
-    Dictionary<GameObject, List<Vector3>> parkingSpots;
+    Dictionary<GameObject, List<Vector3>> parkingSpots = new Dictionary<GameObject, List<Vector3>>();
+    List<GameObject> instantiatedCars = new List<GameObject>();
+
     [SerializeField] GameObject[] carPrefabs;
     [SerializeField] GameObject[] parkingLots;
 
@@ -42,7 +44,7 @@ public class SpawnParkedCars : MonoBehaviour
 
            for(int i = 0; i < maxOccupiedSpaces; i++)
            {
-                Instantiate(prefabs[i], spots[i], Quaternion.AngleAxis(angles[i], transform.up));
+               instantiatedCars.Add(Instantiate(prefabs[i], spots[i], Quaternion.AngleAxis(angles[i], transform.up)));
            }
         }
 
@@ -60,5 +62,20 @@ public class SpawnParkedCars : MonoBehaviour
                 parkingSpots[pl].Add(spot.position);
             }
         }
+    }
+
+    void DestroyCars()
+    {
+        if(instantiatedCars?.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var car in instantiatedCars)
+        {
+                Destroy(car);
+        }
+        instantiatedCars.Clear();
+        parkingSpots.Clear();
     }
 }
