@@ -41,7 +41,6 @@ public class ESGearShift : MonoBehaviour
     public GameObject[] HeavyEngineSmoke;
     public AudioSource TransmissionSoundPrefab;
     public AudioSource TransmissionSoud;
-    public bool MachineLearningOverride = false;
 
     public float EffectTime = 2f;
     public int MaxGear = 7;
@@ -110,7 +109,7 @@ public class ESGearShift : MonoBehaviour
 
     private void Awake()
     {
-        isML = !MachineLearningOverride && ParkingUtils.IsAcademyActive();
+        isML = !vehiclecontroller.MLOverride && ParkingUtils.IsAcademyActive();
     }
 
     private void Start()
