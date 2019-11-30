@@ -31,7 +31,6 @@ public class CarAgent : Agent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        base.AgentAction(vectorAction, textAction);
     }
 
     public override void CollectObservations()
