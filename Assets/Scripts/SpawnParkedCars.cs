@@ -14,14 +14,24 @@ public class SpawnParkedCars : MonoBehaviour
     [SerializeField] GameObject[] carPrefabs;
     [SerializeField] GameObject[] parkingLots;
 
-    [SerializeField] int maxOccupiedSpaces; 
+    [SerializeField] int maxOccupiedSpaces;
+    
+    [SerializeField, Tooltip("Should we populate parking spots on activation")] bool spawnOnAwake;
 
     private void Awake()
     {
+        if(spawnOnAwake)
+        {
+            Spawn();
+        }
+    }
+
+    public void Spawn()
+    {
+        DestroyCars();
         PopulateFreeSpots();
         OccupyParkingSpots();
     }
-
     private void OccupyParkingSpots()
     {
         foreach (var lot in parkingLots)
