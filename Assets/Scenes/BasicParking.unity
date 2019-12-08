@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.1599907, y: -0.2056437, z: 0.034098662, w: -0.96485806}
+  m_LocalRotation: {x: -0.15972999, y: -0.21288753, z: 0.03529982, w: -0.9632856}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1751,7 +1751,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.0320065, y: -0.22413714, z: 0.007364957, w: -0.9740041}
+  m_LocalRotation: {x: -0.031977672, y: -0.22791706, z: 0.007489172, w: -0.97312653}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5980,7 +5980,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.15798393, y: -0.18149175, z: 0.029554294, w: -0.97016925}
+  m_LocalRotation: {x: -0.1576004, y: -0.19365889, z: 0.03153561, w: -0.96781397}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6787,7 +6787,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.03200644, y: 0.22413719, z: -0.007365296, w: 0.97400403}
+  m_LocalRotation: {x: 0.031977594, y: 0.22791708, z: -0.0074895085, w: 0.9731265}
   m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -7177,7 +7177,7 @@ MonoBehaviour:
   parkingLots:
   - {fileID: 1638583577}
   - {fileID: 568316538}
-  maxOccupiedSpaces: 0
+  maxOccupiedSpaces: 4
   spawnOnAwake: 0
 --- !u!4 &1775243853
 Transform:
@@ -8353,17 +8353,17 @@ PrefabInstance:
     - target: {fileID: 1548861548646659415, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1548861548646659415, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1548861548646659415, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1548861548646659415, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
@@ -8433,6 +8433,7 @@ MonoBehaviour:
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 5
+  carSpawner: {fileID: 1775243852}
 --- !u!114 &2034348295
 MonoBehaviour:
   m_ObjectHideFlags: 0

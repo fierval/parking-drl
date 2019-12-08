@@ -124,6 +124,7 @@ MonoBehaviour:
   Drag: 0.2
   KillDriftSpeed: 5
   mul: 1
+  MLOverride: 1
   Shoebrake: 0
   Rpm: 0
   ShowCursor: 0
@@ -141,6 +142,7 @@ MonoBehaviour:
   usefuel: 0
   uselight: 0
   currentnode: 0
+  isML: 0
 --- !u!114 &3494701602590740377
 MonoBehaviour:
   m_ObjectHideFlags: 0

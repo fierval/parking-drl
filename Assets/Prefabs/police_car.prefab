@@ -5580,7 +5580,7 @@ MonoBehaviour:
   Drag: 0.2
   KillDriftSpeed: 5
   mul: 1
-  MLOverride: 0
+  MLOverride: 1
   Shoebrake: 0
   Rpm: 0
   ShowCursor: 0
@@ -5633,7 +5633,6 @@ MonoBehaviour:
   HeavyEngineSmoke: []
   TransmissionSoundPrefab: {fileID: 0}
   TransmissionSoud: {fileID: 0}
-  MachineLearningOverride: 0
   EffectTime: 2
   MaxGear: 7
   gearcalculationtype: 0

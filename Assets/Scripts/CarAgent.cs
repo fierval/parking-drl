@@ -6,7 +6,7 @@ using MLAgents;
 
 public class CarAgent : Agent
 {
-    SpawnParkedCars carSpawner;
+    public SpawnParkedCars carSpawner;
     RayPerception3D rayPerception;
 
     const float RayDistance = 20f;

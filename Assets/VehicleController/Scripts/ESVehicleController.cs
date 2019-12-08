@@ -73,7 +73,7 @@ public class ESVehicleController : MonoBehaviour
     public float Drag;
     public float KillDriftSpeed;
     public float mul = 1;
-    public bool MLOverride = false;
+    public bool MLOverride = true;
 
     public float Shoebrake, Rpm;
     [HideInInspector]
