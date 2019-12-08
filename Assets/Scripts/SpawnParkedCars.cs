@@ -14,7 +14,7 @@ public class SpawnParkedCars : MonoBehaviour
     [SerializeField] GameObject[] carPrefabs;
     [SerializeField] GameObject[] parkingLots;
 
-    [SerializeField] int maxOccupiedSpaces;
+    [SerializeField, Range(0, 5)] int maxOccupiedSpaces;
     
     [SerializeField, Tooltip("Should we populate parking spots on activation")] bool spawnOnAwake;
     readonly HashSet<GameObject> allSpots = new HashSet<GameObject>();
@@ -47,7 +47,7 @@ public class SpawnParkedCars : MonoBehaviour
         foreach (var lot in parkingLots)
         {
             // get cars
-            var prefabs = Enumerable.Range(0, carPrefabs.Length)
+            var prefabs = Enumerable.Range(0, parkingSpots[lot].Count)
                 .Select(_ => carPrefabs[Random.Range(0, carPrefabs.Length - 1)])
                 .Take(maxOccupiedSpaces)
                 .ToList();
@@ -96,7 +96,7 @@ public class SpawnParkedCars : MonoBehaviour
 
         foreach (var car in instantiatedCars)
         {
-                Destroy(car);
+            Destroy(car);
         }
         instantiatedCars.Clear();
         parkingSpots.Clear();
