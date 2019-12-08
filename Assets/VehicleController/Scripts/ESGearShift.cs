@@ -107,14 +107,10 @@ public class ESGearShift : MonoBehaviour
 
     bool isML = false;
 
-    private void Awake()
-    {
-        isML = !vehiclecontroller.MLOverride && ParkingUtils.IsAcademyActive();
-    }
-
     private void Start()
     {
         vehiclecontroller = GetComponent<ESVehicleController>();
+        isML = !vehiclecontroller.MLOverride && ParkingUtils.IsAcademyActive();
         if (gearcalculationtype == GearRatioCalculationType.Automatic)
         {
             CurrentEngineTorque = MaxEngineTorque;
