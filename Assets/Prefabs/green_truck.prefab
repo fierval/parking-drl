@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 5488152039465002765}
   m_Layer: 0
   m_Name: green_truck
-  m_TagString: Untagged
+  m_TagString: car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +124,6 @@ MonoBehaviour:
   Drag: 0.2
   KillDriftSpeed: 5
   mul: 1
-  MLOverride: 1
   Shoebrake: 0
   Rpm: 0
   ShowCursor: 0
@@ -5798,7 +5797,7 @@ GameObject:
   - component: {fileID: 3494701604067896684}
   m_Layer: 0
   m_Name: front
-  m_TagString: Untagged
+  m_TagString: car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

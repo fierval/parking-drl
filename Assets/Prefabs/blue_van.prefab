@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 8711772787472644409}
   m_Layer: 0
   m_Name: blue_van
-  m_TagString: Untagged
+  m_TagString: car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -558,7 +558,6 @@ MonoBehaviour:
   Drag: 0.2
   KillDriftSpeed: 5
   mul: 1
-  MLOverride: 0
   Shoebrake: 0
   Rpm: 0
   ShowCursor: 0

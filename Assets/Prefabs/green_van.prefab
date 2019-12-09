@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7888715777222326273}
   m_Layer: 0
   m_Name: front
-  m_TagString: Untagged
+  m_TagString: car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,8 +52,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.1, y: 1.6528041, z: 4.5271225}
-  m_Center: {x: -7.6323114e-11, y: 0.382285, z: 0.5660973}
+  m_Size: {x: 1.1, y: 1.9, z: 4.5271225}
+  m_Center: {x: -7.6323114e-11, y: 0.4, z: 0.5660973}
 --- !u!23 &7888715777222326273
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5472,7 +5472,7 @@ GameObject:
   - component: {fileID: 1237399800610746976}
   m_Layer: 0
   m_Name: green_van
-  m_TagString: Untagged
+  m_TagString: car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5577,7 +5577,6 @@ MonoBehaviour:
   Drag: 0.2
   KillDriftSpeed: 5
   mul: 1
-  MLOverride: 1
   Shoebrake: 0
   Rpm: 0
   ShowCursor: 0

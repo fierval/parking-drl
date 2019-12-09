@@ -5129,7 +5129,7 @@ GameObject:
   - component: {fileID: 3718455251745813450}
   m_Layer: 0
   m_Name: front
-  m_TagString: Untagged
+  m_TagString: car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5167,8 +5167,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.971679, y: 0.73825836, z: 2.9840693}
-  m_Center: {x: 0.4936992, y: -0.13087091, z: 0.05654025}
+  m_Size: {x: 0.971679, y: 1, z: 2.9840693}
+  m_Center: {x: 0.4936992, y: -0.1, z: 0.05654025}
 --- !u!23 &3718455251745813450
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5475,7 +5475,7 @@ GameObject:
   - component: {fileID: 5750220403229292971}
   m_Layer: 0
   m_Name: police_car
-  m_TagString: Untagged
+  m_TagString: car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5580,7 +5580,6 @@ MonoBehaviour:
   Drag: 0.2
   KillDriftSpeed: 5
   mul: 1
-  MLOverride: 1
   Shoebrake: 0
   Rpm: 0
   ShowCursor: 0

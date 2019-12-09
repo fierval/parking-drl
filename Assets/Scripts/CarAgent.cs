@@ -13,7 +13,7 @@ public class CarAgent : Agent
     ESGearShift gearShift;
 
     const float RayDistance = 20f;
-    const int AngleEvery = 20;
+    const int AngleEvery = 15;
     readonly string[] DetectableObjects = {"car", "immovable", "parking"};
     readonly float[] rayAngles;
 
@@ -40,12 +40,13 @@ public class CarAgent : Agent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
+        gearShift.GearShift(vectorAction[0]);
         vehicleController.Engine(vectorAction[0], vectorAction[1], vectorAction[2]);
     }
 
     public override void CollectObservations()
     {
-        AddVectorObs(rayPerception.Perceive(RayDistance, rayAngles, DetectableObjects, 0f, 0f));
+        AddVectorObs(rayPerception.Perceive(RayDistance, rayAngles, DetectableObjects, 0.2f, 0.2f));
         AddVectorObs(transform.position);
         AddVectorObs(transform.rotation.y);
     }
