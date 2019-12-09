@@ -19,6 +19,26 @@ public class SpawnParkedCars : MonoBehaviour
     [SerializeField, Tooltip("Should we populate parking spots on activation")] bool spawnOnAwake;
     readonly HashSet<GameObject> allSpots = new HashSet<GameObject>();
 
+    /// <summary>
+    /// Clone a car prefab at a fixed place
+    /// </summary>
+    /// <param name="car">car prefab</param>
+    /// <param name="pos">position</param>
+    /// <param name="rotation">rotation</param>
+    public static GameObject CloneCar(GameObject car, Vector3 pos, Quaternion rotation)
+    {
+        GameObject carInstance = Instantiate(car, pos, rotation);
+
+        carInstance.GetComponent<ESVehicleController>().enabled = false;
+        carInstance.GetComponent<ESGearShift>().enabled = false;
+        carInstance.GetComponent<ESAudioSystem>().enabled = false;
+        carInstance.GetComponent<AudioSource>().enabled = false;
+        carInstance.GetComponents<ESSpringBalance>().ToList().ForEach(c => c.enabled = false);
+        carInstance.GetComponent<ParkingDetector>().enabled = false;
+
+        return carInstance;
+    }
+
     public IEnumerable<GameObject> FreeSpots
     {
         get
@@ -66,7 +86,7 @@ public class SpawnParkedCars : MonoBehaviour
 
            for(int i = 0; i < maxOccupiedSpaces; i++)
            {
-                GameObject car = Instantiate(prefabs[i],
+                GameObject car = CloneCar(prefabs[i],
                     spots[i].transform.position,
                     Quaternion.AngleAxis(angles[i], transform.up));
                 

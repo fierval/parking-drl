@@ -40,6 +40,9 @@ TagManager:
   - frontwheel
   - Dodge(RearWheel)
   - Particles
+  - car
+  - immovable
+  - parking
   layers:
   - Default
   - TransparentFX
