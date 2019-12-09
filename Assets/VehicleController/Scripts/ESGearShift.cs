@@ -153,28 +153,22 @@ public class ESGearShift : MonoBehaviour
 
     private void Update()
     {
-        float accel = 0f;
+        if(isML)
+        {
+            return;
+        }
 
-        if (!isML)
-        {
-            accel = Input.GetAxis("Vertical");
-        }
-        else
-        {
-            accel = GetAccelFromAgent();
-        }
+        GearShift(Input.GetAxis("Vertical"));
+    }
+
+    public void GearShift(float accel)
+    {
         GoNeutral_Parking();
         ApplyClutch();
         Clutching();
         TorqueControl();
         Reverse(accel);
         Gear();
-
-
-        if (!isML)
-        {
-            accel = Input.GetAxis("Vertical");
-        }
 
         EmitHeavyEngineSmoke(accel);
         NitroEngine();
@@ -187,13 +181,6 @@ public class ESGearShift : MonoBehaviour
         {
             EngineRpm = MaxEngineRpm;
         }
-
-    }
-
-    // TODO: retrieve acceleration from the CarAgent if present
-    private float GetAccelFromAgent()
-    {
-        throw new NotImplementedException();
     }
 
     #region CalculateEngineRpm

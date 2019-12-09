@@ -7,12 +7,21 @@ using MLAgents;
 public class CarAgent : Agent
 {
     public SpawnParkedCars carSpawner;
+
     RayPerception3D rayPerception;
+    ESVehicleController vehicleController;
+    ESGearShift gearShift;
 
     const float RayDistance = 20f;
-    const int AngleEvery = 10;
+    const int AngleEvery = 20;
     readonly string[] DetectableObjects = {"car", "immovable", "parking"};
     readonly float[] rayAngles;
+
+    private void Awake()
+    {
+        vehicleController = GetComponent<ESVehicleController>();
+        gearShift = GetComponent<ESGearShift>();
+    }
 
     public CarAgent()
     {
@@ -31,6 +40,7 @@ public class CarAgent : Agent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
+        vehicleController.Engine(vectorAction[0], vectorAction[1], vectorAction[2]);
     }
 
     public override void CollectObservations()
@@ -42,7 +52,17 @@ public class CarAgent : Agent
 
     public override void AgentReset()
     {
-        base.AgentReset();
         carSpawner.Spawn();
     }
+
+    public override float[] Heuristic()
+    {
+        var action = new float[3];
+
+        action[0] = Input.GetAxis("Vertical");
+        action[1] = Input.GetAxis("Horizontal");
+        action[2] = Input.GetAxis("Jump");
+        return action;
+    }
+
 }
