@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.15922506, y: -0.22622684, z: 0.037511718, w: -0.9602405}
+  m_LocalRotation: {x: -0.15944293, y: -0.22057521, z: 0.036574587, w: -0.9615544}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1795,7 +1795,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.031923115, y: -0.23489396, z: 0.0077184415, w: -0.97146606}
+  m_LocalRotation: {x: -0.03194646, y: -0.23193564, z: 0.0076212296, w: -0.97217655}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6132,7 +6132,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.15679102, y: -0.21702522, z: 0.0353406, w: -0.9628436}
+  m_LocalRotation: {x: -0.15714994, y: -0.20700347, z: 0.033708636, w: -0.96504784}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6955,7 +6955,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.031923033, y: 0.23489399, z: -0.0077187764, w: 0.971466}
+  m_LocalRotation: {x: 0.03194638, y: 0.23193568, z: -0.0076215607, w: 0.97217655}
   m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8614,6 +8614,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1548861548646659401, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: ShowReadOnly
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548861548646659401, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: MLOverride
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 340d5d4e655434a4594b5c86635591ce, type: 3}
 --- !u!4 &2034348291 stripped
@@ -8671,7 +8681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 184
+    vectorObservationSize: 124
     numStackedVectorObservations: 3
     vectorActionSize: 01000000
     vectorActionDescriptions: []
