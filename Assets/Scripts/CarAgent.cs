@@ -15,8 +15,12 @@ public class CarAgent : Agent
 
     const float RayDistance = 20f;
 
-    [Range(10, 90), Tooltip("Angle of fanned out raycast")]
-    public float angleEvery = 15;
+    const float AngleEvery = 15;
+
+    // idx's of 90 and -90 in the array of angles
+
+    const int idx90 = 6;
+    const int idx270 = 18;
 
     [Tooltip("Starting position for the agent")]
     public Transform startPosTransform;
@@ -31,7 +35,7 @@ public class CarAgent : Agent
         carTransform = GetComponent<Transform>();
 
         rayAngles = Enumerable.Range(0, 360)
-            .Where(i => i % angleEvery == 0)
+            .Where(i => i % AngleEvery == 0)
             .Select(i => (float)i)
             .ToArray();
     }

@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.15998472, y: -0.20581311, z: 0.03412675, w: -0.9648219}
+  m_LocalRotation: {x: -0.16002138, y: -0.20477408, z: 0.033954456, w: -0.96504295}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1874,7 +1874,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.03200585, y: -0.22422546, z: 0.0073678726, w: -0.97398376}
+  m_LocalRotation: {x: -0.032009926, y: -0.22368383, z: 0.007350069, w: -0.9741083}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4431,7 +4431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045914859}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.99}
+  m_LocalPosition: {x: 0, y: -0.225, z: 2.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1013240562}
@@ -6243,7 +6243,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.15797542, y: -0.18177105, z: 0.029599756, w: -0.970117}
+  m_LocalRotation: {x: -0.1580273, y: -0.18006219, z: 0.029321477, w: -0.9704356}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7066,7 +7066,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.032005757, y: 0.22422548, z: -0.0073682005, w: 0.9739837}
+  m_LocalRotation: {x: 0.03200982, y: 0.22368386, z: -0.007350395, w: 0.9741083}
   m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8779,6 +8779,7 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 5
   carSpawner: {fileID: 1775243852}
+  startPosTransform: {fileID: 1045914860}
 --- !u!114 &2034348295
 MonoBehaviour:
   m_ObjectHideFlags: 0
