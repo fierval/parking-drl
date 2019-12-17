@@ -24,6 +24,8 @@ public class ParkingDetector : MonoBehaviour
     WheelCollider[] wheelColliders;
     Dictionary<GameObject, int> parkingState = new Dictionary<GameObject, int>();
 
+    public ParkingState CarParkingState { get; private set; }
+
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
@@ -97,6 +99,7 @@ public class ParkingDetector : MonoBehaviour
 
     void SetParkingState(List<GameObject> spots, ParkingState state)
     {
+        CarParkingState = state;
         spots.ForEach(g => g.GetComponent<ParkingTracker>().ParkingState = state);
     }
 

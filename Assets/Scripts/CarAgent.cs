@@ -11,27 +11,27 @@ public class CarAgent : Agent
     RayPerception3D rayPerception;
     ESVehicleController vehicleController;
     ESGearShift gearShift;
+    Transform carTransform;
 
     const float RayDistance = 20f;
-    const int AngleEvery = 15;
+
+    [Range(10, 90)]
+    public float angleEvery = 15;
     readonly string[] DetectableObjects = {"car", "immovable", "parking"};
-    readonly float[] rayAngles;
+    float[] rayAngles;
 
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
         gearShift = GetComponent<ESGearShift>();
-    }
+        carTransform = GetComponent<Transform>();
 
-    public CarAgent()
-    {
         rayAngles = Enumerable.Range(0, 360)
-            .Where(i => i % AngleEvery == 0)
-            .Select(i => (float) i)
+            .Where(i => i % angleEvery == 0)
+            .Select(i => (float)i)
             .ToArray();
     }
 
-    [SerializeField] 
     public override void InitializeAgent()
     {
         base.InitializeAgent();
