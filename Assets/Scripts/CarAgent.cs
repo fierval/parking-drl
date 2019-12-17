@@ -15,8 +15,12 @@ public class CarAgent : Agent
 
     const float RayDistance = 20f;
 
-    [Range(10, 90)]
+    [Range(10, 90), Tooltip("Angle of fanned out raycast")]
     public float angleEvery = 15;
+
+    [Tooltip("Starting position for the agent")]
+    public Transform startPosTransform;
+
     readonly string[] DetectableObjects = {"car", "immovable", "parking"};
     float[] rayAngles;
 
@@ -54,6 +58,8 @@ public class CarAgent : Agent
     public override void AgentReset()
     {
         carSpawner.Spawn();
+        carTransform.position = startPosTransform.position;
+        carTransform.rotation = startPosTransform.rotation;
     }
 
     public override float[] Heuristic()
