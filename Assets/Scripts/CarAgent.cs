@@ -12,8 +12,9 @@ public class CarAgent : Agent
     RayPerception3D rayPerception;
     ESVehicleController vehicleController;
     ESGearShift gearShift;
-    Transform carTransform;
     ParkingDetector parkingDetector;
+    CollisionState collistionState;
+
     float[] parkingStateVector;
 
     const float RayDistance = 20f;
@@ -34,8 +35,8 @@ public class CarAgent : Agent
     {
         vehicleController = GetComponent<ESVehicleController>();
         gearShift = GetComponent<ESGearShift>();
-        carTransform = GetComponent<Transform>();
         parkingDetector = GetComponent<ParkingDetector>();
+        collistionState = gameObject.GetComponentsInChildren<CollisionState>().Single();
 
         // initialize vector of parking states
         parkingStateVector = new float[Enum.GetNames(typeof(ParkingState)).Length];
@@ -63,29 +64,45 @@ public class CarAgent : Agent
 
     private void CollectRewards()
     {
-        
+        SetDone();
     }
 
     public override void CollectObservations()
     {
+        // observations
         AddVectorObs(rayPerception.Perceive(RayDistance, rayAngles, DetectableObjects, 0.2f, 0.2f));
+        // position
         AddVectorObs(transform.position);
+        // direction (rotation)
         AddVectorObs(transform.rotation.y);
+        // parking state
         AddVectorObs(ToCategory(parkingDetector.CarParkingState));
+        // collision
+        AddVectorObs(collistionState.IsCollsion);
+    }
+
+    private void SetDone()
+    {
+        if( collistionState.IsCollsion
+            || parkingDetector.CarParkingState == ParkingState.Complete
+            || parkingDetector.CarParkingState == ParkingState.Failed)
+        {
+            Done();
+        }
     }
 
     private float[] ToCategory(ParkingState state)
     {
         Array.Clear(parkingStateVector, 0, parkingStateVector.Length);
-        parkingStateVector[(int)Mathf.Log((float)state, 2f)] = 1f;
+        parkingStateVector[(int)state] = 1f;
         return parkingStateVector;
     }
 
     public override void AgentReset()
     {
         carSpawner.Spawn();
-        carTransform.position = startPosTransform.position;
-        carTransform.rotation = startPosTransform.rotation;
+        transform.position = startPosTransform.position;
+        transform.rotation = startPosTransform.rotation;
     }
 
     public override float[] Heuristic()

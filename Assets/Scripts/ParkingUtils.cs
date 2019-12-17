@@ -12,7 +12,7 @@ public enum ParkingState : int
     Available = 0,
     InProgress = 1,
     Failed = 2,
-    Complete = 4
+    Complete = 3
 }
 
 public static class ParkingUtils
