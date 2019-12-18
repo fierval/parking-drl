@@ -14,12 +14,13 @@ public enum WheelColliderPos : int
 public class ParkingDetector : MonoBehaviour
 {
     // angles where parking is not failed
-    const int MinAngle = 10;
-    const int MaxAngle = 170;
+    const int MinAngle = 20;
+    const int MaxAngle = 160;
 
     Renderer parkRender;
     Bounds parkingBoundingBox;
     ESVehicleController vehicleController;
+    ESGearShift gearShift;
 
     WheelCollider[] wheelColliders;
     Dictionary<GameObject, int> parkingState = new Dictionary<GameObject, int>();
@@ -29,6 +30,7 @@ public class ParkingDetector : MonoBehaviour
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
+        gearShift = GetComponent<ESGearShift>();
 
         // get front and rear wheel colliders
         wheelColliders =
@@ -118,13 +120,14 @@ public class ParkingDetector : MonoBehaviour
         return prevParking.Except(curParking).ToList();
     }
 
-    // Angle between x axis of place mat and z axis of collider should not be large
+    // Angle between x axis of place mat and z axis of collider should not be too large
+    // So we cannot recover. We may be backing into the spot or driving forward
     bool IsFailedParking(WheelCollider wheel, GameObject spot)
     {
         var wheelPos = wheel.transform.forward.normalized;
         var spotPos = spot.transform.right.normalized;
         var angle = Vector3.Angle(spotPos, wheelPos);
 
-        return angle > MinAngle && angle < MaxAngle;
+        return (!gearShift.isreverse && angle > MinAngle) || (gearShift.isreverse && angle < MaxAngle);
     }
 }

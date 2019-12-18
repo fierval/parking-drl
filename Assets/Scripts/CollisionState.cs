@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollisionState : MonoBehaviour
 {
-    public bool IsCollsion { get; private set; }
+    public bool IsCollsion { get; set; }
 
     private void Awake()
     {

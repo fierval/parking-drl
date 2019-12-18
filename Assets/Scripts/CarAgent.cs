@@ -41,7 +41,7 @@ public class CarAgent : Agent
         vehicleController = GetComponent<ESVehicleController>();
         gearShift = GetComponent<ESGearShift>();
         parkingDetector = GetComponent<ParkingDetector>();
-        collistionState = gameObject.GetComponentsInChildren<CollisionState>().Single();
+        collistionState = gameObject.GetComponent<CollisionState>();
 
         // initialize vector of parking states
         parkingStateVector = new float[Enum.GetNames(typeof(ParkingState)).Length];
@@ -135,6 +135,7 @@ public class CarAgent : Agent
 
     public override void AgentReset()
     {
+        collistionState.IsCollsion = false;
         carSpawner.Spawn();
         transform.position = startPosTransform.position;
         transform.rotation = startPosTransform.rotation;
