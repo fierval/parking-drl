@@ -65,6 +65,7 @@ public class CarAgent : Agent
         vehicleController.Engine(vectorAction[0], vectorAction[1], vectorAction[2]);
 
         float reward = CollectRewards();
+        AddReward(reward);
         SetDone();
     }
 
