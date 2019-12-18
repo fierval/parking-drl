@@ -25,10 +25,15 @@ public class CarAgent : Agent
     const int idx90 = 6;
     const int idx270 = 18;
 
+    // backward and forward facing angles
+    readonly float[] directionAngles = { 90, 90 - AngleEvery, 90 + AngleEvery, -90, -90 - AngleEvery, -90 + AngleEvery };
+
     [Tooltip("Starting position for the agent")]
     public Transform startPosTransform;
 
-    readonly string[] DetectableObjects = {"car", "immovable", "parking"};
+    readonly string[] DetectableObjects = { "car", "immovable", "parking" };
+    readonly string[] ParkingDirection = { "parking" };
+
     float[] rayAngles;
 
     private void Awake()
@@ -59,12 +64,41 @@ public class CarAgent : Agent
         gearShift.GearShift(vectorAction[0]);
         vehicleController.Engine(vectorAction[0], vectorAction[1], vectorAction[2]);
 
-        CollectRewards();
+        float reward = CollectRewards();
+        SetDone();
     }
 
-    private void CollectRewards()
+    float CollectRewards()
     {
-        SetDone();
+        // are we parking now
+        switch (parkingDetector.CarParkingState)
+        {
+            case ParkingState.InProgress:
+                return 1.25e-3f;
+            case ParkingState.Failed:
+                return -1f;
+            case ParkingState.Complete:
+                return 1f;
+            default:
+                break;
+        }
+
+        // are we heading towards parking? Rear or front?
+        var parkingDirectionHits = rayPerception.Perceive(RayDistance, directionAngles, ParkingDirection, 0.2f, 0.2f);
+
+        var maxDistance = 
+            parkingDirectionHits
+                .Where((_, i) => i % 3 == 2)
+                .Max();
+
+        // negative reward for not heading towards parking
+        if(maxDistance == 0)
+        {
+            return -1e-3f;
+        }
+
+        // small reward for getting closer to parking
+        return 1f / maxDistance * 1e-3f;
     }
 
     public override void CollectObservations()
@@ -83,7 +117,7 @@ public class CarAgent : Agent
 
     private void SetDone()
     {
-        if( collistionState.IsCollsion
+        if (collistionState.IsCollsion
             || parkingDetector.CarParkingState == ParkingState.Complete
             || parkingDetector.CarParkingState == ParkingState.Failed)
         {
