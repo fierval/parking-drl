@@ -120,7 +120,10 @@ public class SpawnParkedCars : MonoBehaviour
 
         foreach (var car in instantiatedCars)
         {
-            Destroy(car);
+            // Destroy() will wait unitl next Update()
+            // which will cause newly generated cars to 
+            // collide with the ones awaiting destruction
+            DestroyImmediate(car);
         }
         instantiatedCars.Clear();
         parkingSpots.Clear();

@@ -1874,7 +1874,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.032009926, y: -0.22368383, z: 0.007350069, w: -0.9741083}
+  m_LocalRotation: {x: -0.03200996, y: -0.22368383, z: 0.0073500765, w: -0.9741083}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6702,7 +6702,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2034348290}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1590169225
+--- !u!114 &1590169229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7084,7 +7084,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.03200982, y: 0.22368386, z: -0.007350395, w: 0.9741083}
+  m_LocalRotation: {x: 0.03200988, y: 0.22368386, z: -0.0073504085, w: 0.9741083}
   m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8811,11 +8811,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 124
+    vectorObservationSize: 129
     numStackedVectorObservations: 3
-    vectorActionSize: 01000000
+    vectorActionSize: 03000000
     vectorActionDescriptions: []
-    vectorActionSpaceType: 0
+    vectorActionSpaceType: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_UseHeuristic: 0
