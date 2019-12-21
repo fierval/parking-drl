@@ -126,6 +126,8 @@ public class ParkingDetector : MonoBehaviour
     {
         var wheelPos = wheel.transform.forward.normalized;
         var spotPos = spot.transform.right.normalized;
+        // angle is never greater than 180 degrees
+        // https://docs.unity3d.com/ScriptReference/Vector3.Angle.html
         var angle = Vector3.Angle(spotPos, wheelPos);
 
         return (!gearShift.isreverse && angle > MinAngle) || (gearShift.isreverse && angle < MaxAngle);
