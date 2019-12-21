@@ -151,4 +151,13 @@ public class CarAgent : Agent
         return action;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        foreach (var angle in rayAngles)
+        {
+            var endpos = transform.TransformDirection(RayPerception3D.PolarToCartesian(RayDistance, angle));
+            Gizmos.DrawWireSphere(transform.position + endpos, 0.5f);
+        }
+    }
 }
