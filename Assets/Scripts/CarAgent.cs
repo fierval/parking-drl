@@ -26,7 +26,7 @@ public class CarAgent : Agent
     const int idx270 = 18;
 
     // backward and forward facing angles
-    readonly float[] directionAngles = { 90, 90 - AngleEvery, 90 + AngleEvery, -90, -90 - AngleEvery, -90 + AngleEvery };
+    readonly float[] directionAngles = { 180, 180 - AngleEvery, 180 + AngleEvery, 0, - AngleEvery, AngleEvery };
 
     [Tooltip("Starting position for the agent")]
     public Transform startPosTransform;
