@@ -59,7 +59,7 @@ public class CarAgent : Agent
         rayPerception = GetComponent<RayPerception3D>();
     }
 
-    public override void AgentAction(float[] vectorAction, string textAction)
+    public override void AgentAction(float[] vectorAction)
     {
         gearShift.GearShift(vectorAction[0]);
         vehicleController.Engine(vectorAction[0], vectorAction[1], vectorAction[2]);
@@ -153,11 +153,20 @@ public class CarAgent : Agent
 
     private void OnDrawGizmos()
     {
+        if(rayAngles is null) { return; }
+
         Gizmos.color = Color.red;
         foreach (var angle in rayAngles)
         {
-            var endpos = transform.TransformDirection(RayPerception3D.PolarToCartesian(RayDistance, angle));
+            var endpos = transform.TransformDirection(PolarToCartesian3D(RayDistance, angle));
             Gizmos.DrawWireSphere(transform.position + endpos, 0.5f);
         }
     }
+    static Vector3 PolarToCartesian3D(float radius, float angleDegrees)
+    {
+        var x = radius * Mathf.Cos(Mathf.Deg2Rad * angleDegrees);
+        var z = radius * Mathf.Sin(Mathf.Deg2Rad * angleDegrees);
+        return new Vector3(x, 0f, z);
+    }
+
 }

@@ -5,15 +5,8 @@ using MLAgents;
 
 public class CarAcademy : Academy
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void AcademyStep()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
