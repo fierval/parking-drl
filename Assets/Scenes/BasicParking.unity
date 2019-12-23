@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.15970838, y: -0.21347643, z: 0.03539744, w: -0.9631553}
+  m_LocalRotation: {x: -0.1599888, y: -0.20569788, z: 0.034107614, w: -0.9648465}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -568,6 +568,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 118799491}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &172387143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 172387144}
+  m_Layer: 0
+  m_Name: Back
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &172387144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172387143}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2034348297}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &173077972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1874,7 +1904,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.03197532, y: -0.22822465, z: 0.0074992725, w: -0.9730544}
+  m_LocalRotation: {x: -0.0320063, y: -0.2241654, z: 0.007365878, w: -0.9739976}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2694,6 +2724,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 614419655}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &618039099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 618039100}
+  m_Layer: 0
+  m_Name: Front
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &618039100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618039099}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2034348297}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &659901216 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 90b352aed9f02164c8f20cf5f79a36ee,
@@ -6243,7 +6303,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.15756746, y: -0.19466683, z: 0.031699713, w: -0.9676118}
+  m_LocalRotation: {x: -0.15798122, y: -0.18158102, z: 0.029568797, w: -0.9701526}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7066,7 +7126,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.031975232, y: 0.2282247, z: -0.007499615, w: 0.9730544}
+  m_LocalRotation: {x: 0.032006234, y: 0.22416542, z: -0.0073662344, w: 0.97399753}
   m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8784,10 +8844,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
-    maxStep: 50000
+    maxStep: 0
     resetOnDone: 1
     onDemandDecision: 0
-    numberOfActionsBetweenDecisions: 5
+    numberOfActionsBetweenDecisions: 1
   carSpawner: {fileID: 1775243852}
   startPosTransform: {fileID: 1045914860}
 --- !u!114 &2034348295
@@ -8810,7 +8870,7 @@ MonoBehaviour:
     vectorActionSpaceType: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_UseHeuristic: 0
+  m_BehaviorType: 0
   m_BehaviorName: Parking
 --- !u!114 &2034348296
 MonoBehaviour:
@@ -8824,6 +8884,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06112754472ab44884654b41c246f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &2034348297 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 905039390885053791, guid: 340d5d4e655434a4594b5c86635591ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 2034348290}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2035651660
 PrefabInstance:
   m_ObjectHideFlags: 0
