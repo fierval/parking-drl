@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using MLAgents;
+using MLAgents.Sensor;
 using System;
 
 public class CarAgent : Agent
 {
     public SpawnParkedCars carSpawner;
 
-    RayPerception3D rayPerception;
     ESVehicleController vehicleController;
     ESGearShift gearShift;
     ParkingDetector parkingDetector;
@@ -17,22 +17,10 @@ public class CarAgent : Agent
 
     float[] parkingStateVector;
 
-    const float RayDistance = 20f;
-
-    const float AngleEvery = 15;
-
-    // idx's of 90 and -90 in the array of angles
-    const int idx90 = 6;
-    const int idx270 = 18;
-
     // backward and forward facing angles
-    readonly float[] directionAngles = { 90, 90 - AngleEvery, 90 + AngleEvery, -90, -90 - AngleEvery, -90 + AngleEvery };
 
     [Tooltip("Starting position for the agent")]
     public Transform startPosTransform;
-
-    readonly string[] DetectableObjects = { "car", "immovable", "parking" };
-    readonly string[] ParkingDirection = { "parking" };
 
     float[] rayAngles;
 
@@ -46,17 +34,6 @@ public class CarAgent : Agent
         // initialize vector of parking states
         parkingStateVector = new float[Enum.GetNames(typeof(ParkingState)).Length];
         Array.Clear(parkingStateVector, 0, parkingStateVector.Length);
-
-        rayAngles = Enumerable.Range(0, 360)
-            .Where(i => i % AngleEvery == 0)
-            .Select(i => (float)i)
-            .ToArray();
-    }
-
-    public override void InitializeAgent()
-    {
-        base.InitializeAgent();
-        rayPerception = GetComponent<RayPerception3D>();
     }
 
     public override void AgentAction(float[] vectorAction)
@@ -84,34 +61,33 @@ public class CarAgent : Agent
                 break;
         }
 
-        // are we heading towards parking? Rear or front?
-        var parkingDirectionHits = rayPerception.Perceive(RayDistance, directionAngles, ParkingDirection, 0.2f, 0.2f);
+        //// are we heading towards parking? Rear or front?
+        //var parkingDirectionHits = rayPerception.Perceive(RayDistance, directionAngles, ParkingDirection, 0.2f, 0.2f);
 
-        var maxDistance = 
-            parkingDirectionHits
-                .Where((_, i) => i % 3 == 2)
-                .Max();
+        //var maxDistance = 
+        //    parkingDirectionHits
+        //        .Where((_, i) => i % 3 == 2)
+        //        .Max();
 
-        // negative reward for not heading towards parking
-        if(maxDistance == 0)
-        {
-            return -1e-3f;
-        }
+        //// negative reward for not heading towards parking
+        //if(maxDistance == 0)
+        //{
+        //    return -1e-3f;
+        //}
 
+        float maxDistance = 1f;
         // small reward for getting closer to parking
         return 1f / maxDistance * 1e-3f;
     }
 
     public override void CollectObservations()
     {
-        // observations
-        AddVectorObs(rayPerception.Perceive(RayDistance, rayAngles, DetectableObjects, 0.2f, 0.2f));
         // position
         AddVectorObs(transform.position);
         // direction (rotation)
         AddVectorObs(transform.rotation.y);
-        // parking state
-        AddVectorObs(ToCategory(parkingDetector.CarParkingState));
+        // parking state: one-hot observation
+        AddVectorObs((int)parkingDetector.CarParkingState, parkingStateVector.Length);
         // collision
         AddVectorObs(collistionState.IsCollsion);
     }
@@ -143,6 +119,9 @@ public class CarAgent : Agent
 
     public override float[] Heuristic()
     {
+        // update the sensors
+        GenerateSensorData();
+
         var action = new float[3];
 
         action[0] = Input.GetAxis("Vertical");
@@ -151,17 +130,6 @@ public class CarAgent : Agent
         return action;
     }
 
-    private void OnDrawGizmos()
-    {
-        if(rayAngles is null) { return; }
-
-        Gizmos.color = Color.red;
-        foreach (var angle in rayAngles)
-        {
-            var endpos = transform.TransformDirection(PolarToCartesian3D(RayDistance, angle));
-            Gizmos.DrawWireSphere(transform.position + endpos, 0.5f);
-        }
-    }
     static Vector3 PolarToCartesian3D(float radius, float angleDegrees)
     {
         var x = radius * Mathf.Cos(Mathf.Deg2Rad * angleDegrees);

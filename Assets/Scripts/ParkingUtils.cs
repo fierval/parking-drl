@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Random = System.Random;
 
-[Flags]
 public enum ParkingState : int
 {
     Available = 0,

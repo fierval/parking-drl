@@ -35,9 +35,18 @@ namespace MLAgents
         [SerializeField]
         string m_BehaviorName = "My Behavior";
 
+        [HideInInspector]
+        [SerializeField]
+        [Tooltip("Use all Sensor components attached to child GameObjects of this Agent.")]
+        bool m_useChildSensors = true;
         public BrainParameters brainParameters
         {
             get { return m_BrainParameters; }
+        }
+
+        public bool useChildSensors
+        {
+            get { return m_useChildSensors; }
         }
 
         public string behaviorName
