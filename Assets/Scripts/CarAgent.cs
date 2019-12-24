@@ -14,6 +14,7 @@ public class CarAgent : Agent
     ESGearShift gearShift;
     ParkingDetector parkingDetector;
     CollisionState collistionState;
+    float [] rewardAngles;
 
     float[] parkingStateVector;
 
@@ -34,6 +35,12 @@ public class CarAgent : Agent
         // initialize vector of parking states
         parkingStateVector = new float[Enum.GetNames(typeof(ParkingState)).Length];
         Array.Clear(parkingStateVector, 0, parkingStateVector.Length);
+        // {90, 90 + delta, 90 - delta}
+        rewardAngles = GetComponentsInChildren<RayPerceptionSensorComponent3D>()
+            .Select(s => RayPerceptionSensorComponentBase.GetRayAngles(s.raysPerDirection, s.maxRayDegrees))
+            .Take(3)
+            .SelectMany(a => a)
+            .ToArray();
     }
 
     public override void AgentAction(float[] vectorAction)
