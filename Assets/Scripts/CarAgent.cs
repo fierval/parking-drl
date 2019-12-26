@@ -34,13 +34,6 @@ public class CarAgent : Agent
 
         // initialize vector of parking states
         parkingStateVector = new float[Enum.GetNames(typeof(ParkingState)).Length];
-        Array.Clear(parkingStateVector, 0, parkingStateVector.Length);
-        // {90, 90 + delta, 90 - delta}
-        rewardAngles = GetComponentsInChildren<RayPerceptionSensorComponent3D>()
-            .Select(s => RayPerceptionSensorComponentBase.GetRayAngles(s.raysPerDirection, s.maxRayDegrees))
-            .Take(3)
-            .SelectMany(a => a)
-            .ToArray();
     }
 
     public override void AgentAction(float[] vectorAction)
@@ -68,23 +61,30 @@ public class CarAgent : Agent
                 break;
         }
 
-        //// are we heading towards parking? Rear or front?
-        //var parkingDirectionHits = rayPerception.Perceive(RayDistance, directionAngles, ParkingDirection, 0.2f, 0.2f);
+        var observations = sensors
+            .Select(s => (s as RayPerceptionSensor).Observations)
+            .Take(5 * 3)
+            .SelectMany(o => o)
+            .ToList();
 
-        //var maxDistance = 
-        //    parkingDirectionHits
-        //        .Where((_, i) => i % 3 == 2)
-        //        .Max();
+        float maxDistance = 0f;
+        for (int i = 2; i < observations.Count; i+=5)
+        {
+            // hit parking
+            if(observations[i] > 0)
+            {
+                maxDistance = Mathf.Max(maxDistance, observations[i + 2]);
+            }
+        }        
 
-        //// negative reward for not heading towards parking
-        //if(maxDistance == 0)
-        //{
-        //    return -1e-3f;
-        //}
+        // negative reward for not heading towards parking
+        if (maxDistance == 0)
+        {
+            return -1e-3f;
+        }
 
-        float maxDistance = 1f;
         // small reward for getting closer to parking
-        return 1f / maxDistance * 1e-3f;
+        return 1f / maxDistance * 1e-4f;
     }
 
     public override void CollectObservations()

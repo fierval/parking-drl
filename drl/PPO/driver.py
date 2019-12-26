@@ -3,9 +3,9 @@ import numpy as np
 import time, datetime
 import os
 import sys
-from model import ActorCritic
+from model_flat import ActorCritic
 
-from mlagents.envs import UnityEnvironment
+from mlagents.envs.environment import UnityEnvironment
 from agent import PPOAgent
 import tensorboardX
 from utils import RewardTracker, TBMeanTracker
@@ -28,7 +28,7 @@ GAE_LAMBDA = 0.96       # lambda-factor in the advantage estimator for PPO
 NUM_CONSEQ_FRAMES = 6   # number of consequtive frames that make up a state
 
 SAVE_EVERY = 1000
-debug = False
+debug = True
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 if __name__ == "__main__":
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         root_path = os.path.abspath("..")
 
     # where the environment file is located
-    env_path = os.path.join(root_path, "../env/ejik")
+    env_path = os.path.join(root_path, "../env/cars")
     # where to save the model
     ckpt_path = os.path.join(root_path, "saved_model")
 
@@ -46,11 +46,16 @@ if __name__ == "__main__":
         os.makedirs(ckpt_path)
 
     if debug:
-        env = UnityEnvironment(file_name=None)
+        env_file = None
+        port = 5004
     else:
-        env = UnityEnvironment(file_name=env_path)
-        
-    brain_name = env.brain_names[0]
+        env_file = "cars"
+        port = 5005
+
+    env = UnityEnvironment(file_name=env_file, base_port=port)
+    env.step()
+
+    brain_name = env.external_brain_names[0]
     brain = env.brains[brain_name]
 
     env_info = env.reset(train_mode=True)[brain_name]
@@ -63,19 +68,19 @@ if __name__ == "__main__":
     print('Size of each action:', action_size)
 
     # examine the state space 
-    states = env_info.visual_observations
-    state_size = list(states[0][0].transpose(2, 0, 1).shape)
-    state_size[0] *= NUM_CONSEQ_FRAMES
+    states = env_info.vector_observations
+    state_size = states.shape[1]
     
     # torch.manual_seed(SEED)
     # np.random.seed(SEED)
 
     # create policy to be trained & optimizer
-    policy = ActorCritic(state_size, action_size).to(device)
+    policy = ActorCritic(state_size, action_size)
+    policy = policy.to(device)
 
-    writer = tensorboardX.SummaryWriter(comment=f"-ejik")
+    writer = tensorboardX.SummaryWriter(comment=f"-cars")
     
-    trajectory_collector = TrajectoryCollector(env, policy, num_agents, tmax=TMAX, gamma=GAMMA, gae_lambda=GAE_LAMBDA, debug=debug, is_visual=True, visual_state_size=NUM_CONSEQ_FRAMES)
+    trajectory_collector = TrajectoryCollector(env, policy, num_agents, tmax=TMAX, gamma=GAMMA, gae_lambda=GAE_LAMBDA, debug=debug, is_visual=False)
 
     tb_tracker = TBMeanTracker(writer, EPOCHS)
 

@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.15929084, y: -0.22453655, z: 0.03723142, w: -0.9606371}
+  m_LocalRotation: {x: -0.15993547, y: -0.2072004, z: 0.034356773, w: -0.9645249}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1874,7 +1874,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.03193013, y: -0.23400886, z: 0.0076893303, w: -0.9716796}
+  m_LocalRotation: {x: -0.032000374, y: -0.22494885, z: 0.0073916144, w: -0.97381693}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6275,7 +6275,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.15690078, y: -0.2140131, z: 0.034850065, w: -0.9635176}
+  m_LocalRotation: {x: -0.15790488, y: -0.18406822, z: 0.029973786, w: -0.96968377}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7098,7 +7098,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.031930037, y: 0.2340089, z: -0.007689688, w: 0.97167957}
+  m_LocalRotation: {x: 0.032000273, y: 0.2249489, z: -0.007391972, w: 0.97381693}
   m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8856,10 +8856,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
-    maxStep: 0
+    maxStep: 50000
     resetOnDone: 1
     onDemandDecision: 0
-    numberOfActionsBetweenDecisions: 1
+    numberOfActionsBetweenDecisions: 5
   carSpawner: {fileID: 1775243852}
   startPosTransform: {fileID: 1045914860}
 --- !u!114 &2034348295

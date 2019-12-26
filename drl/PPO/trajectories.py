@@ -33,7 +33,7 @@ class TrajectoryCollector:
         self.rewards = None
         self.scores_by_episode = []
 
-        self.brain_name = self.env.brain_names[0]
+        self.brain_name = self.env.external_brain_names[0]
         self.action_space_size = self.env.brains[self.brain_name].vector_action_space_size[0]
 
         self.last_states = None
@@ -112,7 +112,7 @@ class TrajectoryCollector:
         else:            
             # agent will act on the action vector where everything is set to "0"
             # signal it to ignore these actions and only listent to us
-            env_info = self.env.step(actions, text_action="act")[self.brain_name]
+            env_info = self.env.step(actions)[self.brain_name]
             rewards = self.to_tensor(env_info.rewards)
             dones = self.to_tensor(env_info.local_done, dtype=np.uint8)
 

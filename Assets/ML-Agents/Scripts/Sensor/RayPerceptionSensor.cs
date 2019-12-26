@@ -13,6 +13,8 @@ namespace MLAgents.Sensor
         }
 
         float[] m_Observations;
+        public float[] Observations => m_Observations;
+
         int[] m_Shape;
         string m_Name;
 
