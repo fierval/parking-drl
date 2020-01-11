@@ -44,13 +44,19 @@ public class CarAgent : Agent
 
     public override void AgentAction(float[] vectorAction)
     {
-        gearShift.GearShift(vectorAction[0]);
-        vehicleController.Engine(vectorAction[0], vectorAction[1], vectorAction[2]);
+        gearShift.GearShift(Clamp(vectorAction[0]));
+        vehicleController.Engine(Clamp(vectorAction[0]), Clamp(vectorAction[1]), Clamp(vectorAction[2], 0));
 
         float reward = CollectRewards();
         AddReward(reward);
         SetDone();
     }
+
+    private float Clamp(float v, float minClamp = -1f)
+    {
+        return Mathf.Clamp(v, minClamp, 1f);
+    }
+
 
     float CollectRewards()
     {
