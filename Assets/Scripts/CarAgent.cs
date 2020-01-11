@@ -13,7 +13,6 @@ public class CarAgent : Agent
     ESVehicleController vehicleController;
     ESGearShift gearShift;
     ParkingDetector parkingDetector;
-    CollisionState collistionState;
     float [] rewardAngles;
 
     float[] parkingStateVector;
@@ -25,15 +24,22 @@ public class CarAgent : Agent
 
     float[] rayAngles;
 
+    bool isCollision;
+
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
         gearShift = GetComponent<ESGearShift>();
         parkingDetector = GetComponent<ParkingDetector>();
-        collistionState = gameObject.GetComponent<CollisionState>();
 
         // initialize vector of parking states
         parkingStateVector = new float[Enum.GetNames(typeof(ParkingState)).Length];
+        isCollision = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        isCollision = collision.gameObject != null;
     }
 
     public override void AgentAction(float[] vectorAction)
@@ -96,12 +102,12 @@ public class CarAgent : Agent
         // parking state: one-hot observation
         AddVectorObs((int)parkingDetector.CarParkingState, parkingStateVector.Length);
         // collision
-        AddVectorObs(collistionState.IsCollsion);
+        AddVectorObs(isCollision);
     }
 
     private void SetDone()
     {
-        if (collistionState.IsCollsion
+        if (isCollision
             || parkingDetector.CarParkingState == ParkingState.Complete
             || parkingDetector.CarParkingState == ParkingState.Failed)
         {
@@ -118,7 +124,7 @@ public class CarAgent : Agent
 
     public override void AgentReset()
     {
-        collistionState.IsCollsion = false;
+        isCollision = false;
         carSpawner.Spawn();
         transform.position = startPosTransform.position;
         transform.rotation = startPosTransform.rotation;

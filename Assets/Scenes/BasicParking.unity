@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.15993547, y: -0.2072004, z: 0.034356773, w: -0.9645249}
+  m_LocalRotation: {x: -0.15933222, y: -0.22346582, z: 0.03705387, w: -0.9608868}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1874,7 +1874,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.032000374, y: -0.22494885, z: 0.0073916144, w: -0.97381693}
+  m_LocalRotation: {x: -0.031934574, y: -0.23344833, z: 0.0076709134, w: -0.97181445}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6275,7 +6275,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.15790488, y: -0.18406822, z: 0.029973786, w: -0.96968377}
+  m_LocalRotation: {x: -0.15696923, y: -0.21211115, z: 0.034540337, w: -0.96393806}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7098,7 +7098,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.032000273, y: 0.2249489, z: -0.007391972, w: 0.97381693}
+  m_LocalRotation: {x: 0.031934466, y: 0.23344836, z: -0.00767127, w: 0.9718144}
   m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8856,7 +8856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
-    maxStep: 50000
+    maxStep: 5000
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 5
@@ -8885,18 +8885,6 @@ MonoBehaviour:
   m_BehaviorType: 0
   m_BehaviorName: Parking
   m_useChildSensors: 1
---- !u!114 &2034348296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2034348292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f06112754472ab44884654b41c246f26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2035651660
 PrefabInstance:
   m_ObjectHideFlags: 0
