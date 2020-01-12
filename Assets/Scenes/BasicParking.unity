@@ -4820,20 +4820,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3951fedb011a25445b0d7191b4169e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrainingConfiguration:
-    width: 500
-    height: 500
-    qualityLevel: 0
-    timeScale: 20
-    targetFrameRate: -1
-  m_InferenceConfiguration:
-    width: 1280
-    height: 720
-    qualityLevel: 5
-    timeScale: 1
-    targetFrameRate: 60
-  resetParameters:
-    m_ResetParameters: []
 --- !u!4 &1203670577
 Transform:
   m_ObjectHideFlags: 0
@@ -8872,6 +8858,7 @@ MonoBehaviour:
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: Parking
+  m_TeamID: 0
   m_useChildSensors: 1
 --- !u!1001 &2035651660
 PrefabInstance:

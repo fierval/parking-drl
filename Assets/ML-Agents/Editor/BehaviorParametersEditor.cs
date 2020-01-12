@@ -33,6 +33,7 @@ namespace MLAgents
             EditorGUILayout.PropertyField(so.FindProperty("m_InferenceDevice"), true);
             EditorGUI.indentLevel--;
             EditorGUILayout.PropertyField(so.FindProperty("m_BehaviorType"));
+            EditorGUILayout.PropertyField(so.FindProperty("m_TeamID"));
             EditorGUILayout.PropertyField(so.FindProperty("m_useChildSensors"), true);
             // EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Heuristic"), true);
             EditorGUI.indentLevel--;
@@ -60,7 +61,7 @@ namespace MLAgents
             var model = (NNModel)serializedObject.FindProperty("m_Model").objectReferenceValue;
             var behaviorParameters = (BehaviorParameters)target;
             SensorComponent[] sensorComponents;
-            if (behaviorParameters.useChildSensors)
+            if(behaviorParameters.useChildSensors)
             {
                 sensorComponents = behaviorParameters.GetComponentsInChildren<SensorComponent>();
             }
