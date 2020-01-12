@@ -15,7 +15,7 @@ public class CarAgent : Agent
     ParkingDetector parkingDetector;
     float [] rewardAngles;
 
-    float[] parkingStateVector;
+    int parkingStateLength;
 
     // backward and forward facing angles
 
@@ -37,7 +37,7 @@ public class CarAgent : Agent
         parkingDetector = GetComponent<ParkingDetector>();
 
         // initialize vector of parking states
-        parkingStateVector = new float[Enum.GetNames(typeof(ParkingState)).Length];
+        parkingStateLength = Enum.GetNames(typeof(ParkingState)).Length;
         isCollision = false;
 
         RayPerceptionSensorComponent3D rayPerceptionSensorComponent3D = gameObject.GetComponentsInChildren<RayPerceptionSensorComponent3D>().First();
@@ -112,11 +112,11 @@ public class CarAgent : Agent
     public override void CollectObservations()
     {
         // position
-        AddVectorObs(transform.position);
+        AddVectorObs(new Vector2(transform.position.x, transform.position.z));
         // direction (rotation)
-        AddVectorObs(transform.rotation.y);
+        AddVectorObs(transform.rotation.eulerAngles.y);
         // parking state: one-hot observation
-        AddVectorObs((int)parkingDetector.CarParkingState, parkingStateVector.Length);
+        AddVectorObs((int)parkingDetector.CarParkingState, parkingStateLength);
         // collision
         AddVectorObs(isCollision);
     }
@@ -129,13 +129,6 @@ public class CarAgent : Agent
         {
             Done();
         }
-    }
-
-    private float[] ToCategory(ParkingState state)
-    {
-        Array.Clear(parkingStateVector, 0, parkingStateVector.Length);
-        parkingStateVector[(int)state] = 1f;
-        return parkingStateVector;
     }
 
     public override void AgentReset()
