@@ -111,10 +111,6 @@ public class CarAgent : Agent
 
     public override void CollectObservations()
     {
-        // position
-        AddVectorObs(new Vector2(transform.position.x, transform.position.z));
-        // direction (rotation)
-        AddVectorObs(transform.rotation.eulerAngles.y);
         // parking state: one-hot observation
         AddVectorObs((int)parkingDetector.CarParkingState, parkingStateLength);
         // collision

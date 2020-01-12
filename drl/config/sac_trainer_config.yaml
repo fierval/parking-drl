@@ -275,3 +275,4 @@ cars:
     train_interval: 3
     max_steps: 1e7
     learning_rate: 1e-4
+    buffer_size: 1e5
