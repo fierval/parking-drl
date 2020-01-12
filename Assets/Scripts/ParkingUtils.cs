@@ -19,36 +19,8 @@ public static class ParkingUtils
     static CarAcademy academy = GameObject.FindObjectOfType<CarAcademy>();
 
     public static bool IsAcademyActive() => academy != null && academy.enabled;
+    public const string ParkingTag = "parking";
     
-    /// <summary>
-    /// Create rectangle from local bounds
-    /// </summary>
-    /// <param name="transform">game object transform</param>
-    /// <returns>rectangle in XZ plane in world coordinates</returns>
-    public static Rect CreateRectFromTransformAndLocalBounds(Transform transform)
-    {
-        Bounds localBounds = transform.gameObject.GetComponent<MeshFilter>().mesh.bounds;
-
-        var min = transform.TransformVector(localBounds.min);
-        var max = transform.TransformVector(localBounds.max);
-
-        return Rect.MinMaxRect(min.x, min.y, max.x, max.y);
-    }
-
-    /// <summary>
-    /// Does "container" contain "rect"
-    /// </summary>
-    /// <param name="container"></param>
-    /// <param name="rect"></param>
-    /// <returns></returns>
-    public static bool Contains(this Rect container, Rect rect)
-    {
-        return container.min.x <= rect.min.x
-            && container.min.y <= rect.min.y
-            && container.max.x >= rect.max.y
-            && container.max.y >= rect.max.y;
-    }
-
     private static Random rng = new Random();
 
     public static IEnumerable<T> Shuffle<T>(this IList<T> list)

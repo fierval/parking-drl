@@ -23,8 +23,12 @@ public class CarAgent : Agent
     public Transform startPosTransform;
 
     float[] rayAngles;
-
     bool isCollision;
+
+    // number of tags we are detecting a ray collision with
+    int numberOfTags;
+    // index of the parking tag in the sensor detection array
+    int idxParkingTag;
 
     private void Awake()
     {
@@ -35,6 +39,10 @@ public class CarAgent : Agent
         // initialize vector of parking states
         parkingStateVector = new float[Enum.GetNames(typeof(ParkingState)).Length];
         isCollision = false;
+
+        RayPerceptionSensorComponent3D rayPerceptionSensorComponent3D = gameObject.GetComponentsInChildren<RayPerceptionSensorComponent3D>().First();
+        numberOfTags = rayPerceptionSensorComponent3D.detectableTags.Count;
+        idxParkingTag = rayPerceptionSensorComponent3D.detectableTags.FindIndex(s => s == ParkingUtils.ParkingTag);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -64,7 +72,7 @@ public class CarAgent : Agent
         switch (parkingDetector.CarParkingState)
         {
             case ParkingState.InProgress:
-                return 1.25e-3f;
+                return 1.5e-4f;
             case ParkingState.Failed:
                 return -1f;
             case ParkingState.Complete:
@@ -74,29 +82,31 @@ public class CarAgent : Agent
         }
 
         var observations = sensors
-            .Select(s => (s as RayPerceptionSensor).Observations)
-            .Take(5 * 3)
-            .SelectMany(o => o)
+            .Take(2) // just vector sensors
+            .SelectMany(s => (s as RayPerceptionSensor).Observations)
             .ToList();
 
-        float maxDistance = 0f;
-        for (int i = 2; i < observations.Count; i+=5)
+        float maxDistance = 0;
+        int nParkingHits = 0;
+        for (int i = idxParkingTag; i < observations.Count; i += numberOfTags + 2)
         {
             // hit parking
             if(observations[i] > 0)
             {
                 maxDistance = Mathf.Max(maxDistance, observations[i + 2]);
+                nParkingHits++;
             }
-        }        
+        }
 
         // negative reward for not heading towards parking
         if (maxDistance == 0)
         {
-            return -1e-3f;
+            return -1e-4f;
         }
 
         // small reward for getting closer to parking
-        return 1f / maxDistance * 1e-4f;
+        // and also turning towards it
+        return 1f / maxDistance * nParkingHits * 1e-4f;
     }
 
     public override void CollectObservations()

@@ -14,8 +14,8 @@ public enum WheelColliderPos : int
 public class ParkingDetector : MonoBehaviour
 {
     // angles where parking is not failed
-    const int MinAngle = 20;
-    const int MaxAngle = 160;
+    const int MinAngle = 30;
+    const int MaxAngle = 180 - MinAngle;
 
     Renderer parkRender;
     Bounds parkingBoundingBox;
