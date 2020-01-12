@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.16012342, y: -0.20185189, z: 0.03346985, w: -0.9656584}
+  m_LocalRotation: {x: -0.16012344, y: -0.2018519, z: 0.033469852, w: -0.9656584}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1874,7 +1874,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.032021366, y: -0.22216138, z: 0.007300002, w: -0.9744566}
+  m_LocalRotation: {x: -0.03202138, y: -0.2221614, z: 0.007300006, w: -0.9744566}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7098,7 +7098,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.03202128, y: 0.2221614, z: -0.0073003694, w: 0.9744566}
+  m_LocalRotation: {x: 0.03202132, y: 0.22216141, z: -0.0073003806, w: 0.9744566}
   m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8844,7 +8844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
-    maxStep: 500000
+    maxStep: 50000
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 5
@@ -8869,7 +8869,7 @@ MonoBehaviour:
     vectorActionDescriptions: []
     vectorActionSpaceType: 1
   m_Model: {fileID: 0}
-  m_InferenceDevice: 0
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: Parking
   m_useChildSensors: 1
