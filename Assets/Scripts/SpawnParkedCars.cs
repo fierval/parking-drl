@@ -36,6 +36,9 @@ public class SpawnParkedCars : MonoBehaviour
         carInstance.GetComponents<ESSpringBalance>().ToList().ForEach(c => c.enabled = false);
         carInstance.GetComponent<ParkingDetector>().enabled = false;
 
+        carInstance.GetComponentsInChildren<AudioSource>().ToList()
+            .ForEach(a => a.enabled = false);
+
         return carInstance;
     }
 

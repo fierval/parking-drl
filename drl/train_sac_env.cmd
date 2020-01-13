@@ -1,1 +1,1 @@
-mlagents-learn config\sac_trainer_config.yaml --env ..\env\cars.exe --run-id sac-1 --keep-checkpoints 10 --train --width 400 --height 400 --quality-level 0 --time-scale 20
+mlagents-learn config\sac_trainer_config.yaml --env ..\env\cars.exe --run-id sac-1 --keep-checkpoints 10 --train --width 800 --height 800 --quality-level 0 --time-scale 20
