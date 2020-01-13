@@ -317,6 +317,9 @@ public class ESVehicleController : MonoBehaviour
         Handbrake = brake;
         AddTorqueToEngine(Accel, Shoebrake);
         BrakeSystem(Handbrake);
+
+        Debug.Log($"Steer: {Steer}, Accel: {Accel} Shoebrake: {Shoebrake}");
+
         if (Handbrake == 0 && m_enginesettings.PlayAirSound)
         {
             if (m_enginesettings.AirBrakeSourcePrefab != null)

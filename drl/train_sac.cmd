@@ -1,0 +1,1 @@
+mlagents-learn config\sac_trainer_config.yaml --run-id sac-1 --keep-checkpoints 10 --train --width 400 --height 400 --quality-level 0 --time-scale 20
