@@ -72,6 +72,8 @@ public class CarAgent : Agent
 
     float CollectRewards()
     {
+        if (isCollision) return -1f;
+
         // are we parking now
         switch (parkingDetector.CarParkingState)
         {
