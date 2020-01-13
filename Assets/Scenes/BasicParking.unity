@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.15981086, y: -0.21066906, z: 0.034931906, w: -0.96377325}
+  m_LocalRotation: {x: -0.1604771, y: -0.19136456, z: 0.031730875, w: -0.96779126}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1874,7 +1874,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.03198659, y: -0.22675872, z: 0.007451078, w: -0.9733971}
+  m_LocalRotation: {x: -0.0320617, y: -0.21670839, z: 0.007120808, w: -0.9756838}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6261,7 +6261,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.1577221, y: -0.18988594, z: 0.030921144, w: -0.96856135}
+  m_LocalRotation: {x: -0.15862544, y: -0.15899651, z: 0.025891028, w: -0.97410876}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7084,7 +7084,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.0319865, y: 0.22675875, z: -0.0074514505, w: 0.9733971}
+  m_LocalRotation: {x: 0.032061614, y: 0.21670842, z: -0.0071211834, w: 0.97568375}
   m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8830,7 +8830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
-    maxStep: 10000
+    maxStep: 5000
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 5
@@ -8851,7 +8851,7 @@ MonoBehaviour:
   m_BrainParameters:
     vectorObservationSize: 5
     numStackedVectorObservations: 1
-    vectorActionSize: 03000000
+    vectorActionSize: 02000000
     vectorActionDescriptions: []
     vectorActionSpaceType: 1
   m_Model: {fileID: 0}

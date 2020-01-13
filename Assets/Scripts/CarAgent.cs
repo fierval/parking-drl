@@ -30,6 +30,8 @@ public class CarAgent : Agent
     // index of the parking tag in the sensor detection array
     int idxParkingTag;
 
+    int actionSpaceSize;
+
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
@@ -43,6 +45,8 @@ public class CarAgent : Agent
         RayPerceptionSensorComponent3D rayPerceptionSensorComponent3D = gameObject.GetComponentsInChildren<RayPerceptionSensorComponent3D>().First();
         numberOfTags = rayPerceptionSensorComponent3D.detectableTags.Count;
         idxParkingTag = rayPerceptionSensorComponent3D.detectableTags.FindIndex(s => s == ParkingUtils.ParkingTag);
+
+        actionSpaceSize = GetComponent<BehaviorParameters>().brainParameters.vectorActionSize[0];
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,16 +57,16 @@ public class CarAgent : Agent
     public override void AgentAction(float[] vectorAction)
     {
         gearShift.GearShift(Clamp(vectorAction[0]));
-        vehicleController.Engine(Clamp(vectorAction[0]), Clamp(vectorAction[1]), Clamp(vectorAction[2], 0));
+        vehicleController.Engine(Clamp(vectorAction[0]), Clamp(vectorAction[1]), 0f);
 
         float reward = CollectRewards();
         AddReward(reward);
         SetDone();
     }
 
-    private float Clamp(float v, float minClamp = -1f)
+    private float Clamp(float v)
     {
-        return Mathf.Clamp(v, minClamp, 1f);
+        return Mathf.Clamp(v, -1f, 1f);
     }
 
 
@@ -140,11 +144,10 @@ public class CarAgent : Agent
         // update the sensors
         GenerateSensorData();
 
-        var action = new float[3];
+        var action = new float[actionSpaceSize];
 
         action[0] = Input.GetAxis("Vertical");
         action[1] = Input.GetAxis("Horizontal");
-        action[2] = Input.GetAxis("Jump");
         return action;
     }
 
