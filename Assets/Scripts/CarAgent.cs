@@ -101,14 +101,14 @@ public class CarAgent : Agent
         }
 
         // negative reward for not heading towards parking
-        if (minDistance == 0)
+        if (minDistance == -1)
         {
-            return -1e-3f;
+            return -1e-4f;
         }
 
         // small reward for getting closer to parking
         // and also turning towards it
-        return 1f / minDistance * 1e-3f;
+        return 1f / minDistance * 1e-4f;
     }
 
     public override void CollectObservations()
