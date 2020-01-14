@@ -92,25 +92,25 @@ public class CarAgent : Agent
             .SelectMany(s => (s as RayPerceptionSensor).Observations.Take((numberOfTags + 2) * 3))
             .ToList();
 
-        float minDistance = float.MaxValue;
+        float maxDistance = 0;
         for (int i = idxParkingTag; i < observations.Count; i += numberOfTags + 2)
         {
             // hit parking
             if(observations[i] > 0)
             {
-                minDistance = Mathf.Min(minDistance, observations[i + 2]);
+                maxDistance = Mathf.Max(maxDistance, observations[i + 2]);
             }
         }
 
         // negative reward for not heading towards parking
-        if (minDistance == float.MaxValue)
+        if (maxDistance == 0)
         {
             return -1e-4f;
         }
 
         // small reward for getting closer to parking
         // and also turning towards it
-        return 1f / minDistance * 1e-4f;
+        return 1f / maxDistance * 5e-5f;
     }
 
     public override void CollectObservations()
