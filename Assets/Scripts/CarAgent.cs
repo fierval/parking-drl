@@ -78,7 +78,7 @@ public class CarAgent : Agent
         switch (parkingDetector.CarParkingState)
         {
             case ParkingState.InProgress:
-                return 1.5e-3f;
+                return 1e-3f;
             case ParkingState.Failed:
                 return -1f;
             case ParkingState.Complete:
@@ -92,25 +92,25 @@ public class CarAgent : Agent
             .SelectMany(s => (s as RayPerceptionSensor).Observations.Take((numberOfTags + 2) * 3))
             .ToList();
 
-        float maxDistance = 0;
+        float minDistance = float.MaxValue;
         for (int i = idxParkingTag; i < observations.Count; i += numberOfTags + 2)
         {
             // hit parking
             if(observations[i] > 0)
             {
-                maxDistance = Mathf.Max(maxDistance, observations[i + 2]);
+                minDistance = Mathf.Min(minDistance, observations[i + 2]);
             }
         }
 
         // negative reward for not heading towards parking
-        if (maxDistance == 0)
+        if (minDistance == float.MaxValue)
         {
             return -1e-4f;
         }
 
         // small reward for getting closer to parking
         // and also turning towards it
-        return 1f / maxDistance * 5e-5f;
+        return 1f / minDistance * 5e-5f;
     }
 
     public override void CollectObservations()

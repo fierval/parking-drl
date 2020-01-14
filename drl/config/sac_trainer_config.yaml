@@ -274,7 +274,6 @@ Parking:
     hidden_units: 256
     train_interval: 3
     max_steps: 1e7
-    learning_rate: 5e-4
-    buffer_size: 100000
-    learning_rate_schedule: linear
-        
+    learning_rate: 1e-4
+    buffer_size: 10000000
+    init_entcoef: 1.5
