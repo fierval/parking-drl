@@ -22,6 +22,24 @@ public static class ParkingUtils
     public const string ParkingTag = "parking";
     
     private static Random rng = new Random();
+    private static float Round1(this float f)
+    {
+        return (float) Math.Round(f, 1);
+    }
+
+    /// <summary>
+    /// Does "container" contain "rect"
+    /// </summary>
+    /// <param name="container"></param>
+    /// <param name="rect"></param>
+    /// <returns></returns>
+    public static bool Contains(this Bounds container, Bounds rect)
+    {
+        return container.min.x.Round1() <= rect.min.x.Round1()
+            && container.min.z.Round1() <= rect.min.z.Round1()
+            && container.max.x.Round1() >= rect.max.x.Round1()
+            && container.max.z.Round1() >= rect.max.z.Round1();
+    }
 
     public static IEnumerable<T> Shuffle<T>(this IList<T> list)
     {

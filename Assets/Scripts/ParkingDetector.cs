@@ -14,8 +14,7 @@ public enum WheelColliderPos : int
 public class ParkingDetector : MonoBehaviour
 {
     // angles where parking is not failed
-    const int MinAngle = 30;
-    const int MaxAngle = 180 - MinAngle;
+    const int MinAngle = 50;
 
     Renderer parkRender;
     Bounds parkingBoundingBox;
@@ -67,7 +66,7 @@ public class ParkingDetector : MonoBehaviour
                 curParkingState[spotGameObj]++;
 
                 // once we fail parking = it's always failed
-                isFailedParking = isFailedParking || IsFailedParking(wheel, spotGameObj);
+                isFailedParking = isFailedParking || IsFailedParking(spotGameObj);
             }
 
         }
@@ -107,7 +106,20 @@ public class ParkingDetector : MonoBehaviour
 
     // We only have as many points as we have colliders and they
     // are all within one placemat
-    bool IsParked(Dictionary<GameObject, int> parkingState) => parkingState.Count == 1 && parkingState.First().Value == wheelColliders.Length;
+    bool IsParked(Dictionary<GameObject, int> parkingState)
+    {
+        bool isParked = false;
+
+        // we are all four wheels in and the car is entirely inside the bounds
+        if( parkingState.Count == 1 && parkingState.First().Value == wheelColliders.Length)
+        {
+            var spotBounds = parkingState.First().Key.GetComponent<Renderer>().bounds;
+            var carBounds = GetComponentInChildren<Renderer>().bounds;
+            isParked = spotBounds.Contains(carBounds);
+        }
+
+        return isParked;
+    }
 
     // We have a wheel on the mat or a few wheels
     // on a couple of mats
@@ -122,14 +134,14 @@ public class ParkingDetector : MonoBehaviour
 
     // Angle between x axis of place mat and z axis of collider should not be too large
     // So we cannot recover. We may be backing into the spot or driving forward
-    bool IsFailedParking(WheelCollider wheel, GameObject spot)
+    bool IsFailedParking(GameObject spot)
     {
-        var wheelPos = wheel.transform.forward.normalized;
-        var spotPos = spot.transform.right.normalized;
+        var carPos = transform.forward.normalized;
+        var spotPos = spot.transform.parent.forward.normalized;
         // angle is never greater than 180 degrees
         // https://docs.unity3d.com/ScriptReference/Vector3.Angle.html
-        var angle = Vector3.Angle(spotPos, wheelPos);
+        var angle = Mathf.Abs(90 - Vector3.Angle(spotPos, carPos));
 
-        return (!gearShift.isreverse && angle > MinAngle) || (gearShift.isreverse && angle < MaxAngle);
+        return angle > MinAngle;
     }
 }
