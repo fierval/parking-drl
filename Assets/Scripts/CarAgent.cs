@@ -22,7 +22,6 @@ public class CarAgent : Agent
     [Tooltip("Starting position for the agent")]
     public Transform startPosTransform;
 
-    float[] rayAngles;
     bool isCollision;
 
     // number of tags we are detecting a ray collision with
@@ -35,6 +34,10 @@ public class CarAgent : Agent
     const float MinWorldX = -35f, MinWorldZ = -46.9f, MaxWorldZ = 22.64f, MaxWorldX = 36.32f;
     const float deltaX = MaxWorldX - MinWorldX;
     const float deltaZ = MaxWorldZ - MinWorldZ;
+
+    RayPerceptionSensorComponent3D [] raySensors;
+    float [] rayAngles;
+    float[] observations;
 
     private void Awake()
     {
@@ -51,6 +54,12 @@ public class CarAgent : Agent
         idxParkingTag = rayPerceptionSensorComponent3D.detectableTags.FindIndex(s => s == ParkingUtils.ParkingTag);
 
         actionSpaceSize = GetComponent<BehaviorParameters>().brainParameters.vectorActionSize[0];
+
+        raySensors = GetComponentsInChildren<RayPerceptionSensorComponent3D>();
+        RayPerceptionSensorComponent3D sensor = raySensors.First();
+        rayAngles = RayPerceptionSensorComponent3D.GetRayAngles(sensor.raysPerDirection, raySensors.First().maxRayDegrees);
+
+        observations = new float[(sensor.detectableTags.Count + 2) * rayAngles.Length];
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -91,20 +100,25 @@ public class CarAgent : Agent
                 break;
         }
 
-        var observations = sensors
+        var dirSensors = sensors
             .Take(2) // just vector sensors
-            .SelectMany(s => (s as RayPerceptionSensor).Observations.Take((numberOfTags + 2) * 3))
             .ToList();
 
         float minDistance = float.MaxValue;
-        for (int i = idxParkingTag; i < observations.Count; i += numberOfTags + 2)
+        foreach (var sensor in raySensors)
         {
-            // hit parking
-            if(observations[i] > 0)
+            RayPerceptionSensor.PerceiveStatic(sensor.rayLength, rayAngles, sensor.detectableTags, sensor.startVerticalOffset, sensor.endVerticalOffset, sensor.sphereCastRadius, transform, RayPerceptionSensor.CastType.Cast3D, observations);
+            for (int i = idxParkingTag; i < observations.Length; i += numberOfTags + 2)
             {
-                minDistance = Mathf.Min(minDistance, observations[i + 2]);
+                // hit parking
+                if (observations[i] > 0)
+                {
+                    minDistance = Mathf.Min(minDistance, observations[i + 2]);
+                }
             }
+
         }
+
 
         // negative reward for not heading towards parking
         if (minDistance == float.MaxValue)
