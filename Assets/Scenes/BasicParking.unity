@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.15959658, y: -0.21649656, z: 0.035898205, w: -0.9624809}
+  m_LocalRotation: {x: -0.16129528, y: -0.16445345, z: 0.027268521, w: -0.9727258}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1874,7 +1874,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.031963114, y: -0.22980277, z: 0.0075510927, w: -0.9726829}
+  m_LocalRotation: {x: -0.032323163, y: -0.17712647, z: 0.0058200834, w: -0.98363996}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4131,7 +4131,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003936474}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
+  m_LocalPosition: {x: -3.6927314, y: 4.7704515, z: -1.1772928}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1447580202}
@@ -6261,7 +6261,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.15739447, y: -0.19987525, z: 0.03254779, w: -0.96654934}
+  m_LocalRotation: {x: -0.15891388, y: -0.14773574, z: 0.02405731, w: -0.9758801}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7084,8 +7084,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.03196302, y: 0.22980279, z: -0.0075514726, w: 0.9726829}
-  m_LocalPosition: {x: -5.8795705, y: 4.7704515, z: 0.08955479}
+  m_LocalRotation: {x: 0.032323074, y: 0.17712647, z: -0.005820493, w: 0.98363996}
+  m_LocalPosition: {x: -3.6927314, y: 4.7704515, z: -1.1772928}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1841085811}
@@ -8691,7 +8691,7 @@ PrefabInstance:
     - target: {fileID: 1548861548646659415, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.26304626
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 1548861548646659415, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
@@ -8701,7 +8701,7 @@ PrefabInstance:
     - target: {fileID: 1548861548646659415, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.694018
+      value: 9.97
       objectReference: {fileID: 0}
     - target: {fileID: 1548861548646659415, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
@@ -8890,7 +8890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
-    maxStep: 5000
+    maxStep: 10000
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 5
@@ -8910,7 +8910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BrainParameters:
     vectorObservationSize: 5
-    numStackedVectorObservations: 1
+    numStackedVectorObservations: 5
     vectorActionSize: 02000000
     vectorActionDescriptions: []
     vectorActionSpaceType: 1

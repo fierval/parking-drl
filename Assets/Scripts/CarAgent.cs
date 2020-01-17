@@ -32,6 +32,10 @@ public class CarAgent : Agent
 
     int actionSpaceSize;
 
+    const float MinWorldX = -35f, MinWorldZ = -46.9f, MaxWorldZ = 22.64f, MaxWorldX = 36.32f;
+    const float deltaX = MaxWorldX - MinWorldX;
+    const float deltaZ = MaxWorldZ - MinWorldZ;
+
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
@@ -115,6 +119,10 @@ public class CarAgent : Agent
 
     public override void CollectObservations()
     {
+        // position
+        AddVectorObs(new Vector2((transform.position.x - MinWorldX) / deltaX, (transform.position.z - MinWorldZ) / deltaZ));
+        // rotation
+        AddVectorObs(transform.eulerAngles.y / 360f);
         // parking state: one-hot observation
         AddVectorObs((int)parkingDetector.CarParkingState, parkingStateLength);
         // collision
