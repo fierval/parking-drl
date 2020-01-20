@@ -125,10 +125,9 @@ public class CarAgent : Agent
                     minDistance = Mathf.Min(minDistance, observations[i + 2]);
                     int idx = (i - idxParkingTag) / (sensor.detectableTags.Count + 2);
                     var angle = rayAngles[idx];
-                    var direction = GetDirectionFromAngle(angle);
-                    var worldAngle = sensor.transform.TransformDirection(direction).normalized;
-                    var zAngle = Mathf.Asin(worldAngle.z) * Mathf.Rad2Deg;
-                    var zAngleFront = sensor.transform.rotation.y > 180 ? sensor.transform.rotation.y - zAngle : zAngle;
+
+                    // get angle relative to local axis z
+                    var zAngleFront = angle + sensor.transform.localEulerAngles.z - 90;
                     var zAngleBack = 180 - zAngleFront;
 
                     if(Application.isEditor)
