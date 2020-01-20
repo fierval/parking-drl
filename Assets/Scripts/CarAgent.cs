@@ -7,6 +7,7 @@ using MLAgents.Sensor;
 using System;
 using static MLAgents.Sensor.RayPerceptionSensor;
 using UnityEditor;
+using TMPro;
 
 public class CarAgent : Agent
 {
@@ -43,6 +44,12 @@ public class CarAgent : Agent
 
     DebugDisplayInfo rayDebugInfo = null;
 
+    // angles to display
+    List<TextMeshPro> tmeshAngles;
+
+    public TextMeshPro angleDisplay;
+    public bool showAngles;
+
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
@@ -69,7 +76,7 @@ public class CarAgent : Agent
         if (Application.isEditor)
         {
             rayDebugInfo = new DebugDisplayInfo();
-            Monitor.SetActive(true);
+            tmeshAngles = new List<TextMeshPro>();
         }
     }
 
@@ -112,6 +119,12 @@ public class CarAgent : Agent
         }
 
         float minDistance = float.MaxValue;
+        if(rayDebugInfo != null)
+        {
+            tmeshAngles.ForEach(o => Destroy(o.gameObject));
+            tmeshAngles.Clear();
+        }
+
         foreach (var sensor in raySensors)
         {
             RayPerceptionSensor.PerceiveStatic(sensor.rayLength, rayAngles, sensor.detectableTags, sensor.startVerticalOffset, sensor.endVerticalOffset, 
@@ -127,10 +140,18 @@ public class CarAgent : Agent
                     var angle = rayAngles[idx];
 
                     // get angle relative to local axis z
-                    var zAngleFront = angle + sensor.transform.localEulerAngles.z - 90;
-                    var zAngleBack =  zAngleFront - 180;
+                    var zAngleFront = 90 - angle + sensor.transform.localEulerAngles.y;
+                    if(zAngleFront > 180)
+                    {
+                        zAngleFront -= 360;
+                    }
 
-                    if(Application.isEditor)
+                    var zAngleBack = zAngleFront > 0 ? zAngleFront - 180 : zAngleFront + 180;
+
+                    zAngleFront %= 360;
+                    zAngleBack %= 360;
+
+                    if (Application.isEditor && showAngles)
                     {
                         var rayInfo = rayDebugInfo.rayInfos[idx];
 
@@ -139,7 +160,16 @@ public class CarAgent : Agent
                         var rayDirection = endPositionWorld - startPositionWorld;
                         rayDirection *= rayInfo.hitFraction;
                         endPositionWorld = startPositionWorld + rayDirection;
-                        //Handles.Label(endPositionWorld, $"{zAngle.ToString()}, {zAngleBack.ToString()}");
+
+                        // draw text
+                        var gObj = Instantiate(angleDisplay);
+                        gObj.gameObject.SetActive(true);
+
+                        endPositionWorld.y = 3;
+                        gObj.transform.position = endPositionWorld;
+                        gObj.transform.eulerAngles = new Vector3(90, 0, 0);
+                        gObj.SetText($"{zAngleFront:.##}, {zAngleBack:.##}");
+                        tmeshAngles.Add(gObj);
                     }
                 }
             }
