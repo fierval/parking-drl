@@ -128,7 +128,7 @@ public class CarAgent : Agent
 
                     // get angle relative to local axis z
                     var zAngleFront = angle + sensor.transform.localEulerAngles.z - 90;
-                    var zAngleBack = 180 - zAngleFront;
+                    var zAngleBack =  zAngleFront - 180;
 
                     if(Application.isEditor)
                     {
