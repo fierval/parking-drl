@@ -5,6 +5,8 @@ using UnityEngine;
 using MLAgents;
 using MLAgents.Sensor;
 using System;
+using static MLAgents.Sensor.RayPerceptionSensor;
+using UnityEditor;
 
 public class CarAgent : Agent
 {
@@ -39,6 +41,8 @@ public class CarAgent : Agent
     float [] rayAngles;
     float[] observations;
 
+    DebugDisplayInfo rayDebugInfo = null;
+
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
@@ -60,6 +64,13 @@ public class CarAgent : Agent
         rayAngles = RayPerceptionSensorComponent3D.GetRayAngles(sensor.raysPerDirection, raySensors.First().maxRayDegrees);
 
         observations = new float[(sensor.detectableTags.Count + 2) * rayAngles.Length];
+
+        // info for ray drawing
+        if (Application.isEditor)
+        {
+            rayDebugInfo = new DebugDisplayInfo();
+            Monitor.SetActive(true);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -100,20 +111,37 @@ public class CarAgent : Agent
                 break;
         }
 
-        var dirSensors = sensors
-            .Take(2) // just vector sensors
-            .ToList();
-
         float minDistance = float.MaxValue;
         foreach (var sensor in raySensors)
         {
-            RayPerceptionSensor.PerceiveStatic(sensor.rayLength, rayAngles, sensor.detectableTags, sensor.startVerticalOffset, sensor.endVerticalOffset, sensor.sphereCastRadius, transform, RayPerceptionSensor.CastType.Cast3D, observations);
+            RayPerceptionSensor.PerceiveStatic(sensor.rayLength, rayAngles, sensor.detectableTags, sensor.startVerticalOffset, sensor.endVerticalOffset, 
+                sensor.sphereCastRadius, sensor.transform, RayPerceptionSensor.CastType.Cast3D, observations, false, debugInfo: rayDebugInfo);
+
             for (int i = idxParkingTag; i < observations.Length; i += numberOfTags + 2)
             {
                 // hit parking
                 if (observations[i] > 0)
                 {
                     minDistance = Mathf.Min(minDistance, observations[i + 2]);
+                    int idx = (i - idxParkingTag) / (sensor.detectableTags.Count + 2);
+                    var angle = rayAngles[idx];
+                    var direction = GetDirectionFromAngle(angle);
+                    var worldAngle = sensor.transform.TransformDirection(direction).normalized;
+                    var zAngle = Mathf.Acos(worldAngle.z) * Mathf.Rad2Deg;
+                    var zAngleFront = sensor.transform.rotation.y > 180 ? sensor.transform.rotation.y - zAngle : zAngle;
+                    var zAngleBack = 180 - zAngleFront;
+
+                    if(Application.isEditor)
+                    {
+                        var rayInfo = rayDebugInfo.rayInfos[idx];
+
+                        var startPositionWorld = rayInfo.worldStart;
+                        var endPositionWorld = rayInfo.worldEnd;
+                        var rayDirection = endPositionWorld - startPositionWorld;
+                        rayDirection *= rayInfo.hitFraction;
+                        endPositionWorld = startPositionWorld + rayDirection;
+                        //Handles.Label(endPositionWorld, $"{zAngle.ToString()}, {zAngleBack.ToString()}");
+                    }
                 }
             }
 
@@ -173,10 +201,10 @@ public class CarAgent : Agent
         return action;
     }
 
-    static Vector3 PolarToCartesian3D(float radius, float angleDegrees)
+    static Vector3 GetDirectionFromAngle(float angleDegrees)
     {
-        var x = radius * Mathf.Cos(Mathf.Deg2Rad * angleDegrees);
-        var z = radius * Mathf.Sin(Mathf.Deg2Rad * angleDegrees);
+        var x = Mathf.Cos(Mathf.Deg2Rad * angleDegrees);
+        var z = Mathf.Sin(Mathf.Deg2Rad * angleDegrees);
         return new Vector3(x, 0f, z);
     }
 
