@@ -127,7 +127,7 @@ public class CarAgent : Agent
                     var angle = rayAngles[idx];
                     var direction = GetDirectionFromAngle(angle);
                     var worldAngle = sensor.transform.TransformDirection(direction).normalized;
-                    var zAngle = Mathf.Acos(worldAngle.z) * Mathf.Rad2Deg;
+                    var zAngle = Mathf.Asin(worldAngle.z) * Mathf.Rad2Deg;
                     var zAngleFront = sensor.transform.rotation.y > 180 ? sensor.transform.rotation.y - zAngle : zAngle;
                     var zAngleBack = 180 - zAngleFront;
 
