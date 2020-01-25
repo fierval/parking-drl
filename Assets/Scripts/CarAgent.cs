@@ -140,13 +140,8 @@ public class CarAgent : Agent
                     var angle = rayAngles[idx];
 
                     // get angle relative to local axis z
-                    var zAngleFront = 90 - angle + sensor.transform.localEulerAngles.y;
-                    if(zAngleFront > 180)
-                    {
-                        zAngleFront -= 360;
-                    }
-
-                    var zAngleBack = zAngleFront > 0 ? zAngleFront - 180 : zAngleFront + 180;
+                    var zAngleFront = 90 + angle + sensor.transform.localEulerAngles.y;
+                    var zAngleBack = zAngleFront + 180;
 
                     zAngleFront %= 360;
                     zAngleBack %= 360;
