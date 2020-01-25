@@ -140,7 +140,7 @@ public class CarAgent : Agent
                     var angle = rayAngles[idx];
 
                     // get angle relative to local axis z
-                    var zAngleFront = 90 + angle + sensor.transform.localEulerAngles.y;
+                    var zAngleFront = GetSensorRotationAngle(sensor.transform, angle);
                     var zAngleBack = zAngleFront + 180;
 
                     zAngleFront %= 360;
@@ -181,6 +181,14 @@ public class CarAgent : Agent
         // small reward for getting closer to parking
         // and also turning towards it
         return 1f / minDistance * 5e-5f;
+    }
+
+    float GetSensorRotationAngle(Transform sensor, float sensorAngle)
+    {
+        var localDirection = GetDirectionFromAngle(sensorAngle);
+        var worldDirection = sensor.TransformDirection(localDirection);
+        var carRelativeDirection = transform.InverseTransformDirection(worldDirection);
+        return GetZAngleFromDirection(carRelativeDirection);
     }
 
     public override void CollectObservations()
@@ -232,4 +240,9 @@ public class CarAgent : Agent
         return new Vector3(x, 0f, z);
     }
 
+    static float GetZAngleFromDirection(Vector3 direction)
+    {
+        var absAngle = Mathf.Rad2Deg * Mathf.Acos(direction.z);
+        return direction.x > 0 ? absAngle : -absAngle;
+    }
 }
