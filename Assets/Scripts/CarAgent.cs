@@ -26,6 +26,7 @@ public class CarAgent : Agent
     float [] rewardAngles;
 
     int parkingStateLength;
+    int facingLength;
 
     // backward and forward facing angles
 
@@ -57,6 +58,8 @@ public class CarAgent : Agent
     public TextMeshPro angleDisplay;
     public bool showAngles;
 
+    Facing nowFacing = Facing.WhoCares;
+
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
@@ -65,6 +68,8 @@ public class CarAgent : Agent
 
         // initialize vector of parking states
         parkingStateLength = Enum.GetNames(typeof(ParkingState)).Length;
+        facingLength = Enum.GetNames(typeof(Facing)).Length;
+
         isCollision = false;
 
         RayPerceptionSensorComponent3D rayPerceptionSensorComponent3D = gameObject.GetComponentsInChildren<RayPerceptionSensorComponent3D>().First();
@@ -107,7 +112,6 @@ public class CarAgent : Agent
         return Mathf.Clamp(v, -1f, 1f);
     }
 
-
     float CollectRewards()
     {
         if (isCollision) return -1f;
@@ -134,7 +138,7 @@ public class CarAgent : Agent
             tmeshAngles.Clear();
         }
 
-        var minAngleFacing = FindSensorAngles();
+        var minAngleFacing = FindSensorAngleDistanceAdjustFacing();
 
         // negative reward for not heading towards parking
         if (minAngleFacing.facing == Facing.WhoCares)
@@ -147,7 +151,7 @@ public class CarAgent : Agent
         return reward + Mathf.Cos(minAngleFacing.angle) * (1f / minAngleFacing.distance) * 5e-5f;
     }
 
-    private (float angle, float distance, Facing facing) FindSensorAngles()
+    private (float angle, float distance, Facing facing) FindSensorAngleDistanceAdjustFacing()
     {
         //angle and distance fraction of hitting rays
         // plus where-facing
@@ -189,6 +193,8 @@ public class CarAgent : Agent
             }
         }
 
+        // this will influence the new state
+        nowFacing = anglesDistances.facing;
         return anglesDistances;
     }
 
@@ -229,6 +235,8 @@ public class CarAgent : Agent
         AddVectorObs(transform.eulerAngles.y / 360f);
         // parking state: one-hot observation
         AddVectorObs((int)parkingDetector.CarParkingState, parkingStateLength);
+        //facing
+        AddVectorObs((int)nowFacing, facingLength);
         // collision
         AddVectorObs(isCollision);
     }
