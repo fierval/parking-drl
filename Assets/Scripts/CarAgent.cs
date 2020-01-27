@@ -9,6 +9,13 @@ using static MLAgents.Sensor.RayPerceptionSensor;
 using UnityEditor;
 using TMPro;
 
+public enum Facing :int
+{
+    WhoCares = 0,
+    Front = 1,
+    Back = 2
+}
+
 public class CarAgent : Agent
 {
     public SpawnParkedCars carSpawner;
@@ -71,11 +78,11 @@ public class CarAgent : Agent
         rayAngles = RayPerceptionSensorComponent3D.GetRayAngles(sensor.raysPerDirection, raySensors.First().maxRayDegrees);
 
         observations = new float[(sensor.detectableTags.Count + 2) * rayAngles.Length];
+        rayDebugInfo = new DebugDisplayInfo();
 
         // info for ray drawing
         if (Application.isEditor)
         {
-            rayDebugInfo = new DebugDisplayInfo();
             tmeshAngles = new List<TextMeshPro>();
         }
     }
@@ -105,11 +112,14 @@ public class CarAgent : Agent
     {
         if (isCollision) return -1f;
 
+        float reward = -1e-4f;
+
         // are we parking now
         switch (parkingDetector.CarParkingState)
         {
             case ParkingState.InProgress:
-                return 1e-3f;
+                reward *= 0.5f;
+                break;
             case ParkingState.Failed:
                 return -1f;
             case ParkingState.Complete:
@@ -118,16 +128,34 @@ public class CarAgent : Agent
                 break;
         }
 
-        float minDistance = float.MaxValue;
-        if(rayDebugInfo != null)
+        if (Application.isEditor && showAngles)
         {
             tmeshAngles.ForEach(o => Destroy(o.gameObject));
             tmeshAngles.Clear();
         }
 
+        var minAngleFacing = FindSensorAngles();
+
+        // negative reward for not heading towards parking
+        if (minAngleFacing.facing == Facing.WhoCares)
+        {
+            return reward;
+        }
+
+        // small reward for getting closer to parking
+        // and also turning towards it
+        return reward + Mathf.Cos(minAngleFacing.angle) * (1f / minAngleFacing.distance) * 5e-5f;
+    }
+
+    private (float angle, float distance, Facing facing) FindSensorAngles()
+    {
+        //angle and distance fraction of hitting rays
+        // plus where-facing
+        (float angle, float distance, Facing facing) anglesDistances = (360f, 1f, Facing.WhoCares);
+
         foreach (var sensor in raySensors)
         {
-            RayPerceptionSensor.PerceiveStatic(sensor.rayLength, rayAngles, sensor.detectableTags, sensor.startVerticalOffset, sensor.endVerticalOffset, 
+            RayPerceptionSensor.PerceiveStatic(sensor.rayLength, rayAngles, sensor.detectableTags, sensor.startVerticalOffset, sensor.endVerticalOffset,
                 sensor.sphereCastRadius, sensor.transform, RayPerceptionSensor.CastType.Cast3D, observations, false, debugInfo: rayDebugInfo);
 
             for (int i = idxParkingTag; i < observations.Length; i += numberOfTags + 2)
@@ -135,49 +163,54 @@ public class CarAgent : Agent
                 // hit parking
                 if (observations[i] > 0)
                 {
-                    minDistance = Mathf.Min(minDistance, observations[i + 2]);
                     int idx = (i - idxParkingTag) / (sensor.detectableTags.Count + 2);
                     var angle = rayAngles[idx];
+                    var distance = observations[i + 2];
 
                     // get angle relative to local axis z
                     var zAngleFront = GetSensorRotationAngle(sensor.transform, angle);
                     var zAngleBack = (zAngleFront + 180f) % 360f;
 
+                    // don't care where we are moving, the most advantageos direction is saved
+                    var finalAngle = Math.Abs(zAngleBack) <= Math.Abs(zAngleFront) ? zAngleBack : zAngleFront;
+                    var facing = Math.Abs(zAngleBack) <= Math.Abs(zAngleFront) ? Facing.Back : Facing.Front;
+
+                    if (Mathf.Abs(finalAngle) < Mathf.Abs(anglesDistances.angle)
+                        || (Mathf.Abs(finalAngle) == Mathf.Abs(anglesDistances.angle) && distance < anglesDistances.distance))
+                    {
+                        anglesDistances = (angle: finalAngle, distance: distance, facing: facing);
+                    }
+
                     if (Application.isEditor && showAngles)
                     {
-                        var rayInfo = rayDebugInfo.rayInfos[idx];
-
-                        var startPositionWorld = rayInfo.worldStart;
-                        var endPositionWorld = rayInfo.worldEnd;
-                        var rayDirection = endPositionWorld - startPositionWorld;
-                        rayDirection *= rayInfo.hitFraction;
-                        endPositionWorld = startPositionWorld + rayDirection;
-
-                        // draw text
-                        var gObj = Instantiate(angleDisplay);
-                        gObj.gameObject.SetActive(true);
-
-                        endPositionWorld.y = 3;
-                        gObj.transform.position = endPositionWorld;
-                        gObj.transform.eulerAngles = new Vector3(90, 0, 0);
-                        gObj.SetText($"{zAngleFront:.##}, {zAngleBack:.##}");
-                        tmeshAngles.Add(gObj);
+                        DebugDrawAngleValues(idx, zAngleFront, zAngleBack);
                     }
                 }
             }
-
         }
 
+        return anglesDistances;
+    }
 
-        // negative reward for not heading towards parking
-        if (minDistance == float.MaxValue)
-        {
-            return -1e-4f;
-        }
+    private void DebugDrawAngleValues(int idx, float zAngleFront, float zAngleBack)
+    {
+        var rayInfo = rayDebugInfo.rayInfos[idx];
 
-        // small reward for getting closer to parking
-        // and also turning towards it
-        return 1f / minDistance * 5e-5f;
+        var startPositionWorld = rayInfo.worldStart;
+        var endPositionWorld = rayInfo.worldEnd;
+        var rayDirection = endPositionWorld - startPositionWorld;
+        rayDirection *= rayInfo.hitFraction;
+        endPositionWorld = startPositionWorld + rayDirection;
+
+        // draw text
+        var gObj = Instantiate(angleDisplay);
+        gObj.gameObject.SetActive(true);
+
+        endPositionWorld.y = 3;
+        gObj.transform.position = endPositionWorld;
+        gObj.transform.eulerAngles = new Vector3(90, 0, 0);
+        gObj.SetText($"{zAngleFront:.##}, {zAngleBack:.##}");
+        tmeshAngles.Add(gObj);
     }
 
     float GetSensorRotationAngle(Transform sensor, float sensorAngle)
