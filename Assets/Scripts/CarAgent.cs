@@ -148,7 +148,7 @@ public class CarAgent : Agent
 
         // small reward for getting closer to parking
         // and also turning towards it
-        return reward + Mathf.Cos(minAngleFacing.angle) * 8e-5f + (1f / minAngleFacing.distance) * 5e-5f;
+        return reward + Mathf.Abs(Mathf.Cos(minAngleFacing.angle)) * 8e-5f + (1f / minAngleFacing.distance) * 5e-5f;
     }
 
     private (float angle, float distance, Facing facing) FindSensorAngleDistanceAdjustFacing()
