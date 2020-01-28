@@ -9091,6 +9091,21 @@ PrefabInstance:
       propertyPath: rayMissColor.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3519513248621410702, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519513248621410702, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: startVerticalOffset
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519513248621410702, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: endVerticalOffset
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 3091746077758509450, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
       propertyPath: maxRayDegrees
@@ -9100,6 +9115,21 @@ PrefabInstance:
         type: 3}
       propertyPath: raysPerDirection
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091746077758509450, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091746077758509450, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: startVerticalOffset
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091746077758509450, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: endVerticalOffset
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 902164793098330591, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
@@ -9135,6 +9165,21 @@ PrefabInstance:
         type: 3}
       propertyPath: raysPerDirection
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515107603556, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515107603556, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: startVerticalOffset
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515107603556, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: endVerticalOffset
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2782313846294578319, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
@@ -9200,6 +9245,21 @@ PrefabInstance:
         type: 3}
       propertyPath: raysPerDirection
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515237628814, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515237628814, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: startVerticalOffset
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515237628814, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: endVerticalOffset
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2034348295, guid: 340d5d4e655434a4594b5c86635591ce, type: 3}
       propertyPath: m_BrainParameters.vectorObservationSize
