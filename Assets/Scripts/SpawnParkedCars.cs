@@ -19,7 +19,11 @@ public class SpawnParkedCars : MonoBehaviour
     [SerializeField, Tooltip("Should we populate parking spots on activation")] bool spawnOnAwake;
     readonly HashSet<GameObject> allSpots = new HashSet<GameObject>();
 
+    [SerializeField, Tooltip("Collider of this object is used to block out occupied parking spots")]
+    GameObject parkingBlocker;
+
     List<GameObject> occupiedSpots = new List<GameObject>();
+    List<GameObject> parkingBlockers = new List<GameObject>();
 
     /// <summary>
     /// Clone a car prefab at a fixed place
@@ -63,7 +67,7 @@ public class SpawnParkedCars : MonoBehaviour
     public void Spawn()
     {
         DestroyCars();
-        PopulateFreeSpots();
+        DiscoverFreeSpots();
         OccupyParkingSpots();
     }
     private void OccupyParkingSpots()
@@ -95,13 +99,17 @@ public class SpawnParkedCars : MonoBehaviour
                 GameObject car = CloneCar(prefabs[i],
                     spots[i].transform.position,
                     Quaternion.AngleAxis(angles[i], transform.up));
+
+                GameObject cube = Instantiate(parkingBlocker, spots[i].transform.position, Quaternion.identity);
+                cube.SetActive(true);
                 
                 instantiatedCars.Add(car);
+                parkingBlockers.Add(cube);
            }
         }
     }
 
-    private void PopulateFreeSpots()
+    private void DiscoverFreeSpots()
     {
         // Populate the list of parking spots
         foreach (var pl in parkingLots)
@@ -141,7 +149,14 @@ public class SpawnParkedCars : MonoBehaviour
             // collide with the ones awaiting destruction
             DestroyImmediate(car);
         }
+
+        foreach (var cube in parkingBlockers)
+        {
+            DestroyImmediate(cube);
+        }
+
         instantiatedCars.Clear();
+        parkingBlockers.Clear();
         parkingSpots.Clear();
     }
 }

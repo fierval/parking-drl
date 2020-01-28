@@ -60,9 +60,6 @@ public class CarAgent : Agent
 
     Facing nowFacing = Facing.WhoCares;
 
-    // free spot detection
-    SpawnParkedCars parkedCarsSpawner;
-
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
@@ -87,9 +84,6 @@ public class CarAgent : Agent
 
         observations = new float[(sensor.detectableTags.Count + 2) * rayAngles.Length];
         rayDebugInfo = new DebugDisplayInfo();
-
-        // for free spots
-        parkedCarsSpawner = FindObjectOfType<SpawnParkedCars>();
 
         // info for ray drawing
         if (Application.isEditor)
@@ -175,13 +169,6 @@ public class CarAgent : Agent
                 {
                     int idx = (i - idxParkingTag) / (sensor.detectableTags.Count + 2);
                     
-                    // figure out if the parking spot is actually available
-                    Vector3 endPositionWorld = GetHitEndWorldPos(idx);
-                    if(!parkedCarsSpawner.IsFreeSpot(endPositionWorld))
-                    {
-                        continue;
-                    }
-
                     var angle = rayAngles[idx];
                     var distance = observations[i + 2];
 
