@@ -96,13 +96,14 @@ public class SpawnParkedCars : MonoBehaviour
 
            for(int i = 0; i < maxOccupiedSpaces; i++)
            {
+                var cubePos = new Vector3(spots[i].transform.position.x, 1.75f, spots[i].transform.position.z);
+                GameObject cube = Instantiate(parkingBlocker, cubePos, Quaternion.identity);
+
                 GameObject car = CloneCar(prefabs[i],
                     spots[i].transform.position,
                     Quaternion.AngleAxis(angles[i], transform.up));
-
-                GameObject cube = Instantiate(parkingBlocker, spots[i].transform.position, Quaternion.identity);
-                cube.SetActive(true);
                 
+                cube.SetActive(true);
                 instantiatedCars.Add(car);
                 parkingBlockers.Add(cube);
            }
@@ -158,5 +159,6 @@ public class SpawnParkedCars : MonoBehaviour
         instantiatedCars.Clear();
         parkingBlockers.Clear();
         parkingSpots.Clear();
+        occupiedSpots.Clear();
     }
 }

@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.96254}
   m_Children:
   - {fileID: 1390457124293082135}
   m_Father: {fileID: 0}
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 2293924645159931794}
   - component: {fileID: 2400408931883396663}
   - component: {fileID: 1635085092869495137}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Marker
   m_TagString: parking
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212042974100590679}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -3.25, y: 0.8399999, z: -0.03}
+  m_LocalPosition: {x: -3.13, y: 0.8399999, z: -0.03}
   m_LocalScale: {x: 3.7920594, y: 1.6131, z: 1}
   m_Children: []
   m_Father: {fileID: 7620227809355808470}
@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: 5605496200893984894}
   - component: {fileID: 4434167558856823570}
   - component: {fileID: 6062603710250401422}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Marker
   m_TagString: parking
   m_Icon: {fileID: 0}
@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 3607057133765439299}
   - component: {fileID: 6545802047754440440}
   - component: {fileID: 5052262427478214879}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Marker
   m_TagString: parking
   m_Icon: {fileID: 0}
@@ -844,7 +844,7 @@ GameObject:
   - component: {fileID: 8445494301273938369}
   - component: {fileID: 8157566173982331091}
   - component: {fileID: 4140258877033495485}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Marker
   m_TagString: parking
   m_Icon: {fileID: 0}
@@ -1060,7 +1060,7 @@ GameObject:
   - component: {fileID: 8770393077475141394}
   - component: {fileID: 8327736513367429246}
   - component: {fileID: 6537571101826460149}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Marker
   m_TagString: parking
   m_Icon: {fileID: 0}
@@ -1075,7 +1075,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5857711425790981807}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -3.25, y: 0.8399999, z: 0.1}
+  m_LocalPosition: {x: -3.13, y: 0.8399999, z: 0.1}
   m_LocalScale: {x: 3.6973295, y: 1.6131, z: 1}
   m_Children: []
   m_Father: {fileID: 7792243055834055493}
@@ -1276,7 +1276,7 @@ GameObject:
   - component: {fileID: 2439286303012295329}
   - component: {fileID: 8049098013741120467}
   - component: {fileID: 3374225690630861826}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Marker
   m_TagString: parking
   m_Icon: {fileID: 0}
@@ -1915,7 +1915,7 @@ GameObject:
   - component: {fileID: 3995309528097528528}
   - component: {fileID: 5630892564514324794}
   - component: {fileID: 1242676635592268049}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Marker
   m_TagString: parking
   m_Icon: {fileID: 0}
@@ -1930,7 +1930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9089300295899427213}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -3.25, y: 0.8399, z: 0}
+  m_LocalPosition: {x: -2.99, y: 0.8399, z: 0.1}
   m_LocalScale: {x: 3.651, y: 1.6131, z: 1}
   m_Children: []
   m_Father: {fileID: 267540526749152103}
@@ -2022,7 +2022,7 @@ GameObject:
   - component: {fileID: 4709187295585585265}
   - component: {fileID: 3800127932748077441}
   - component: {fileID: 2202886558412738756}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Marker
   m_TagString: parking
   m_Icon: {fileID: 0}
