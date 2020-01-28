@@ -96,8 +96,6 @@ public class SpawnParkedCars : MonoBehaviour
                 instantiatedCars.Add(car);
            }
         }
-
-
     }
 
     private void PopulateFreeSpots()
@@ -112,6 +110,19 @@ public class SpawnParkedCars : MonoBehaviour
                 allSpots.Add(spot.gameObject);
             }
         }
+    }
+
+    /// <summary>
+    /// Is the position in a free spot
+    /// </summary>
+    /// <param name="pos"></param>
+    public bool IsFreeSpot(Vector3 pos)
+    {
+        var freeSpots = FreeSpots
+            .Select(go => go.transform.Find("Marker").GetComponent<BoxCollider>().bounds)
+            .Where(b => b.Contains(pos))
+            .Count();
+        return freeSpots > 0;
     }
 
     void DestroyCars()

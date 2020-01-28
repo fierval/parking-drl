@@ -60,6 +60,9 @@ public class CarAgent : Agent
 
     Facing nowFacing = Facing.WhoCares;
 
+    // free spot detection
+    SpawnParkedCars parkedCarsSpawner;
+
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
@@ -84,6 +87,9 @@ public class CarAgent : Agent
 
         observations = new float[(sensor.detectableTags.Count + 2) * rayAngles.Length];
         rayDebugInfo = new DebugDisplayInfo();
+
+        // for free spots
+        parkedCarsSpawner = FindObjectOfType<SpawnParkedCars>();
 
         // info for ray drawing
         if (Application.isEditor)
@@ -168,15 +174,21 @@ public class CarAgent : Agent
                 if (observations[i] > 0)
                 {
                     int idx = (i - idxParkingTag) / (sensor.detectableTags.Count + 2);
+                    
+                    // figure out if the parking spot is actually available
+                    Vector3 endPositionWorld = GetHitEndWorldPos(idx);
+                    if(!parkedCarsSpawner.IsFreeSpot(endPositionWorld))
+                    {
+                        continue;
+                    }
+
                     var angle = rayAngles[idx];
                     var distance = observations[i + 2];
+
 
                     // get angle relative to local axis z
                     var zAngleFront = GetSensorRotationAngle(sensor.transform, angle);
                     var zAngleBack = (zAngleFront + 180f) % 360f;
-
-                    // figure out if the parking spot is actually available
-                    Vector3 endPositionWorld = GetHitEndWorldPos(idx);
 
                     // don't care where we are moving, the most advantageos direction is saved
                     var finalAngle = Math.Abs(zAngleBack) <= Math.Abs(zAngleFront) ? zAngleBack : zAngleFront;
