@@ -175,6 +175,9 @@ public class CarAgent : Agent
                     var zAngleFront = GetSensorRotationAngle(sensor.transform, angle);
                     var zAngleBack = (zAngleFront + 180f) % 360f;
 
+                    // figure out if the parking spot is actually available
+                    Vector3 endPositionWorld = GetHitEndWorldPos(idx);
+
                     // don't care where we are moving, the most advantageos direction is saved
                     var finalAngle = Math.Abs(zAngleBack) <= Math.Abs(zAngleFront) ? zAngleBack : zAngleFront;
                     var facing = Math.Abs(zAngleBack) <= Math.Abs(zAngleFront) ? Facing.Back : Facing.Front;
@@ -200,13 +203,7 @@ public class CarAgent : Agent
 
     private void DebugDrawAngleValues(int idx, float zAngleFront, float zAngleBack)
     {
-        var rayInfo = rayDebugInfo.rayInfos[idx];
-
-        var startPositionWorld = rayInfo.worldStart;
-        var endPositionWorld = rayInfo.worldEnd;
-        var rayDirection = endPositionWorld - startPositionWorld;
-        rayDirection *= rayInfo.hitFraction;
-        endPositionWorld = startPositionWorld + rayDirection;
+        Vector3 endPositionWorld = GetHitEndWorldPos(idx);
 
         // draw text
         var gObj = Instantiate(angleDisplay);
@@ -217,6 +214,18 @@ public class CarAgent : Agent
         gObj.transform.eulerAngles = new Vector3(90, 0, 0);
         gObj.SetText($"{zAngleFront:.##}, {zAngleBack:.##}");
         tmeshAngles.Add(gObj);
+    }
+
+    private Vector3 GetHitEndWorldPos(int idx)
+    {
+        var rayInfo = rayDebugInfo.rayInfos[idx];
+
+        var startPositionWorld = rayInfo.worldStart;
+        var endPositionWorld = rayInfo.worldEnd;
+        var rayDirection = endPositionWorld - startPositionWorld;
+        rayDirection *= rayInfo.hitFraction;
+        endPositionWorld = startPositionWorld + rayDirection;
+        return endPositionWorld;
     }
 
     float GetSensorRotationAngle(Transform sensor, float sensorAngle)
