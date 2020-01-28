@@ -19,6 +19,8 @@ public class SpawnParkedCars : MonoBehaviour
     [SerializeField, Tooltip("Should we populate parking spots on activation")] bool spawnOnAwake;
     readonly HashSet<GameObject> allSpots = new HashSet<GameObject>();
 
+    List<GameObject> occupiedSpots = new List<GameObject>();
+
     /// <summary>
     /// Clone a car prefab at a fixed place
     /// </summary>
@@ -42,12 +44,11 @@ public class SpawnParkedCars : MonoBehaviour
         return carInstance;
     }
 
-    public IEnumerable<GameObject> FreeSpots
+    public List<GameObject> FreeSpots
     {
         get
         {
-            var occupied = parkingSpots.SelectMany(d => d.Value);
-            return allSpots.Except(occupied);
+            return allSpots.Except(occupiedSpots).ToList();
         }
     }
 
@@ -81,6 +82,8 @@ public class SpawnParkedCars : MonoBehaviour
                 .Take(maxOccupiedSpaces)
                 .Select(i => parkingSpots[lot][i])
                 .ToList();
+
+            occupiedSpots.AddRange(spots);
 
             // rotation angles for y axis: 90 or -90
             var angles = Enumerable.Range(0, maxOccupiedSpaces)
@@ -119,8 +122,7 @@ public class SpawnParkedCars : MonoBehaviour
     public bool IsFreeSpot(Vector3 pos)
     {
         var freeSpots = FreeSpots
-            .Select(go => go.transform.Find("Marker").GetComponent<BoxCollider>().bounds)
-            .Where(b => b.Contains(pos))
+            .Where(go => go.transform.Find("Marker").GetComponent<BoxCollider>().bounds.Contains(pos))
             .Count();
         return freeSpots > 0;
     }
