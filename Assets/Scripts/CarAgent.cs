@@ -16,6 +16,22 @@ public enum Facing :int
     Back = 2
 }
 
+/// <summary>
+/// Reward structure for the agent
+/// </summary>
+struct Rewards
+{
+    public const float BaseReward = -1e-4f;
+    public const float Distance = -BaseReward * 0.7f;
+    public const float Angle = -BaseReward * 0.95f;
+    public const float ParkingComplete = 1f;
+    public const float ParkingFailed = -1f;
+    public const float ParkingProgress = -BaseReward * 1e1f;
+
+    // how many steps left before we totally fail
+    public const int StepsToFailure = 3;
+}
+
 public class CarAgent : Agent
 {
     public SpawnParkedCars carSpawner;
@@ -114,22 +130,28 @@ public class CarAgent : Agent
 
     float CollectRewards()
     {
-        if (isCollision) return -1f;
+        float reward = Rewards.BaseReward;
 
-        float reward = -1e-4f;
+        if (isCollision) return Rewards.ParkingFailed;
+
 
         // are we parking now
         switch (parkingDetector.CarParkingState)
         {
             case ParkingState.InProgress:
-                reward = -reward;
+                reward = Rewards.ParkingProgress;
                 break;
             case ParkingState.Failed:
-                return -1f;
+                return Rewards.ParkingFailed;
             case ParkingState.Complete:
-                return 1f;
+                return Rewards.ParkingComplete;
             default:
                 break;
+        }
+
+        if(GetStepCount() >= agentParameters.maxStep - Rewards.StepsToFailure && parkingDetector.CarParkingState != ParkingState.InProgress)
+        {
+            return Rewards.ParkingFailed;
         }
 
         if (Application.isEditor && showAngles)
@@ -148,7 +170,7 @@ public class CarAgent : Agent
 
         // small reward for getting closer to parking
         // and also turning towards it
-        return reward + Mathf.Abs(Mathf.Cos(minAngleFacing.angle)) * 8e-5f + (1f / minAngleFacing.distance) * 5e-5f;
+        return reward + Mathf.Abs(Mathf.Cos(minAngleFacing.angle)) * Rewards.Angle + (1f / minAngleFacing.distance) * Rewards.Distance;
     }
 
     private (float angle, float distance, Facing facing) FindSensorAngleDistanceAdjustFacing()
@@ -159,8 +181,7 @@ public class CarAgent : Agent
 
         foreach (var sensor in raySensors)
         {
-            RayPerceptionSensor.PerceiveStatic(sensor.rayLength, rayAngles, sensor.detectableTags, sensor.startVerticalOffset, sensor.endVerticalOffset,
-                sensor.sphereCastRadius, sensor.transform, RayPerceptionSensor.CastType.Cast3D, observations, false, debugInfo: rayDebugInfo);
+            observations = GetSensorObservations(sensor);
 
             for (int i = idxParkingTag; i < observations.Length; i += numberOfTags + 2)
             {
@@ -168,7 +189,7 @@ public class CarAgent : Agent
                 if (observations[i] > 0)
                 {
                     int idx = (i - idxParkingTag) / (sensor.detectableTags.Count + 2);
-                    
+
                     var angle = rayAngles[idx];
                     var distance = observations[i + 2];
 
@@ -200,6 +221,14 @@ public class CarAgent : Agent
         return anglesDistances;
     }
 
+    private float [] GetSensorObservations(RayPerceptionSensorComponent3D sensor)
+    {
+        RayPerceptionSensor.PerceiveStatic(sensor.rayLength, rayAngles, sensor.detectableTags, sensor.startVerticalOffset, sensor.endVerticalOffset,
+            sensor.sphereCastRadius, sensor.transform, RayPerceptionSensor.CastType.Cast3D, observations, false, debugInfo: rayDebugInfo);
+
+        return observations;
+    }
+
     private void DebugDrawAngleValues(int idx, float zAngleFront, float zAngleBack)
     {
         Vector3 endPositionWorld = GetHitEndWorldPos(idx);
@@ -215,6 +244,11 @@ public class CarAgent : Agent
         tmeshAngles.Add(gObj);
     }
 
+    /// <summary>
+    /// Where is the ray going to end
+    /// </summary>
+    /// <param name="idx"></param>
+    /// <returns></returns>
     private Vector3 GetHitEndWorldPos(int idx)
     {
         var rayInfo = rayDebugInfo.rayInfos[idx];
@@ -227,6 +261,13 @@ public class CarAgent : Agent
         return endPositionWorld;
     }
 
+    /// <summary>
+    /// Given a sensor and its angle, find the angle
+    /// relative to the car forward axis
+    /// </summary>
+    /// <param name="sensor"></param>
+    /// <param name="sensorAngle"></param>
+    /// <returns></returns>
     float GetSensorRotationAngle(Transform sensor, float sensorAngle)
     {
         var localDirection = GetDirectionFromAngle(sensorAngle);
