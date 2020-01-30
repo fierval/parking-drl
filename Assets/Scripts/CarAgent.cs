@@ -122,7 +122,7 @@ public class CarAgent : Agent
         switch (parkingDetector.CarParkingState)
         {
             case ParkingState.InProgress:
-                reward *= 0.5f;
+                reward = -reward;
                 break;
             case ParkingState.Failed:
                 return -1f;
