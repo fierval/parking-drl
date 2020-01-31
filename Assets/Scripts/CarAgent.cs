@@ -77,6 +77,9 @@ public class CarAgent : Agent
 
     Facing nowFacing = Facing.WhoCares;
 
+    // where we expect to park
+    GameObject goalParking;
+
     private void Awake()
     {
         vehicleController = GetComponent<ESVehicleController>();
@@ -224,6 +227,39 @@ public class CarAgent : Agent
         return observations;
     }
 
+    /// <summary>
+    /// We have hit a free parking spot. Return its transform so we can track our progress from that moment on
+    /// </summary>
+    /// <param name="sensor"></param>
+    /// <param name="idx"></param>
+    /// <returns></returns>
+    private GameObject GetFreeParkingSpot(RayPerceptionSensorComponent3D sensor, int idx)
+    {
+        var castRadius = sensor.sphereCastRadius;
+
+        var rayInfo = rayDebugInfo.rayInfos[idx];
+        bool castHit = false;
+        var rayLength = sensor.rayLength;
+        int layerMask = Physics.DefaultRaycastLayers;
+        var startPositionWorld = rayInfo.worldStart;
+        var rayDirection = rayInfo.worldEnd - startPositionWorld;
+        RaycastHit rayHit;
+
+        if (castRadius > 0f)
+        {
+            castHit = Physics.SphereCast(startPositionWorld, castRadius, rayDirection, out rayHit,
+                rayLength, layerMask);
+        }
+        else
+        {
+            castHit = Physics.Raycast(startPositionWorld, rayDirection, out rayHit,
+                rayLength, layerMask);
+        }
+
+        var parkingObject = castHit ? rayHit.collider.gameObject.transform.parent.gameObject : null;
+        return parkingObject;
+    }
+
     private void DebugDrawAngleValues(int idx, float zAngleFront, float zAngleBack)
     {
         Vector3 endPositionWorld = GetHitEndWorldPos(idx);
@@ -297,6 +333,7 @@ public class CarAgent : Agent
 
     public override void AgentReset()
     {
+        goalParking = null;
         isCollision = false;
         carSpawner.Spawn();
         transform.position = startPosTransform.position;
