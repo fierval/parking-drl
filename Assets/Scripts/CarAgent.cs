@@ -21,12 +21,13 @@ public enum Facing :int
 /// </summary>
 struct Rewards
 {
-    public const float BaseReward = -1e-4f;
+    public const float BaseReward = -1e-3f;
     public const float Distance = -BaseReward * 0.7f;
     public const float Angle = -BaseReward * 0.95f;
     public const float ParkingComplete = 1f;
     public const float ParkingFailed = -1f;
     public const float ParkingProgress = -BaseReward * 1e1f;
+    public const float FoundParking = -BaseReward;
 
     // how many steps left before we totally fail
     public const int StepsToFailure = 3;
@@ -134,7 +135,6 @@ public class CarAgent : Agent
 
         if (isCollision) return Rewards.ParkingFailed;
 
-
         // are we parking now
         switch (parkingDetector.CarParkingState)
         {
@@ -147,11 +147,6 @@ public class CarAgent : Agent
                 return Rewards.ParkingComplete;
             default:
                 break;
-        }
-
-        if(GetStepCount() >= agentParameters.maxStep - Rewards.StepsToFailure && parkingDetector.CarParkingState != ParkingState.InProgress)
-        {
-            return Rewards.ParkingFailed;
         }
 
         if (Application.isEditor && showAngles)

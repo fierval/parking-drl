@@ -394,4 +394,4 @@ Music/
 saved_models/
 sac-1*/
 summaries/
-csharp_timers.*
+csharp_timers.json
