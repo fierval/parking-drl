@@ -256,7 +256,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53770354}
-  m_LocalRotation: {x: -0.16108428, y: -0.17181133, z: 0.028488543, w: -0.97145313}
+  m_LocalRotation: {x: -0.16130264, y: -0.16419102, z: 0.027224956, w: -0.9727701}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1966,7 +1966,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412181766}
-  m_LocalRotation: {x: -0.032300103, y: -0.18097745, z: 0.0059466013, w: -0.98293877}
+  m_LocalRotation: {x: -0.032323956, y: -0.17698921, z: 0.005815536, w: -0.9836647}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6571,7 +6571,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1447580200}
-  m_LocalRotation: {x: -0.15858114, y: -0.16065486, z: 0.02616104, w: -0.9738366}
+  m_LocalRotation: {x: -0.15892509, y: -0.1472809, z: 0.023983203, w: -0.97594875}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7205,6 +7205,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2543716438905740066, guid: e2799ac2ba184ee49b3fdda417b57ed6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81c8c9aa820e76243afcdb8b147cd577, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2799ac2ba184ee49b3fdda417b57ed6, type: 3}
 --- !u!1 &1638583577 stripped
@@ -7394,7 +7399,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677570025}
-  m_LocalRotation: {x: 0.032300018, y: 0.18097746, z: -0.0059470385, w: 0.9829387}
+  m_LocalRotation: {x: 0.03232387, y: 0.17698923, z: -0.0058159824, w: 0.9836647}
   m_LocalPosition: {x: -3.6927314, y: 4.7704515, z: -1.1772928}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -9072,7 +9077,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2034348294, guid: 340d5d4e655434a4594b5c86635591ce, type: 3}
       propertyPath: agentParameters.maxStep
-      value: 10000
+      value: 30000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2034348294, guid: 340d5d4e655434a4594b5c86635591ce, type: 3}
+      propertyPath: agentParameters.numberOfActionsBetweenDecisions
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3519513248621410702, guid: 340d5d4e655434a4594b5c86635591ce,
         type: 3}
