@@ -16,8 +16,6 @@ public class ParkingDetector : MonoBehaviour
     // angles where parking is not failed
     const int MinAngle = 50;
 
-    Renderer parkRender;
-    Bounds parkingBoundingBox;
     ESVehicleController vehicleController;
     ESGearShift gearShift;
 

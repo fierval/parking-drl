@@ -270,7 +270,7 @@ Basic:
 Parking:
     batch_size: 128
     normalize: false
-    num_layers: 1
+    num_layers: 3
     hidden_units: 256
     train_interval: 3
     max_steps: 1e7
