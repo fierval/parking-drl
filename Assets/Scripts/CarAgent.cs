@@ -21,9 +21,9 @@ public enum Facing :int
 /// </summary>
 struct Rewards
 {
-    public const float BaseReward = -1e-3f;
-    public const float Distance = -BaseReward * 0.7f;
-    public const float Angle = -BaseReward * 0.95f;
+    public const float BaseReward = -1e-4f;
+    public const float DistanceWeight = -BaseReward * 0.9f;
+    public const float AngleWeight = -BaseReward * 0.9f;
     public const float ParkingComplete = 1f;
     public const float ParkingFailed = -1f;
     public const float ParkingProgress = -BaseReward * 1e1f;
@@ -152,6 +152,11 @@ public class CarAgent : Agent
                 break;
         }
 
+        if(GetStepCount() >= agentParameters.maxStep)
+        {
+            return Rewards.ParkingFailed;
+        }
+
         if (Application.isEditor && showAngles)
         {
             tmeshAngles.ForEach(o => Destroy(o.gameObject));
@@ -168,7 +173,7 @@ public class CarAgent : Agent
 
         // small reward for getting closer to parking
         // and also turning towards it
-        return reward + Mathf.Abs(Mathf.Cos(minAngleFacing.angle)) * Rewards.Angle + (1f / minAngleFacing.distance) * Rewards.Distance;
+        return reward + Mathf.Abs(Mathf.Cos(minAngleFacing.angle)) * Rewards.AngleWeight + (1f - minAngleFacing.distance ) * Rewards.DistanceWeight;
     }
 
     private (float angle, float distance, Facing facing) FindSensorAngleDistanceAdjustFacing()
