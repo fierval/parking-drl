@@ -25,12 +25,13 @@ struct Rewards
     public const float DistanceWeight = -BaseReward * 1e1f;
     public const float AngleWeight = -BaseReward;
     public const float ParkingComplete = 1f;
-    public const float ParkingFailed = 0f;
+    public const float ParkingFailed = -1f;
+    public const float ParkingAttempted = 0f;
     public const float ParkingProgress = -BaseReward * 1e1f;
     public const float FoundParking = -BaseReward;
 
     // how many steps left before we totally fail
-    public const int StepsToFailure = 3;
+    public const int StepsToFailure = 1;
 }
 
 public class CarAgent : Agent
@@ -145,7 +146,7 @@ public class CarAgent : Agent
                 reward = Rewards.ParkingProgress;
                 break;
             case ParkingState.Failed:
-                return Rewards.ParkingFailed;
+                return Rewards.ParkingAttempted;
             case ParkingState.Complete:
                 return Rewards.ParkingComplete;
             default:
