@@ -199,7 +199,12 @@ public class CarAgent : Agent
 
                     // get angle relative to local axis z
                     var zAngleFront = GetSensorRotationAngle(sensor.transform, angle);
-                    var zAngleBack = (zAngleFront + 180f) % 360f;
+                    var zAngleBack = (zAngleFront + 180f);
+
+                    if(zAngleBack > 180)
+                    {
+                        zAngleBack -= 360;
+                    }
 
                     // don't care where we are moving, the most advantageos direction is saved
                     var finalAngle = Math.Abs(zAngleBack) <= Math.Abs(zAngleFront) ? zAngleBack : zAngleFront;
@@ -343,6 +348,8 @@ public class CarAgent : Agent
         carSpawner.Spawn();
         transform.position = startPosTransform.position;
         transform.rotation = startPosTransform.rotation;
+        vehicleController.Accel = 0;
+        vehicleController.Steer = 0;
     }
 
     public override float[] Heuristic()

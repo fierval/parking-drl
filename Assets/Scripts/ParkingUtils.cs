@@ -20,7 +20,9 @@ public static class ParkingUtils
 
     public static bool IsAcademyActive() => academy != null && academy.enabled;
     public const string ParkingTag = "parking";
-    
+    public const string CarTag = "car";
+    public const string ImmovableTag = "immovable";
+    public const string Marker = "Marker";
     private static Random rng = new Random();
     private static float Round1(this float f)
     {

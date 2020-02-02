@@ -20,7 +20,6 @@ public class SpawnParkedCars : MonoBehaviour
     readonly HashSet<GameObject> allSpots = new HashSet<GameObject>();
 
     [SerializeField, Tooltip("Collider of this object is used to block out occupied parking spots")]
-    GameObject parkingBlocker;
 
     List<GameObject> occupiedSpots = new List<GameObject>();
     List<GameObject> parkingBlockers = new List<GameObject>();
@@ -87,7 +86,19 @@ public class SpawnParkedCars : MonoBehaviour
                 .Select(i => parkingSpots[lot][i])
                 .ToList();
 
-            occupiedSpots.AddRange(spots);
+            // occu
+            foreach(var spot in spots)
+            {
+                foreach (Transform child in spot.transform)
+                {
+                    if(child.name == ParkingUtils.Marker)
+                    {
+                        child.gameObject.tag = ParkingUtils.CarTag;
+                        occupiedSpots.Add(child.gameObject);
+                        break;
+                    }
+                }
+            }
 
             // rotation angles for y axis: 90 or -90
             var angles = Enumerable.Range(0, maxOccupiedSpaces)
@@ -96,16 +107,10 @@ public class SpawnParkedCars : MonoBehaviour
 
            for(int i = 0; i < maxOccupiedSpaces; i++)
            {
-                var cubePos = new Vector3(spots[i].transform.position.x, 1.75f, spots[i].transform.position.z);
-                GameObject cube = Instantiate(parkingBlocker, cubePos, Quaternion.identity);
-
                 GameObject car = CloneCar(prefabs[i],
                     spots[i].transform.position,
                     Quaternion.AngleAxis(angles[i], transform.up));
-                
-                cube.SetActive(true);
                 instantiatedCars.Add(car);
-                parkingBlockers.Add(cube);
            }
         }
     }
@@ -154,6 +159,11 @@ public class SpawnParkedCars : MonoBehaviour
         foreach (var cube in parkingBlockers)
         {
             DestroyImmediate(cube);
+        }
+
+        foreach (var spot in occupiedSpots)
+        {
+            spot.tag = ParkingUtils.ParkingTag; 
         }
 
         instantiatedCars.Clear();
