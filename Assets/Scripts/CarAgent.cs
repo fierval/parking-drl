@@ -22,8 +22,8 @@ public enum Facing :int
 struct Rewards
 {
     public const float BaseReward = -1e-4f;
-    public const float DistanceWeight = -BaseReward * 0.9f;
-    public const float AngleWeight = -BaseReward * 0.9f;
+    public const float DistanceWeight = -BaseReward * 1e1f;
+    public const float AngleWeight = -BaseReward;
     public const float ParkingComplete = 1f;
     public const float ParkingFailed = -1f;
     public const float ParkingProgress = -BaseReward * 1e1f;
