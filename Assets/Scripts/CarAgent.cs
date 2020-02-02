@@ -210,8 +210,7 @@ public class CarAgent : Agent
                     var finalAngle = Math.Abs(zAngleBack) <= Math.Abs(zAngleFront) ? zAngleBack : zAngleFront;
                     var facing = Math.Abs(zAngleBack) <= Math.Abs(zAngleFront) ? Facing.Back : Facing.Front;
 
-                    if (Mathf.Abs(finalAngle) < Mathf.Abs(anglesDistances.angle)
-                        || (Mathf.Abs(finalAngle) == Mathf.Abs(anglesDistances.angle) && distance < anglesDistances.distance))
+                    if (distance < anglesDistances.distance)
                     {
                         anglesDistances = (angle: finalAngle, distance: distance, facing: facing);
                     }
