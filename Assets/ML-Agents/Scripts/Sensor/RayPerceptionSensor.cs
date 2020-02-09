@@ -27,8 +27,6 @@ namespace MLAgents.Sensor
         Transform m_Transform;
         int m_LayerMask;
 
-        public float[] Observations => m_Observations;
-
         /// <summary>
         /// Debug information for the raycast hits. This is used by the RayPerceptionSensorComponent.
         /// </summary>
