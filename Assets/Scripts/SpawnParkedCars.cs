@@ -14,15 +14,31 @@ public class SpawnParkedCars : MonoBehaviour
     [SerializeField] GameObject[] carPrefabs;
     [SerializeField] GameObject[] parkingLots;
 
-    [SerializeField, Range(0, 7)] int maxOccupiedSpaces;
-    
+    [Range(0, 7)]
+    public int maxOccupiedSpaces;
+
+    [Range(0, 7), Tooltip("Spot where we need to park")]
+    public int goalSpot;
+
+    [Tooltip("Choose goal at random, overrides the value of Goal Spot")]
+    public bool randomGoalSpot;
+
     [SerializeField, Tooltip("Should we populate parking spots on activation")] bool spawnOnAwake;
     readonly HashSet<GameObject> allSpots = new HashSet<GameObject>();
 
-    [SerializeField, Tooltip("Collider of this object is used to block out occupied parking spots")]
-
     List<GameObject> occupiedSpots = new List<GameObject>();
-    List<GameObject> parkingBlockers = new List<GameObject>();
+
+    static GameObject GetParkingLot()
+    {
+        var startingPos = GameObject.Find("StartingPoint").transform.position;
+
+        var lots = new GameObject[] { GameObject.Find("parking_lot"), GameObject.Find("parking_lot_1") };
+        return lots
+            .Where(l => l.GetComponent<Renderer>().bounds.Contains(startingPos))
+            .First();
+    }
+
+    public GameObject GoalParkingSpot() => parkingSpots[GetParkingLot()][goalSpot];
 
     /// <summary>
     /// Clone a car prefab at a fixed place
@@ -65,28 +81,43 @@ public class SpawnParkedCars : MonoBehaviour
 
     public void Spawn()
     {
+        //We assign goal spot based on whether or not it is random
         DestroyCars();
         DiscoverFreeSpots();
+        SetGoalSpot();
         OccupyParkingSpots();
     }
+
+    private void SetGoalSpot()
+    {
+        if(!randomGoalSpot)
+        {
+            return;
+        }
+
+        goalSpot = (int)(Random.Range(0f, 0.7f) * 10f);
+    }
+
     private void OccupyParkingSpots()
     {
         foreach (var lot in parkingLots)
         {
             // get cars
             var prefabs = Enumerable.Range(0, parkingSpots[lot].Count)
+                .Where(i => i != goalSpot)
                 .Select(_ => carPrefabs[Random.Range(0, carPrefabs.Length)])
                 .Take(maxOccupiedSpaces)
                 .ToList();
 
             var spots = Enumerable.Range(0, parkingSpots[lot].Count)
+                .Where(i => i != goalSpot)
                 .ToList()
                 .Shuffle()
                 .Take(maxOccupiedSpaces)
                 .Select(i => parkingSpots[lot][i])
                 .ToList();
 
-            // occu
+            // occupied spots: change tag
             foreach(var spot in spots)
             {
                 foreach (Transform child in spot.transform)
@@ -156,18 +187,12 @@ public class SpawnParkedCars : MonoBehaviour
             DestroyImmediate(car);
         }
 
-        foreach (var cube in parkingBlockers)
-        {
-            DestroyImmediate(cube);
-        }
-
         foreach (var spot in occupiedSpots)
         {
             spot.tag = ParkingUtils.ParkingTag; 
         }
 
         instantiatedCars.Clear();
-        parkingBlockers.Clear();
         parkingSpots.Clear();
         occupiedSpots.Clear();
     }

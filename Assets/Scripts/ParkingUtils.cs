@@ -24,6 +24,11 @@ public static class ParkingUtils
     public const string ImmovableTag = "immovable";
     public const string Marker = "Marker";
     private static Random rng = new Random();
+
+    public const string RandomSpot = "random_spot";
+    public const string NumCars = "num_cars";
+    public const string GoalSpot = "goal_spot";
+
     private static float Round1(this float f)
     {
         return (float) Math.Round(f, 1);

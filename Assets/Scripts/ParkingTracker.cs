@@ -17,7 +17,7 @@ public class ParkingTracker : MonoBehaviour
     public Material completeMaterial;
     public Material failedMaterial;
 
-    Material CurMaterial
+    public Material CurMaterial
     {
         get => placeMatRenderer.material;
         set => placeMatRenderer.material = value;

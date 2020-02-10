@@ -40,6 +40,10 @@ public class CarAgent : Agent
     ESVehicleController vehicleController;
     ESGearShift gearShift;
     ParkingDetector parkingDetector;
+
+    // to interface with curriculum learning
+    CarAcademy academy;
+
     float [] rewardAngles;
 
     int parkingStateLength;
@@ -82,6 +86,8 @@ public class CarAgent : Agent
 
     private void Awake()
     {
+        academy = FindObjectOfType<CarAcademy>();
+
         vehicleController = GetComponent<ESVehicleController>();
         gearShift = GetComponent<ESGearShift>();
         parkingDetector = GetComponent<ParkingDetector>();
@@ -345,7 +351,15 @@ public class CarAgent : Agent
     {
         goalParking = null;
         isCollision = false;
+
+        // set academy properties based on the curriculum
+        carSpawner.randomGoalSpot = academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.RandomSpot, 0f) > 0;
+        carSpawner.goalSpot = (int) academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.GoalSpot, 1f);
+        carSpawner.maxOccupiedSpaces = (int)academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.NumCars, 0f);
+
         carSpawner.Spawn();
+        goalParking = carSpawner.GoalParkingSpot();
+
         transform.position = startPosTransform.position;
         transform.rotation = startPosTransform.rotation;
         vehicleController.Accel = 0;
