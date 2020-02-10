@@ -28,12 +28,11 @@ public class SpawnParkedCars : MonoBehaviour
 
     List<GameObject> occupiedSpots = new List<GameObject>();
 
-    static GameObject GetParkingLot()
+    GameObject GetParkingLot()
     {
         var startingPos = GameObject.Find("StartingPoint").transform.position;
 
-        var lots = new GameObject[] { GameObject.Find("parking_lot"), GameObject.Find("parking_lot_1") };
-        return lots
+        return parkingLots
             .Where(l => l.GetComponent<Renderer>().bounds.Contains(startingPos))
             .First();
     }
@@ -73,6 +72,8 @@ public class SpawnParkedCars : MonoBehaviour
 
     private void Awake()
     {
+        DiscoverFreeSpots();
+
         if(spawnOnAwake)
         {
             Spawn();
@@ -83,7 +84,6 @@ public class SpawnParkedCars : MonoBehaviour
     {
         //We assign goal spot based on whether or not it is random
         DestroyCars();
-        DiscoverFreeSpots();
         SetGoalSpot();
         OccupyParkingSpots();
     }
@@ -104,7 +104,6 @@ public class SpawnParkedCars : MonoBehaviour
         {
             // get cars
             var prefabs = Enumerable.Range(0, parkingSpots[lot].Count)
-                .Where(i => i != goalSpot)
                 .Select(_ => carPrefabs[Random.Range(0, carPrefabs.Length)])
                 .Take(maxOccupiedSpaces)
                 .ToList();
@@ -193,7 +192,6 @@ public class SpawnParkedCars : MonoBehaviour
         }
 
         instantiatedCars.Clear();
-        parkingSpots.Clear();
         occupiedSpots.Clear();
     }
 }

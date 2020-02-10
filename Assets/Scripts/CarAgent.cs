@@ -83,6 +83,7 @@ public class CarAgent : Agent
 
     // where we expect to park
     GameObject goalParking;
+    GameObject freeSpace;
 
     private void Awake()
     {
@@ -110,6 +111,8 @@ public class CarAgent : Agent
 
         observations = new float[(sensor.detectableTags.Count + 2) * rayAngles.Length];
         rayDebugInfo = new DebugDisplayInfo();
+
+        freeSpace = null;
 
         // info for ray drawing
         if (Application.isEditor)
@@ -353,17 +356,38 @@ public class CarAgent : Agent
         isCollision = false;
 
         // set academy properties based on the curriculum
-        carSpawner.randomGoalSpot = academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.RandomSpot, 0f) > 0;
-        carSpawner.goalSpot = (int) academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.GoalSpot, 1f);
+        carSpawner.randomGoalSpot = academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.RandomSpot, 1f) > 0;
+        carSpawner.goalSpot = (int) academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.GoalSpot, 3f);
         carSpawner.maxOccupiedSpaces = (int)academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.NumCars, 0f);
 
         carSpawner.Spawn();
         goalParking = carSpawner.GoalParkingSpot();
 
+        // place the target rectangle
+        DestroyImmediate(freeSpace);
+        var placeMat = GetPlaceMat(goalParking);
+
+        freeSpace = Instantiate(academy.FreeSpotMarker, placeMat.transform.position, placeMat.transform.rotation, placeMat);
+
         transform.position = startPosTransform.position;
         transform.rotation = startPosTransform.rotation;
         vehicleController.Accel = 0;
         vehicleController.Steer = 0;
+    }
+
+    private Transform GetPlaceMat(GameObject goalParking)
+    {
+        Transform placeMat = null;
+        foreach (Transform transform in goalParking.transform)
+        {
+            if(transform.name == ParkingUtils.PlaceMat)
+            {
+                placeMat = transform;
+                break;
+            }
+        }
+
+        return placeMat;
     }
 
     public override float[] Heuristic()

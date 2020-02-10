@@ -22,7 +22,10 @@ public static class ParkingUtils
     public const string ParkingTag = "parking";
     public const string CarTag = "car";
     public const string ImmovableTag = "immovable";
+    
     public const string Marker = "Marker";
+    public const string PlaceMat = "PlaceMat";
+
     private static Random rng = new Random();
 
     public const string RandomSpot = "random_spot";

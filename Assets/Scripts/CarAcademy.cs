@@ -5,8 +5,9 @@ using MLAgents;
 
 public class CarAcademy : Academy
 {
+    public GameObject FreeSpotMarker;
+
     public override void AcademyStep()
     {
-
     }
 }
