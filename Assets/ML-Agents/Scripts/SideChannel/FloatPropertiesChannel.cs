@@ -36,7 +36,6 @@ namespace MLAgents
         /// </summary>
         /// <returns> The list of string identifiers </returns>
         IList<string> ListProperties();
-        bool GetPropertyWithDefault(object randomSpot, float v);
     }
 
     public class FloatPropertiesChannel : SideChannel, IFloatProperties
