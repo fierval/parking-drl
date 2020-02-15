@@ -22,7 +22,7 @@ public enum Facing :int
 struct Rewards
 {
     public const float BaseReward = -1e-4f;
-    public const float AngleDistanceWeight = -BaseReward * 1e1f;
+    public const float AngleDistanceWeight = -BaseReward;
     public const float ParkingComplete = 1f;
     public const float ParkingFailed = -1f;
     public const float ParkingAttempted = 0f;
@@ -83,7 +83,10 @@ public class CarAgent : Agent
 
     // where we expect to park
     GameObject goalParking;
+    // place mat of the free spot
+    Transform placeMat;
     GameObject freeSpace;
+    Vector2 goalParkingPosition;
 
     private void Awake()
     {
@@ -147,18 +150,25 @@ public class CarAgent : Agent
 
         if (isCollision) return Rewards.ParkingFailed;
 
-        // are we parking now
-        switch (parkingDetector.CarParkingState)
+        float angle = 90f;
+
+        // we add rewards for parking in the goal spot
+        if (parkingDetector.IsParkingInThisSpot(placeMat.gameObject))
         {
-            case ParkingState.InProgress:
-                reward = Rewards.ParkingProgress;
-                break;
-            case ParkingState.Failed:
-                return Rewards.ParkingAttempted;
-            case ParkingState.Complete:
-                return Rewards.ParkingComplete;
-            default:
-                break;
+            // are we parking now
+            switch (parkingDetector.CarParkingState)
+            {
+                case ParkingState.InProgress:
+                    angle = parkingDetector.GetForwardParkingAngle(goalParking);
+                    reward = Rewards.ParkingProgress;
+                    break;
+                case ParkingState.Failed:
+                    return Rewards.ParkingAttempted;
+                case ParkingState.Complete:
+                    return Rewards.ParkingComplete;
+                default:
+                    break;
+            }
         }
 
         if(GetStepCount() >= agentParameters.maxStep)
@@ -172,17 +182,11 @@ public class CarAgent : Agent
             tmeshAngles.Clear();
         }
 
-        var minAngleFacing = FindSensorAngleDistanceAdjustFacing();
-
-        // negative reward for not heading towards parking
-        if (minAngleFacing.facing == Facing.WhoCares)
-        {
-            return reward;
-        }
+        var distance = Vector2.Distance(goalParkingPosition, new Vector2(transform.position.x, transform.position.z));
 
         // small reward for getting closer to parking
         // and also turning towards it
-        return reward + Mathf.Abs(Mathf.Cos(minAngleFacing.angle)) * (1f - minAngleFacing.distance ) * Rewards.AngleDistanceWeight;
+        return reward + 1f / distance * Rewards.AngleDistanceWeight;
     }
 
     private (float angle, float distance, Facing facing) FindSensorAngleDistanceAdjustFacing()
@@ -362,10 +366,11 @@ public class CarAgent : Agent
 
         carSpawner.Spawn();
         goalParking = carSpawner.GoalParkingSpot();
+        goalParkingPosition = new Vector2(goalParking.transform.position.x, goalParking.transform.position.z);
 
         // place the target rectangle
         DestroyImmediate(freeSpace);
-        var placeMat = GetPlaceMat(goalParking);
+        placeMat = GetPlaceMat(goalParking);
 
         freeSpace = Instantiate(academy.FreeSpotMarker, placeMat.transform.position, placeMat.transform.rotation, placeMat);
 

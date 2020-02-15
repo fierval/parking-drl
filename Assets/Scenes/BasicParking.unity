@@ -4754,6 +4754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3951fedb011a25445b0d7191b4169e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FreeSpotMarker: {fileID: 2878018295618957388, guid: 0b5dabb79b9fcd34481b21f4062bbd91,
+    type: 3}
 --- !u!4 &1203670577
 Transform:
   m_ObjectHideFlags: 0

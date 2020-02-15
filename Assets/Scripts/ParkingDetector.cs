@@ -134,12 +134,18 @@ public class ParkingDetector : MonoBehaviour
     // So we cannot recover. We may be backing into the spot or driving forward
     bool IsFailedParking(GameObject spot)
     {
+        return GetForwardParkingAngle(spot) > MinAngle;
+    }
+
+    public float GetForwardParkingAngle(GameObject spot)
+    {
         var carPos = transform.forward.normalized;
         var spotPos = spot.transform.parent.forward.normalized;
         // angle is never greater than 180 degrees
         // https://docs.unity3d.com/ScriptReference/Vector3.Angle.html
         var angle = Mathf.Abs(90 - Vector3.Angle(spotPos, carPos));
-
-        return angle > MinAngle;
+        return angle;
     }
+
+    public bool IsParkingInThisSpot(GameObject spot) => parkingState.ContainsKey(spot);
 }
