@@ -23,7 +23,10 @@ struct Rewards
 {
     public const float BaseReward = -1e-4f;
     public const float DistanceWeight = -BaseReward;
+    // should line up with the parking spot
     public const float AngleWeight = -BaseReward * 10;
+    // should be as close to 0 as possible
+    public const float VelocityWeight = BaseReward * 1e2f;
     public const float ParkingComplete = 1f;
     public const float ParkingFailed = -1f;
     public const float ParkingAttempted = 0f;
@@ -89,11 +92,17 @@ public class CarAgent : Agent
     GameObject freeSpace;
     Vector2 goalParkingPosition;
 
+    // for vehicle velocity
+    Rigidbody carRigidBody;
+
     private void Awake()
     {
         academy = FindObjectOfType<CarAcademy>();
 
         vehicleController = GetComponent<ESVehicleController>();
+        // for vehicle velocity
+        carRigidBody = vehicleController.CarRb;
+
         gearShift = GetComponent<ESGearShift>();
         parkingDetector = GetComponent<ParkingDetector>();
 
@@ -152,6 +161,7 @@ public class CarAgent : Agent
         if (isCollision) return Rewards.ParkingFailed;
 
         float angle = 90f;
+        Vector3 velocity = Vector3.zero;
 
         // we add rewards for parking in the goal spot
         if (parkingDetector.IsParkingInThisSpot(placeMat.gameObject))
@@ -162,6 +172,7 @@ public class CarAgent : Agent
                 case ParkingState.InProgress:
                     angle = parkingDetector.GetForwardParkingAngle(goalParking);
                     reward = Rewards.ParkingProgress;
+                    velocity = carRigidBody.velocity;
                     break;
                 case ParkingState.Failed:
                     return Rewards.ParkingAttempted;
@@ -187,7 +198,10 @@ public class CarAgent : Agent
 
         // small reward for getting closer to parking
         // and also turning towards it
-        return reward + 1f / distance * Rewards.DistanceWeight + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight;
+        return reward 
+            + 1f / distance * Rewards.DistanceWeight 
+            + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
+            + velocity.magnitude * Rewards.VelocityWeight;
     }
 
     private (float angle, float distance, Facing facing) FindSensorAngleDistanceAdjustFacing()
@@ -377,8 +391,8 @@ public class CarAgent : Agent
 
         transform.position = startPosTransform.position;
         transform.rotation = startPosTransform.rotation;
-        vehicleController.Accel = 0;
-        vehicleController.Steer = 0;
+
+        carRigidBody.velocity = Vector3.zero;
     }
 
     private Transform GetPlaceMat(GameObject goalParking)
