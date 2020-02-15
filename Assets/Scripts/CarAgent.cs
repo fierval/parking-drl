@@ -22,7 +22,8 @@ public enum Facing :int
 struct Rewards
 {
     public const float BaseReward = -1e-4f;
-    public const float AngleDistanceWeight = -BaseReward;
+    public const float DistanceWeight = -BaseReward;
+    public const float AngleWeight = -BaseReward * 10;
     public const float ParkingComplete = 1f;
     public const float ParkingFailed = -1f;
     public const float ParkingAttempted = 0f;
@@ -186,7 +187,7 @@ public class CarAgent : Agent
 
         // small reward for getting closer to parking
         // and also turning towards it
-        return reward + 1f / distance * Rewards.AngleDistanceWeight;
+        return reward + 1f / distance * Rewards.DistanceWeight + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight;
     }
 
     private (float angle, float distance, Facing facing) FindSensorAngleDistanceAdjustFacing()
