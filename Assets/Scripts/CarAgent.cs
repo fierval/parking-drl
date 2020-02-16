@@ -25,8 +25,9 @@ struct Rewards
     public const float DistanceWeight = -BaseReward;
     // should line up with the parking spot
     public const float AngleWeight = -BaseReward * 10;
-    // should be as close to 0 as possible
-    public const float VelocityWeight = BaseReward * 1e2f;
+    // should be as close to 0 as possible when parking
+    // so we punish for having velocity
+    public const float VelocityWeight = BaseReward * 1e1f;
     public const float ParkingComplete = 1f;
     public const float ParkingFailed = -1f;
     public const float ParkingAttempted = 0f;
@@ -170,7 +171,7 @@ public class CarAgent : Agent
             switch (parkingDetector.CarParkingState)
             {
                 case ParkingState.InProgress:
-                    angle = parkingDetector.GetForwardParkingAngle(goalParking);
+                    angle = parkingDetector.GetForwardParkingAngle(placeMat.gameObject);
                     reward = Rewards.ParkingProgress;
                     velocity = carRigidBody.velocity;
                     break;
@@ -194,7 +195,7 @@ public class CarAgent : Agent
             tmeshAngles.Clear();
         }
 
-        var distance = Vector2.Distance(goalParkingPosition, new Vector2(transform.position.x, transform.position.z));
+        var distance = GetRelativeDistanceFromGoal();
 
         // small reward for getting closer to parking
         // and also turning towards it
@@ -203,6 +204,11 @@ public class CarAgent : Agent
             + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
             + velocity.magnitude * Rewards.VelocityWeight;
     }
+
+    float GetRelativeDistanceFromGoal() => 
+        Vector2.Distance(goalParkingPosition, GetRelativePosition());
+
+    Vector2 GetRelativePosition() => new Vector2((transform.position.x - MinWorldX) / deltaX, (transform.position.z - MinWorldZ) / deltaZ);
 
     private (float angle, float distance, Facing facing) FindSensorAngleDistanceAdjustFacing()
     {
@@ -348,13 +354,24 @@ public class CarAgent : Agent
     public override void CollectObservations()
     {
         // position
-        AddVectorObs(new Vector2((transform.position.x - MinWorldX) / deltaX, (transform.position.z - MinWorldZ) / deltaZ));
-        // rotation
-        AddVectorObs(transform.eulerAngles.y / 360f);
+        AddVectorObs(GetRelativePosition());
+        
+        // velocity
+        AddVectorObs(carRigidBody.velocity);
+        
         // parking state: one-hot observation
-        AddVectorObs((int)parkingDetector.CarParkingState, parkingStateLength);
-        //facing
-        AddVectorObs((int)nowFacing, facingLength);
+        if (parkingDetector.IsParkingInThisSpot(placeMat.gameObject))
+        {
+            AddVectorObs((int)parkingDetector.CarParkingState, parkingStateLength);
+            AddVectorObs(Mathf.Cos(parkingDetector.GetForwardParkingAngle(placeMat.gameObject)));
+        }
+        else
+        {
+            AddVectorObs(0, parkingStateLength);
+            AddVectorObs(0);
+        }
+
+
         // collision
         AddVectorObs(isCollision);
     }
@@ -381,7 +398,7 @@ public class CarAgent : Agent
 
         carSpawner.Spawn();
         goalParking = carSpawner.GoalParkingSpot();
-        goalParkingPosition = new Vector2(goalParking.transform.position.x, goalParking.transform.position.z);
+        goalParkingPosition = new Vector2((goalParking.transform.position.x - MinWorldX) / deltaX, (goalParking.transform.position.z - MinWorldZ) / deltaZ);
 
         // place the target rectangle
         DestroyImmediate(freeSpace);
