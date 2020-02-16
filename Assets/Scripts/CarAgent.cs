@@ -28,7 +28,7 @@ struct Rewards
     // should be as close to 0 as possible when parking
     // so we punish for having velocity
     public const float VelocityWeight = BaseReward * 1e1f;
-    public const float ParkingComplete = 1f;
+    public const float ParkingComplete = 1e-2f;
     public const float ParkingFailed = -1f;
     public const float ParkingAttempted = 0f;
     public const float ParkingProgress = -BaseReward * 1e1f;
@@ -165,7 +165,8 @@ public class CarAgent : Agent
         Vector3 velocity = Vector3.zero;
 
         // we add rewards for parking in the goal spot
-        if (parkingDetector.IsParkingInThisSpot(placeMat.gameObject))
+        bool isParking = parkingDetector.IsParkingInThisSpot(placeMat.gameObject);
+        if (isParking)
         {
             // are we parking now
             switch (parkingDetector.CarParkingState)
@@ -178,13 +179,13 @@ public class CarAgent : Agent
                 case ParkingState.Failed:
                     return Rewards.ParkingAttempted;
                 case ParkingState.Complete:
-                    return Rewards.ParkingComplete;
+                    reward = Rewards.ParkingComplete;
+                    break;
                 default:
                     break;
             }
         }
-
-        if(GetStepCount() >= agentParameters.maxStep)
+        else if(GetStepCount() >= agentParameters.maxStep)
         {
             return Rewards.ParkingFailed;
         }
@@ -200,7 +201,7 @@ public class CarAgent : Agent
         // small reward for getting closer to parking
         // and also turning towards it
         return reward 
-            + 1f / distance * Rewards.DistanceWeight 
+            + (isParking && parkingDetector.CarParkingState == ParkingState.Complete ? 1f / (distance + 1e-5f) * Rewards.DistanceWeight : 0)
             + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
             + velocity.magnitude * Rewards.VelocityWeight;
     }
