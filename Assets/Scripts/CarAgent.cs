@@ -22,13 +22,13 @@ public enum Facing :int
 struct Rewards
 {
     public const float BaseReward = -1e-4f;
-    public const float DistanceWeight = -BaseReward;
+    public const float DistanceWeight = 1e-3f;
     // should line up with the parking spot
     public const float AngleWeight = -BaseReward * 10;
     // should be as close to 0 as possible when parking
     // so we punish for having velocity
-    public const float VelocityWeight = BaseReward * 1e1f;
-    public const float ParkingComplete = 1e-2f;
+    public const float VelocityWeight = -1e1f;
+    public const float ParkingComplete = 1f;
     public const float ParkingFailed = -1f;
     public const float ParkingAttempted = 0f;
     public const float ParkingProgress = -BaseReward * 1e1f;
@@ -201,7 +201,7 @@ public class CarAgent : Agent
         // small reward for getting closer to parking
         // and also turning towards it
         return reward 
-            + (isParking && parkingDetector.CarParkingState == ParkingState.Complete ? 1f / (distance + 1e-5f) * Rewards.DistanceWeight : 0)
+            + (isParking && parkingDetector.CarParkingState == ParkingState.Complete ? 0f : 1f / (distance + 1e-5f) * Rewards.DistanceWeight)
             + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
             + velocity.magnitude * Rewards.VelocityWeight;
     }
