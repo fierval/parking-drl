@@ -206,9 +206,17 @@ public class CarAgent : Agent
     }
 
     float GetRelativeDistanceFromGoal() => 
-        Vector2.Distance(goalParkingPosition, GetRelativePosition());
+        Vector2.Distance(goalParkingPosition, GetNormalizedPosition());
 
-    Vector2 GetRelativePosition() => new Vector2((transform.position.x - MinWorldX) / deltaX, (transform.position.z - MinWorldZ) / deltaZ);
+    Vector2 GetNormalizedPosition() => NormalizePos(new Vector2(transform.position.x, transform.position.z));
+
+    Vector2 NormalizePos(Vector2 pos) => new Vector2((pos.x - MinWorldX) / deltaX, (pos.y - MinWorldZ) / deltaZ);
+
+    Vector2 GetPositionRelativeToGoal()
+    {
+        var relativePos = goalParking.transform.InverseTransformVector(transform.position);
+        return NormalizePos(new Vector2(relativePos.x, relativePos.z));
+    }
 
     private (float angle, float distance, Facing facing) FindSensorAngleDistanceAdjustFacing()
     {
@@ -354,10 +362,10 @@ public class CarAgent : Agent
     public override void CollectObservations()
     {
         // position
-        AddVectorObs(GetRelativePosition());
+        AddVectorObs(GetPositionRelativeToGoal());
         
         // velocity
-        AddVectorObs(carRigidBody.velocity);
+        AddVectorObs(new Vector2(carRigidBody.velocity.normalized.x, carRigidBody.velocity.normalized.z));
         
         // parking state: one-hot observation
         if (parkingDetector.IsParkingInThisSpot(placeMat.gameObject))
