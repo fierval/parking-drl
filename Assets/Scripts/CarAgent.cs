@@ -22,7 +22,7 @@ public enum Facing :int
 struct Rewards
 {
     public const float BaseReward = -1e-4f;
-    public const float DistanceWeight = 1e-6f;
+    public const float DistanceWeight = 1e-5f;
     // should line up with the parking spot
     public const float AngleWeight = 1e-3f;
     // should be as close to 0 as possible when parking
@@ -189,7 +189,7 @@ public class CarAgent : Agent
             return Rewards.ParkingFailed;
         }
 
-        int IsParkingComplete() => isParking && parkingDetector.CarParkingState == ParkingState.Complete ? 0 : 1;
+        int NoDistanceIfCompleteParking() => isParking && parkingDetector.CarParkingState == ParkingState.Complete ? 0 : 1;
         int IsParking() => isParking && parkingDetector.CarParkingState == ParkingState.InProgress ? 1 : 0;
 
 
@@ -204,7 +204,7 @@ public class CarAgent : Agent
         // small reward for getting closer to parking
         // and also turning towards it
         reward +=
-            IsParkingComplete() * 1f / (distance + 1e-5f) * Rewards.DistanceWeight
+            NoDistanceIfCompleteParking() * (1f - distance) * Rewards.DistanceWeight
             + IsParking() * Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
             + velocity.magnitude * Rewards.VelocityWeight;
 
@@ -372,7 +372,7 @@ public class CarAgent : Agent
         AddVectorObs(GetPositionRelativeToGoal());
 
         // velocity
-        var velocity = vehicleController.CarRb == null ? Vector3.zero : vehicleController.CarRb.velocity.normalized;
+        var velocity = vehicleController.CarRb == null ? Vector3.zero : vehicleController.CarRb.velocity;
         AddVectorObs(new Vector2(velocity.x, velocity.z));
         
         // parking state: one-hot observation
