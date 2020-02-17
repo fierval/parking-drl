@@ -1,0 +1,9 @@
+Parking:
+  measure: reward
+  thresholds: [0, 0.001, 0.003, 0.005]
+  min_lesson_length: 50
+  signal_smoothing: true
+  parameters:
+    num_cars: [0, 1, 3, 4, 5]
+    random_spot: [0, 0, 0, 1, 1]
+    goal_spot: [3, 3, 5, 4, 4]
