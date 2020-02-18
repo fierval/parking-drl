@@ -14,23 +14,24 @@ public enum ParkingState : int
     Complete = 3
 }
 
-public static class ParkingUtils
+static class ParkingUtils
 {
     static CarAcademy academy = GameObject.FindObjectOfType<CarAcademy>();
 
-    public static bool IsAcademyActive() => academy != null && academy.enabled;
-    public const string ParkingTag = "parking";
-    public const string CarTag = "car";
-    public const string ImmovableTag = "immovable";
+    internal static bool IsAcademyActive() => academy != null && academy.enabled;
+    internal const string ParkingTag = "parking";
+    internal const string CarTag = "car";
+    internal const string ImmovableTag = "immovable";
     
-    public const string Marker = "Marker";
-    public const string PlaceMat = "PlaceMat";
+    internal const string Marker = "Marker";
+    internal const string PlaceMat = "PlaceMat";
 
     private static Random rng = new Random();
 
-    public const string RandomSpot = "random_spot";
-    public const string NumCars = "num_cars";
-    public const string GoalSpot = "goal_spot";
+    internal const string RandomSpot = "random_spot";
+    internal const string NumCars = "num_cars";
+    internal const string GoalSpot = "goal_spot";
+    internal const float TerminalVelocity = 5f;
 
     private static float Round1(this float f)
     {
@@ -43,7 +44,7 @@ public static class ParkingUtils
     /// <param name="container"></param>
     /// <param name="rect"></param>
     /// <returns></returns>
-    public static bool Contains(this Bounds container, Bounds rect)
+    internal static bool Contains(this Bounds container, Bounds rect)
     {
         return container.min.x.Round1() <= rect.min.x.Round1()
             && container.min.z.Round1() <= rect.min.z.Round1()
@@ -51,7 +52,7 @@ public static class ParkingUtils
             && container.max.z.Round1() >= rect.max.z.Round1();
     }
 
-    public static IEnumerable<T> Shuffle<T>(this IList<T> list)
+    internal static IEnumerable<T> Shuffle<T>(this IList<T> list)
     {
         int n = list.Count;
         while (n > 1)

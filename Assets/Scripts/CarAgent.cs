@@ -29,6 +29,7 @@ struct Rewards
     // so we punish for having velocity
     public const float VelocityWeight = -1e-3f;
     public const float ParkingComplete = 1e-3f;
+    public const float Success = 1f;
     public const float ParkingFailed = -1f;
     public const float ParkingAttempted = -1e-2f;
     public const float ParkingProgress = 1e-3f;
@@ -173,12 +174,17 @@ public class CarAgent : Agent
                 case ParkingState.InProgress:
                     angle = Mathf.Deg2Rad * parkingDetector.GetForwardParkingAngle(placeMat.gameObject);
                     reward = Rewards.ParkingProgress;
-                    velocity = vehicleController.CarRb.velocity;
                     break;
                 case ParkingState.Failed:
                     return Rewards.ParkingAttempted;
                 case ParkingState.Complete:
                     reward = Rewards.ParkingComplete;
+                    velocity = vehicleController.CarRb.velocity;
+                    if(velocity.magnitude <= ParkingUtils.TerminalVelocity)
+                    {
+                        reward += Rewards.Success;
+                        return reward;
+                    }
                     break;
                 default:
                     break;
@@ -394,9 +400,10 @@ public class CarAgent : Agent
 
     private void SetDone()
     {
+        var isParking = parkingDetector.IsParkingInThisSpot(placeMat.gameObject);
         if (isCollision
-            || (parkingDetector.CarParkingState == ParkingState.Complete && vehicleController.CarRb.velocity.magnitude <= 2)
-            || parkingDetector.CarParkingState == ParkingState.Failed)
+            || (isParking && parkingDetector.CarParkingState == ParkingState.Complete && vehicleController.CarRb.velocity.magnitude <= ParkingUtils.TerminalVelocity)
+            || (isParking && parkingDetector.CarParkingState == ParkingState.Failed))
         {
             Monitor.print($"IsCollision: {isCollision}, Reward: {GetCumulativeReward()}," +
                 $" Parked: {parkingDetector.CarParkingState == ParkingState.Complete && vehicleController.CarRb.velocity.magnitude <= 2}");
