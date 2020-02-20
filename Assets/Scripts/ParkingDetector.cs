@@ -137,14 +137,22 @@ public class ParkingDetector : MonoBehaviour
         return GetForwardParkingAngle(spot) > MinAngle;
     }
 
-    public float GetForwardParkingAngle(GameObject spot)
+    public float GetForwardParkingAngle(GameObject placeMat)
     {
         var carPos = transform.forward.normalized;
-        var spotPos = spot.transform.parent.forward.normalized;
+        var spotPos = placeMat.transform.parent.forward.normalized;
         // angle is never greater than 180 degrees
         // https://docs.unity3d.com/ScriptReference/Vector3.Angle.html
         var angle = Mathf.Abs(90 - Vector3.Angle(spotPos, carPos));
         return angle;
+    }
+
+    public Quaternion GetForwardRotation(Transform placeMat)
+    {
+        var spot = placeMat.parent.forward.normalized;
+        var car = transform.forward.normalized;
+        var rotationDelta = Quaternion.FromToRotation(car, spot);
+        return rotationDelta;
     }
 
     public bool IsParkingInThisSpot(GameObject spot) => parkingState.ContainsKey(spot);

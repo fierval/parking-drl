@@ -28,10 +28,9 @@ struct Rewards
     // should be as close to 0 as possible when parking
     // so we punish for having velocity
     public const float VelocityWeight = -1e-3f;
-    public const float ParkingComplete = 1e-3f;
+    public const float ParkingComplete = 1e-2f;
     public const float Success = 1f;
     public const float ParkingFailed = -1f;
-    public const float ParkingAttempted = -1e-2f;
     public const float ParkingProgress = 1e-3f;
     public const float FoundParking = -BaseReward;
 
@@ -160,9 +159,8 @@ public class CarAgent : Agent
 
         if (isCollision) return Rewards.ParkingFailed;
 
-        float angle = Mathf.PI / 2;
-
         Vector3 velocity = Vector3.zero;
+        var angle = Mathf.Deg2Rad * parkingDetector.GetForwardParkingAngle(placeMat.gameObject);
 
         // we add rewards for parking in the goal spot
         bool isParking = parkingDetector.IsParkingInThisSpot(placeMat.gameObject);
@@ -172,11 +170,10 @@ public class CarAgent : Agent
             switch (parkingDetector.CarParkingState)
             {
                 case ParkingState.InProgress:
-                    angle = Mathf.Deg2Rad * parkingDetector.GetForwardParkingAngle(placeMat.gameObject);
                     reward = Rewards.ParkingProgress;
                     break;
                 case ParkingState.Failed:
-                    return Rewards.ParkingAttempted;
+                    return Rewards.ParkingFailed;
                 case ParkingState.Complete:
                     reward = Rewards.ParkingComplete;
                     velocity = vehicleController.CarRb.velocity;
@@ -210,10 +207,11 @@ public class CarAgent : Agent
         // small reward for getting closer to parking
         // and also turning towards it
         reward +=
-            NoDistanceIfCompleteParking() * (1f - distance) * Rewards.DistanceWeight
-            + IsParking() * Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
+            NoDistanceIfCompleteParking() * (1f - distance) * Rewards.DistanceWeight * Mathf.Abs(Mathf.Cos(angle))
             + velocity.magnitude * Rewards.VelocityWeight;
 
+        Monitor.Log("Distance", distance, transform);
+        Monitor.Log("CosAngle", Mathf.Cos(angle), transform);
         Monitor.Log("Reward", reward.ToString(), transform);
         return reward;
     }
@@ -393,6 +391,8 @@ public class CarAgent : Agent
             AddVectorObs(0);
         }
 
+        //relative rotation
+        AddVectorObs(parkingDetector.GetForwardRotation(placeMat));
 
         // collision
         AddVectorObs(isCollision);
