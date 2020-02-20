@@ -393,5 +393,6 @@ Music/
 # DRL
 saved_models/
 sac-*/
+ppo-*/
 summaries/
 csharp_timers.json
