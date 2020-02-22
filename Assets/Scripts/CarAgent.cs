@@ -22,12 +22,12 @@ public enum Facing :int
 struct Rewards
 {
     public const float BaseReward = -1e-3f;
-    public const float DistanceWeight = 1e-4f;
+    public const float DistanceWeight = 5e-4f;
     // should line up with the parking spot
-    public const float AngleWeight = 5e-4f;
+    public const float AngleWeight = 1e-4f;
     // should be as close to 0 as possible when parking
     // so we punish for having velocity
-    public const float VelocityWeight = -1e-3f;
+    public const float VelocityWeight = -1e-4f;
     public const float ParkingComplete = 1e-2f;
     public const float Success = 1f;
     public const float ParkingFailed = -1f;
@@ -88,6 +88,8 @@ public class CarAgent : Agent
 
     // where we expect to park
     GameObject goalParking;
+    private Vector2 goalRelativeParkingPosition;
+
     // place mat of the free spot
     Transform placeMat;
     GameObject freeSpace;
@@ -207,7 +209,7 @@ public class CarAgent : Agent
         // small reward for getting closer to parking
         // and also turning towards it
         reward +=
-            NoDistanceIfCompleteParking() * (1f - distance) * Rewards.DistanceWeight
+            NoDistanceIfCompleteParking() * (1f / (distance + 1e-10f)) * Rewards.DistanceWeight
             + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
             + velocity.magnitude * Rewards.VelocityWeight;
 
@@ -218,7 +220,9 @@ public class CarAgent : Agent
     }
 
     float GetRelativeDistanceFromGoal() => 
-        Vector2.Distance(goalParkingPosition, GetNormalizedPosition());
+        Vector2.Distance(goalRelativeParkingPosition, GetNormalizedPosition());
+
+    float GetDistanceFromGoal() => Vector2.Distance(goalParkingPosition, new Vector2(transform.position.x, transform.position.z));
 
     Vector2 GetNormalizedPosition() => NormalizePos(new Vector2(transform.position.x, transform.position.z));
 
@@ -424,7 +428,10 @@ public class CarAgent : Agent
 
         carSpawner.Spawn();
         goalParking = carSpawner.GoalParkingSpot();
-        goalParkingPosition = new Vector2((goalParking.transform.position.x - MinWorldX) / deltaX, (goalParking.transform.position.z - MinWorldZ) / deltaZ);
+        goalRelativeParkingPosition = new Vector2((goalParking.transform.position.x - MinWorldX) / deltaX, (goalParking.transform.position.z - MinWorldZ) / deltaZ);
+        goalParkingPosition = new Vector2(goalParking.transform.position.x, goalParking.transform.position.z);
+
+        Monitor.Log("Pos", $"{goalParkingPosition.x},{goalParkingPosition.y}", goalParking.transform);
 
         // place the target rectangle
         DestroyImmediate(freeSpace);
