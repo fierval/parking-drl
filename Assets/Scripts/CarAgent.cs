@@ -431,8 +431,6 @@ public class CarAgent : Agent
         goalRelativeParkingPosition = new Vector2((goalParking.transform.position.x - MinWorldX) / deltaX, (goalParking.transform.position.z - MinWorldZ) / deltaZ);
         goalParkingPosition = new Vector2(goalParking.transform.position.x, goalParking.transform.position.z);
 
-        Monitor.Log("Pos", $"{goalParkingPosition.x},{goalParkingPosition.y}", goalParking.transform);
-
         // place the target rectangle
         DestroyImmediate(freeSpace);
         placeMat = GetPlaceMat(goalParking);
