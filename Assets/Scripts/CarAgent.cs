@@ -21,17 +21,17 @@ public enum Facing :int
 /// </summary>
 struct Rewards
 {
-    public const float BaseReward = -1e-4f;
-    public const float DistanceWeight = 1e-5f;
+    public const float BaseReward = -1e-3f;
+    public const float DistanceWeight = 1e-4f;
     // should line up with the parking spot
-    public const float AngleWeight = 1e-3f;
+    public const float AngleWeight = 5e-4f;
     // should be as close to 0 as possible when parking
     // so we punish for having velocity
     public const float VelocityWeight = -1e-3f;
     public const float ParkingComplete = 1e-2f;
     public const float Success = 1f;
     public const float ParkingFailed = -1f;
-    public const float ParkingProgress = 1e-3f;
+    public const float ParkingProgress = 1e-2f;
     public const float FoundParking = -BaseReward;
 
     // how many steps left before we totally fail
@@ -187,10 +187,10 @@ public class CarAgent : Agent
                     break;
             }
         }
-        else if(GetStepCount() >= agentParameters.maxStep)
-        {
-            return Rewards.ParkingFailed;
-        }
+        //else if(GetStepCount() >= agentParameters.maxStep)
+        //{
+        //    return Rewards.ParkingFailed;
+        //}
 
         int NoDistanceIfCompleteParking() => isParking && parkingDetector.CarParkingState == ParkingState.Complete ? 0 : 1;
         int IsParking() => isParking && parkingDetector.CarParkingState == ParkingState.InProgress ? 1 : 0;
@@ -207,7 +207,8 @@ public class CarAgent : Agent
         // small reward for getting closer to parking
         // and also turning towards it
         reward +=
-            NoDistanceIfCompleteParking() * (1f - distance) * Rewards.DistanceWeight * Mathf.Abs(Mathf.Cos(angle))
+            NoDistanceIfCompleteParking() * (1f - distance) * Rewards.DistanceWeight
+            + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
             + velocity.magnitude * Rewards.VelocityWeight;
 
         Monitor.Log("Distance", distance, transform);
@@ -419,7 +420,7 @@ public class CarAgent : Agent
         // set academy properties based on the curriculum
         carSpawner.randomGoalSpot = academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.RandomSpot, 1f) > 0;
         carSpawner.goalSpot = (int) academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.GoalSpot, 3f);
-        carSpawner.maxOccupiedSpaces = (int)academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.NumCars, 0f);
+        carSpawner.maxOccupiedSpaces = (int)academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.NumCars, 4f);
 
         carSpawner.Spawn();
         goalParking = carSpawner.GoalParkingSpot();
