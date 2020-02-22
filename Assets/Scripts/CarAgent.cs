@@ -24,7 +24,7 @@ struct Rewards
     public const float BaseReward = -1e-3f;
     public const float DistanceWeight = -1e-4f;
     // should line up with the parking spot
-    public const float AngleWeight = -5e-4f;
+    public const float AngleWeight = -2.5e-4f;
     // should be as close to 0 as possible when parking
     // so we punish for having velocity
     public const float VelocityWeight = -1e-4f;
@@ -157,6 +157,8 @@ public class CarAgent : Agent
 
     float CollectRewards()
     {
+        if(IsDone()) { return 0; }
+
         float reward = Rewards.BaseReward;
 
         if (isCollision) return Rewards.ParkingFailed;
@@ -209,7 +211,7 @@ public class CarAgent : Agent
         // small reward for getting closer to parking
         // and also turning towards it
         reward +=
-            NoDistanceIfCompleteParking() * (1f / (distance + 1e-10f)) * Rewards.DistanceWeight
+            NoDistanceIfCompleteParking() * (1 - distance ) * Rewards.DistanceWeight
             + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
             + velocity.magnitude * Rewards.VelocityWeight;
 
