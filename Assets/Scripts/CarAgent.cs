@@ -22,9 +22,9 @@ public enum Facing :int
 struct Rewards
 {
     public const float BaseReward = -1e-3f;
-    public const float DistanceWeight = 5e-4f;
+    public const float DistanceWeight = -1e-4f;
     // should line up with the parking spot
-    public const float AngleWeight = 1e-4f;
+    public const float AngleWeight = -5e-4f;
     // should be as close to 0 as possible when parking
     // so we punish for having velocity
     public const float VelocityWeight = -1e-4f;
