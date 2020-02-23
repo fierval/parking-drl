@@ -193,8 +193,6 @@ public class CarAgent : Agent
         }
 
         int NoDistanceIfCompleteParking() => isParking && parkingDetector.CarParkingState == ParkingState.Complete ? 0 : 1;
-        int IsParking() => isParking && parkingDetector.CarParkingState == ParkingState.InProgress ? 1 : 0;
-
 
         if (Application.isEditor && showAngles)
         {
@@ -207,11 +205,12 @@ public class CarAgent : Agent
         // small reward for getting closer to parking
         // and also turning towards it
         reward +=
-            NoDistanceIfCompleteParking() * (1 - distance ) * Rewards.DistanceWeight
+            NoDistanceIfCompleteParking() * (-Mathf.Log(distance)) * Rewards.DistanceWeight
             + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
             + velocity.magnitude * Rewards.VelocityWeight;
 
         Monitor.Log("Distance", distance, transform);
+        Monitor.Log("DistanceLog", (-Mathf.Log(distance)).ToString(), transform);
         Monitor.Log("CosAngle", Mathf.Cos(angle), transform);
         Monitor.Log("Reward", reward.ToString(), transform);
         return reward;
