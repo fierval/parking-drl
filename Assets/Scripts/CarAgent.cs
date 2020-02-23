@@ -22,7 +22,7 @@ public enum Facing :int
 struct Rewards
 {
     public const float BaseReward = -1e-3f;
-    public const float DistanceWeight = 2.5e-4f;
+    public const float DistanceWeight = 3.5e-4f;
     // should line up with the parking spot
     public const float AngleWeight = 1e-4f;
     // should be as close to 0 as possible when parking
@@ -200,17 +200,17 @@ public class CarAgent : Agent
             tmeshAngles.Clear();
         }
 
-        var distance = GetRelativeDistanceFromGoal();
+        var distance = GetDistanceFromGoal();
 
         // small reward for getting closer to parking
         // and also turning towards it
         reward +=
-            NoDistanceIfCompleteParking() * (-Mathf.Log(distance)) * Rewards.DistanceWeight
+            NoDistanceIfCompleteParking() * (1f/(distance + 1e-10f)) * Rewards.DistanceWeight
             + Mathf.Abs(Mathf.Cos(angle)) * Rewards.AngleWeight
             + velocity.magnitude * Rewards.VelocityWeight;
 
-        Monitor.Log("Distance", distance, transform);
-        Monitor.Log("DistanceLog", (-Mathf.Log(distance)).ToString(), transform);
+        Monitor.Log("Distance", distance.ToString(), transform);
+        Monitor.Log("DistanceReversed", 1f / (distance + 1e-10f), transform);
         Monitor.Log("CosAngle", Mathf.Cos(angle), transform);
         Monitor.Log("Reward", reward.ToString(), transform);
         return reward;
