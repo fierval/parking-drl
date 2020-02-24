@@ -5,7 +5,7 @@
   "signal_smoothing" : true,
   "parameters" :
   {
-      "num_cars" : [0.0, 5, 10, 15, 20],
+      "num_cars" : [0.0, 2, 3, 4, 5],
       "random_spot" : [0, 0, 1, 1, 1],
       "goal_spot": [3, 3, 5, 4, 4]
   }
