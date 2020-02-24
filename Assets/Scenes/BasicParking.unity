@@ -8253,6 +8253,66 @@ PrefabInstance:
       propertyPath: angleDisplay
       value: 
       objectReference: {fileID: 446264491}
+    - target: {fileID: 5899494515237628814, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: raysPerDirection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515237628814, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: maxRayDegrees
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515237628814, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515107603556, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: raysPerDirection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515107603556, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: maxRayDegrees
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899494515107603556, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519513248621410702, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: raysPerDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519513248621410702, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: maxRayDegrees
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519513248621410702, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091746077758509450, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: raysPerDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091746077758509450, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: maxRayDegrees
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091746077758509450, guid: 340d5d4e655434a4594b5c86635591ce,
+        type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 340d5d4e655434a4594b5c86635591ce, type: 3}
 --- !u!4 &2034348291 stripped
