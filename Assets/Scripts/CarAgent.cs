@@ -439,7 +439,7 @@ public class CarAgent : Agent
             || (isParking && parkingDetector.CarParkingState == ParkingState.Failed))
         {
             Monitor.print($"IsCollision: {isCollision}, Reward: {GetCumulativeReward()}," +
-                $" Parked: {parkingDetector.CarParkingState == ParkingState.Complete && vehicleController.CarRb.velocity.magnitude <= 2}");
+                $" Parked: {parkingDetector.CarParkingState == ParkingState.Complete && vehicleController.CarRb.velocity.magnitude <= ParkingUtils.TerminalVelocity}");
             amIDone = true;
         }
     }
