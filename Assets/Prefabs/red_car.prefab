@@ -117,8 +117,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2129431, y: 1.2030015, z: 5.8000026}
-  m_Center: {x: 0.026307106, y: 0.21730816, z: 0.6000001}
+  m_Size: {x: 1.2129431, y: 0.98157835, z: 5.5383887}
+  m_Center: {x: 0.026307106, y: 0.32801974, z: 0.5762172}
 --- !u!23 &1548861547705849791
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5996,6 +5996,8 @@ MonoBehaviour:
     numberOfActionsBetweenDecisions: 5
   carSpawner: {fileID: 0}
   startPosTransform: {fileID: 0}
+  angleDisplay: {fileID: 0}
+  showAngles: 0
 --- !u!114 &2034348295
 MonoBehaviour:
   m_ObjectHideFlags: 0

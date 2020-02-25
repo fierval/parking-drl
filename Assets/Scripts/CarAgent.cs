@@ -22,7 +22,7 @@ public enum Facing :int
 struct Rewards
 {
     public const float BaseReward = -1e-3f;
-    public const float DistanceWeight = 1e-4f;
+    public const float DistanceWeight = 6.5e-4f;
     // should line up with the parking spot
     public const float AngleWeight = 1e-4f;
     // should be as close to 0 as possible when parking
@@ -95,6 +95,11 @@ public class CarAgent : Agent
     GameObject freeSpace;
     Vector2 goalParkingPosition;
 
+    // set "done" before we actually set the agent to "done"
+    // so we can display accomplished parking.
+    bool amIDone = false;
+    private bool startedCoroutine;
+
     private void Awake()
     {
         academy = FindObjectOfType<CarAcademy>();
@@ -134,6 +139,25 @@ public class CarAgent : Agent
         Monitor.SetActive(true);
     }
 
+    private void Update()
+    {
+        if(parkingDetector.CarParkingState == ParkingState.Complete && amIDone && !startedCoroutine)
+        {
+            startedCoroutine = true;
+            StartCoroutine(DisplayParkingComplete());
+        }
+        else if(amIDone && !startedCoroutine)
+        {
+            Done();
+        }
+    }
+
+    IEnumerator DisplayParkingComplete()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Done();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         isCollision = collision.gameObject != null;
@@ -157,7 +181,7 @@ public class CarAgent : Agent
 
     float CollectRewards()
     {
-        if(IsDone()) { return 0; }
+        if (amIDone) { return 0; }
 
         float reward = Rewards.BaseReward;
 
@@ -167,7 +191,8 @@ public class CarAgent : Agent
         var angle = Mathf.Deg2Rad * parkingDetector.GetForwardParkingAngle(placeMat.gameObject);
 
         // we add rewards for parking in the goal spot
-        bool isParking = parkingDetector.IsParkingInThisSpot(placeMat.gameObject);
+        bool isParking = IsParking();
+
         if (isParking)
         {
             // are we parking now
@@ -181,7 +206,7 @@ public class CarAgent : Agent
                 case ParkingState.Complete:
                     reward = Rewards.ParkingComplete;
                     velocity = vehicleController.CarRb.velocity;
-                    if(velocity.magnitude <= ParkingUtils.TerminalVelocity)
+                    if (velocity.magnitude <= ParkingUtils.TerminalVelocity)
                     {
                         reward += Rewards.Success;
                         return reward;
@@ -200,8 +225,8 @@ public class CarAgent : Agent
             tmeshAngles.Clear();
         }
 
-        var distance = GetDistanceFromGoal();
-        var rewardDistance = (1f / (distance + 1e-7f)) * (1.4f - Mathf.Pow(distance, 1.1f));
+        var distance = GetRelativeDistanceFromGoal();
+        var rewardDistance = 1 - distance;
 
         // small reward for getting closer to parking
         // and also turning towards it
@@ -215,6 +240,11 @@ public class CarAgent : Agent
         Monitor.Log("CosAngle", Mathf.Cos(angle), transform);
         Monitor.Log("Reward", reward.ToString(), transform);
         return reward;
+    }
+
+    private bool IsParking()
+    {
+        return parkingDetector.IsParkingInThisSpot(placeMat.gameObject);
     }
 
     float GetRelativeDistanceFromGoal() => 
@@ -410,7 +440,7 @@ public class CarAgent : Agent
         {
             Monitor.print($"IsCollision: {isCollision}, Reward: {GetCumulativeReward()}," +
                 $" Parked: {parkingDetector.CarParkingState == ParkingState.Complete && vehicleController.CarRb.velocity.magnitude <= 2}");
-            Done();
+            amIDone = true;
         }
     }
 
@@ -418,6 +448,8 @@ public class CarAgent : Agent
     {
         goalParking = null;
         isCollision = false;
+        amIDone = false;
+        startedCoroutine = false;
 
         // set academy properties based on the curriculum
         carSpawner.randomGoalSpot = academy.FloatProperties.GetPropertyWithDefault(ParkingUtils.RandomSpot, 1f) > 0;
